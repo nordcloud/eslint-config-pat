@@ -1,14 +1,19 @@
 // This mixin applies some additional checks for projects using the React library.  For more information,
-// please see the README.md for "@rushstack/eslint-config".
+// please see the README.md for "@nordcloud/eslint-config-pat".
 module.exports = {
-  // Plugin documentation: https://www.npmjs.com/package/eslint-plugin-react
-  plugins: ["eslint-plugin-react"],
+  extends: [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+  ],
 
   settings: {
+    // Link component used by React Router and Next.js
+    linkComponents: ["Hyperlink", { name: "Link", linkAttribute: "to" }],
     react: {
       // The default value is "detect".  Automatic detection works by loading the entire React library
       // into the linter's process, which is inefficient.  It is recommended to specify the version
-      // explicity.  For details, see README.md for "@rushstack/eslint-config".
+      // explicity.  For details, see README.md for "@nordcloud/eslint-config-pat".
       version: "detect",
     },
   },
@@ -19,55 +24,128 @@ module.exports = {
       files: ["*.ts", "*.tsx"],
 
       rules: {
-        // RATIONALE:         When React components are added to an array, they generally need a "key".
-        "react/jsx-key": "warn",
+        "fp/no-mutation": [
+          "warn",
+          {
+            commonjs: true,
+            exceptions: [
+              { object: "window", property: "location" },
+              // Usage with React refs
+              { property: "current" },
+            ],
+          },
+        ],
 
-        // RATIONALE:         Catches a common coding practice that significantly impacts performance.
-        "react/jsx-no-bind": "warn",
+        // avoid false-positives for module bundlers resolution
+        "import/no-unresolved": "off",
 
-        // RATIONALE:         Catches a common coding mistake.
-        "react/jsx-no-comment-textnodes": "warn",
+        "import/no-internal-modules": [
+          "off",
+          {
+            allow: ["@testing-library/**"],
+          },
+        ],
+        "import/order": [
+          "error",
+          {
+            alphabetize: {
+              order: "asc",
+              caseInsensitive: true,
+            },
+            groups: [
+              "builtin",
+              "external",
+              "internal",
+              "parent",
+              "sibling",
+              "index",
+            ],
+            pathGroups: [
+              // GraphQL Codegen output
+              {
+                pattern: "~/generated/**",
+                group: "internal",
+                position: "before",
+              },
+              // Common aliased import pattern used in Nordcloud
+              {
+                pattern: "~/**",
+                group: "internal",
+              },
+              // Nordcloud's React component library
+              {
+                pattern: "@nordcloud/gnui",
+                group: "external",
+                position: "after",
+              },
+              {
+                pattern: "react",
+                group: "external",
+                position: "before",
+              },
+            ],
+            pathGroupsExcludedImportTypes: [
+              "react",
+              "~/generated/**",
+              "@nordcloud/gnui",
+            ],
+          },
+        ],
 
-        // RATIONALE:         Security risk.
-        "react/jsx-no-target-blank": "warn",
+        // eslint-plugin-react-hooks
+        "react-hooks/exhaustive-deps": "warn",
+        "react-hooks/rules-of-hooks": "error",
+        // eslint-plugin-react
+        "react/jsx-no-useless-fragment": "off",
+        "react/prop-types": "off",
+        "react/display-name": "off",
+        "react/function-component-definition": [
+          "warn",
+          {
+            namedComponents: "function-declaration",
+            unnamedComponents: "arrow-function",
+          },
+        ],
+        "react/jsx-pascal-case": ["error", { allowNamespace: true }],
+        "react/jsx-boolean-value": ["error", "never"],
+        "react/jsx-key": "error",
+        "react/self-closing-comp": [
+          "error",
+          {
+            component: true,
+            html: true,
+          },
+        ],
+      },
+    },
+    {
+      files: [
+        // Test files
+        "*.test.ts",
+        "*.test.tsx",
+        "*.spec.ts",
+        "*.spec.tsx",
 
-        // RATIONALE:         Fixes the no-unused-vars rule to make it compatible with React
-        "react/jsx-uses-react": "warn",
+        // Nordcloud convention
+        "**/__mockups__/*.ts",
+        "**/__mockups__/*.tsx",
+        "**/__tests__/*.ts",
+        "**/__tests__/*.tsx",
+      ],
+      extends: [
+        "plugin:jest/all",
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/react",
+      ],
+      rules: {
+        // eslint-plugin-jest-dom
+        "jest-dom/prefer-in-document": "off",
+        // eslint-plugin-testing-library
+        "testing-library/prefer-screen-queries": "warn",
 
-        // RATIONALE:         Fixes the no-unused-vars rule to make it compatible with React
-        "react/jsx-uses-vars": "warn",
-
-        // RATIONALE:         Catches a common coding mistake.
-        "react/no-children-prop": "warn",
-
-        // RATIONALE:         Catches a common coding mistake.
-        "react/no-danger-with-children": "warn",
-
-        // RATIONALE:         Avoids usage of deprecated APIs.
-        //
-        // Note that the set of deprecated APIs is determined by the "react.version" setting.
-        "react/no-deprecated": "warn",
-
-        // RATIONALE:         Catches a common coding mistake.
-        "react/no-direct-mutation-state": "warn",
-
-        // RATIONALE:         Catches some common coding mistakes.
-        "react/no-unescaped-entities": "warn",
-
-        // RATIONALE:         Avoids a potential performance problem.
-        "react/no-find-dom-node": "warn",
-
-        // RATIONALE:         Deprecated API.
-        "react/no-is-mounted": "warn",
-
-        // RATIONALE:         Deprecated API.
-        "react/no-render-return-value": "warn",
-
-        // RATIONALE:         Deprecated API.
-        "react/no-string-refs": "warn",
-
-        // RATIONALE:         Improves syntax for some cases that are not already handled by Prettier.
-        "react/self-closing-comp": "warn",
+        // eslint-plugin-fp
+        // for...of loops are useful for awaiting multiple testing library queries
+        "fp/no-loops": "off",
       },
     },
   ],

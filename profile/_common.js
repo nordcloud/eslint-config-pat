@@ -2,7 +2,6 @@
 // See LICENSE in the project root for license information.
 
 const macros = require("./_macros");
-const { insertIf } = require("./_utils");
 
 // Rule severity guidelines
 // ------------------------
@@ -24,7 +23,7 @@ const { insertIf } = require("./_utils");
 // - An obsolete language feature that nobody should be using for any good reason
 
 function buildRules(profile) {
-  const isReactAppProfile = profile === "react-app";
+  const isWebAppProfile = profile === "web-app";
 
   return {
     // After an .eslintrc.js file is loaded, ESLint will normally continue visiting all parent folders
@@ -40,12 +39,6 @@ function buildRules(profile) {
     parser: "",
 
     extends: [
-      ...insertIf(
-        isReactAppProfile,
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:jsx-a11y/recommended"
-      ),
       "plugin:sonarjs/recommended",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
@@ -66,7 +59,7 @@ function buildRules(profile) {
 
     env: {
       es2020: true,
-      browser: isReactAppProfile,
+      browser: isWebAppProfile,
       node: true,
       jest: true,
     },
@@ -122,17 +115,16 @@ function buildRules(profile) {
           "fp/no-mutating-methods": [
             "warn",
             {
-              allowedObjects: ["history"],
+              ...(isWebAppProfile && { allowedObjects: ["history"] }),
             },
           ],
           "fp/no-mutation": [
             "warn",
             {
               commonjs: true,
-              exceptions: [
-                { object: "window", property: "location" },
-                { property: "current" },
-              ],
+              exceptions: isWebAppProfile
+                ? [{ object: "window", property: "location" }]
+                : [],
             },
           ],
 
@@ -143,12 +135,7 @@ function buildRules(profile) {
           // avoid false-positives for module bundlers resolution
           "import/no-unresolved": "off",
 
-          "import/no-internal-modules": [
-            "off",
-            {
-              allow: ["@testing-library/**"],
-            },
-          ],
+          "import/no-internal-modules": ["off"],
           "import/order": [
             "error",
             {
@@ -165,31 +152,19 @@ function buildRules(profile) {
                 "index",
               ],
               pathGroups: [
+                // GraphQL Codegen output
                 {
                   pattern: "~/generated/**",
                   group: "internal",
                   position: "before",
                 },
+                // Common aliased import pattern used in Nordcloud
                 {
                   pattern: "~/**",
                   group: "internal",
                 },
-                {
-                  pattern: "@nordcloud/gnui",
-                  group: "external",
-                  position: "after",
-                },
-                {
-                  pattern: "react",
-                  group: "external",
-                  position: "before",
-                },
               ],
-              pathGroupsExcludedImportTypes: [
-                "react",
-                "~/generated/**",
-                "@nordcloud/gnui",
-              ],
+              pathGroupsExcludedImportTypes: ["~/generated/**"],
             },
           ],
           "import/no-anonymous-default-export": [
@@ -204,33 +179,6 @@ function buildRules(profile) {
               allowObject: false,
             },
           ],
-
-          ...(isReactAppProfile && {
-            // eslint-plugin-react-hooks
-            "react-hooks/exhaustive-deps": "warn",
-            "react-hooks/rules-of-hooks": "error",
-            // eslint-plugin-react
-            "react/jsx-no-useless-fragment": "off",
-            "react/prop-types": "off",
-            "react/display-name": "off",
-            "react/function-component-definition": [
-              "warn",
-              {
-                namedComponents: "function-declaration",
-                unnamedComponents: "arrow-function",
-              },
-            ],
-            "react/jsx-pascal-case": ["error", { allowNamespace: true }],
-            "react/jsx-boolean-value": ["error", "never"],
-            "react/jsx-key": "error",
-            "react/self-closing-comp": [
-              "error",
-              {
-                component: true,
-                html: true,
-              },
-            ],
-          }),
 
           // eslint-plugin-sonarjs
           "sonarjs/cognitive-complexity": "off",
@@ -329,14 +277,7 @@ function buildRules(profile) {
           "**/__tests__/*.ts",
           "**/__tests__/*.tsx",
         ],
-        extends: [
-          "plugin:jest/all",
-          ...insertIf(
-            isReactAppProfile,
-            "plugin:jest-dom/recommended",
-            "plugin:testing-library/react"
-          ),
-        ],
+        extends: ["plugin:jest/all"],
         rules: {
           // Unit tests sometimes use a standalone statement like "new Thing(123);" to test a constructor.
           "no-new": "off",
@@ -372,17 +313,6 @@ function buildRules(profile) {
           "jest/no-disabled-tests": "error",
           "jest/require-to-throw-message": "error",
           "jest/no-commented-out-tests": "error",
-
-          ...(isReactAppProfile && {
-            // eslint-plugin-jest-dom
-            "jest-dom/prefer-in-document": "off",
-            // eslint-plugin-testing-library
-            "testing-library/prefer-screen-queries": "warn",
-
-            // eslint-plugin-fp
-            // for...of loops are useful for awaiting multiple testing library queries
-            "fp/no-loops": "off",
-          }),
         },
       },
     ],
@@ -392,14 +322,8 @@ function buildRules(profile) {
           extensions: [".js", ".ts", ".tsx"],
         },
       },
+      // Common aliased import pattern used in Nordcloud
       "import/internal-regex": "^~/",
-
-      ...(isReactAppProfile && {
-        linkComponents: ["Hyperlink", { name: "Link", linkAttribute: "to" }],
-        react: {
-          version: "detect", // React version. "detect" automatically picks the version you have installed.
-        },
-      }),
     },
   };
 }

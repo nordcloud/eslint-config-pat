@@ -66,7 +66,7 @@ Important: Your **.eslintrc.js** `"extends"` field must load mixins after the pr
 
 #### `@nordcloud/eslint-config-pat/mixins/react`
 
-For projects using the [React](https://reactjs.org/) library, the `"@nordcloud/eslint-config-pat/mixins/react"` mixin
+For projects using the [React](https://reactjs.org/) library, the `@nordcloud/eslint-config-pat/mixins/react` mixin
 enables some recommended additional rules. These rules are selected via a mixin because they require you to:
 
 - Add `"jsx": "react"` to your **tsconfig.json**
@@ -100,7 +100,7 @@ module.exports = {
 
 ### 4. Prettier
 
-The `"@nordcloud/eslint-config-pat"` ruleset is intended to be used with the Prettier code formatter. For general
+The `@nordcloud/eslint-config-pat` ruleset is intended to be used with the Prettier code formatter. For general
 instructions on setting that up, please refer to the [Prettier docs](https://prettier.io/docs/en/index.html).
 
 ```sh

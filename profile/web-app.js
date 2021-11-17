@@ -9,5 +9,5 @@
 
 const { buildRules } = require("./_common");
 
-const rules = buildRules("react-app");
+const rules = buildRules("web-app");
 module.exports = rules;
