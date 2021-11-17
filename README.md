@@ -58,9 +58,6 @@ module.exports = {
 };
 ```
 
-The `"@nordcloud/eslint-config-pat` ruleset is intended to be used with the Prettier code formatter. For general
-instructions on setting that up, please refer to the [Prettier docs](https://prettier.io/docs/en/index.html).
-
 ### 3. Add any relevant mixins
 
 Optionally, you can add some "mixins" to your `extends` array to opt-in to some extra behaviors.
@@ -97,6 +94,49 @@ module.exports = {
     react: {
       version: "16.9", // <----
     },
+  },
+};
+```
+
+### 4. Prettier
+
+The `"@nordcloud/eslint-config-pat"` ruleset is intended to be used with the Prettier code formatter. For general
+instructions on setting that up, please refer to the [Prettier docs](https://prettier.io/docs/en/index.html).
+
+```sh
+cd your-project-folder
+npm install -D prettier
+```
+
+Add the prettier config file in the root directory:
+
+**prettier.config.js**
+
+```ts
+module.exports = {
+  ...require("@nordcloud/eslint-config-pat/prettier.config.js"),
+  // Your overrides
+};
+```
+
+### 5. Stylelint
+
+It's possible to use common [Stylelint](https://stylelint.io/) config from this package, you must setup stylelint first:
+
+```sh
+cd your-project-folder
+npm install -D stylelint stylelint-config-recommended stylelint-config-styled-components stylelint-processor-styled-components
+```
+
+Add the stylelint config file in the root directory:
+
+**stylelint.config.js**
+
+```ts
+module.exports = {
+  extends: "@nordcloud/eslint-config-pat/stylelint.config.js",
+  rules: {
+    // Your overrides
   },
 };
 ```
