@@ -1,11 +1,11 @@
 // This mixin applies some additional checks for projects using the React library.  For more information,
 // please see the README.md for "@nordcloud/eslint-config-pat".
 module.exports = {
-  extends: [
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended",
-  ],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
 
   settings: {
     // Link component used by React Router and Next.js
@@ -22,6 +22,12 @@ module.exports = {
     {
       // Declare an override that applies to TypeScript files only
       files: ["*.ts", "*.tsx"],
+
+      extends: [
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:jsx-a11y/recommended",
+      ],
 
       rules: {
         "fp/no-mutation": [
@@ -95,6 +101,7 @@ module.exports = {
         // eslint-plugin-react-hooks
         "react-hooks/exhaustive-deps": "warn",
         "react-hooks/rules-of-hooks": "error",
+
         // eslint-plugin-react
         "react/jsx-no-useless-fragment": "off",
         "react/prop-types": "off",
@@ -126,20 +133,17 @@ module.exports = {
         "*.spec.ts",
         "*.spec.tsx",
 
-        // Nordcloud convention
-        "**/__mockups__/*.ts",
-        "**/__mockups__/*.tsx",
+        // Facebook convention
+        "**/__mocks__/*.ts",
+        "**/__mocks__/*.tsx",
         "**/__tests__/*.ts",
         "**/__tests__/*.tsx",
       ],
-      extends: [
-        "plugin:jest/all",
-        "plugin:jest-dom/recommended",
-        "plugin:testing-library/react",
-      ],
+      extends: ["plugin:jest-dom/recommended", "plugin:testing-library/react"],
       rules: {
         // eslint-plugin-jest-dom
         "jest-dom/prefer-in-document": "off",
+
         // eslint-plugin-testing-library
         "testing-library/prefer-screen-queries": "warn",
 

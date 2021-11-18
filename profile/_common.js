@@ -38,18 +38,6 @@ function buildRules(profile) {
     // Disable the parser by default
     parser: "",
 
-    extends: [
-      "plugin:sonarjs/recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:promise/recommended",
-      "plugin:fp/recommended",
-      "plugin:import/errors",
-      "plugin:import/warnings",
-      "plugin:import/typescript",
-      "prettier",
-    ],
-
     plugins: ["fp"],
 
     // Manually authored .d.ts files are generally used to describe external APIs that are  not expected
@@ -81,6 +69,18 @@ function buildRules(profile) {
 
           sourceType: "module",
         },
+
+        extends: [
+          "plugin:sonarjs/recommended",
+          "plugin:@typescript-eslint/eslint-recommended",
+          "plugin:@typescript-eslint/recommended",
+          "plugin:promise/recommended",
+          "plugin:fp/recommended",
+          "plugin:import/errors",
+          "plugin:import/warnings",
+          "plugin:import/typescript",
+          "prettier",
+        ],
 
         rules: {
           // general
@@ -271,9 +271,9 @@ function buildRules(profile) {
           "*.spec.ts",
           "*.spec.tsx",
 
-          // Nordcloud convention
-          "**/__mockups__/*.ts",
-          "**/__mockups__/*.tsx",
+          // Facebook convention
+          "**/__mocks__/*.ts",
+          "**/__mocks__/*.tsx",
           "**/__tests__/*.ts",
           "**/__tests__/*.tsx",
         ],

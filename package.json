@@ -16,7 +16,10 @@
   "files": [
     "index.js",
     "prettier.config.js",
-    "stylelint.config.js"
+    "stylelint.config.js",
+    "mixins/*.js",
+    "patch/*.js",
+    "profile/*.js"
   ],
   "keywords": [
     "eslint",
@@ -26,8 +29,8 @@
     "styleguide"
   ],
   "engines": {
-    "node": ">=16",
-    "npm": ">=8"
+    "node": ">=14.15.5",
+    "npm": ">=7"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -52,14 +55,14 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jest": "^25.2.4",
+    "eslint-plugin-jest": "^24.3.4",
     "eslint-plugin-jest-dom": "^3.9.2",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-promise": "^5.1.1",
     "eslint-plugin-react": "^7.27.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-sonarjs": "^0.10.0",
-    "eslint-plugin-testing-library": "^5.0.0"
+    "eslint-plugin-testing-library": "^3.10.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
