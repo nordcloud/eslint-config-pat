@@ -1,0 +1,72 @@
+{
+  "name": "@nordcloud/eslint-config-pat",
+  "version": "1.0.0",
+  "description": "Shareable ESLint config for PAT projects",
+  "author": "Nordcloud Engineering",
+  "license": "MIT",
+  "homepage": "https://github.com/nordcloud/eslint-config-pat#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nordcloud/eslint-config-pat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nordcloud/eslint-config-pat/issues"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "prettier.config.js",
+    "stylelint.config.js",
+    "mixins/*.js",
+    "patch/*.js",
+    "profile/*.js"
+  ],
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "react",
+    "typescript",
+    "styleguide"
+  ],
+  "engines": {
+    "node": ">=14.15.5",
+    "npm": ">=7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "eslint": ">=7.0.0",
+    "prettier": ">=2.3.0",
+    "typescript": ">=4.2.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    },
+    "prettier": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^24.3.4",
+    "eslint-plugin-jest-dom": "^3.9.2",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-promise": "^5.1.1",
+    "eslint-plugin-react": "^7.27.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-sonarjs": "^0.10.0",
+    "eslint-plugin-testing-library": "^3.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "prettier": "^2.4.1",
+    "typescript": "^4.2.2"
+  }
+}
