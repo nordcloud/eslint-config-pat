@@ -20,7 +20,7 @@ A TypeScript ESLint ruleset designed for Nordcloud's Platform & Tools
 
 Applying the ruleset to your project is quick and easy. You install the package, then create an **.eslintrc.js** file
 and select an appropriate project profile. Optionally you can also add some "mixins" to enable additional rules.
-Let's walk through those three steps in more detail.
+Let's walk through those steps in more detail.
 
 ### 1. Install the package
 
@@ -33,7 +33,7 @@ npm install -D eslint typescript prettier @nordcloud/eslint-config-pat
 
 ### 2. Choose one profile
 
-The ruleset currently supports three different "profile" strings, which select lint rules applicable for
+The ruleset currently supports two different "profile" strings, which select lint rules applicable for
 your project:
 
 - `@nordcloud/eslint-config-pat/profile/node` - This profile enables lint rules intended for a general Node.js project,
