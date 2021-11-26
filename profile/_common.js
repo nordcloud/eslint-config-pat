@@ -49,7 +49,6 @@ function buildRules(profile) {
       es2020: true,
       browser: isWebAppProfile,
       node: true,
-      jest: true,
     },
 
     overrides: [
@@ -93,6 +92,8 @@ function buildRules(profile) {
           "require-await": "off",
           camelcase: "off", // @typescript-eslint/naming-convention is used
           curly: "warn",
+          "no-unused-expressions": ["warn", { allowShortCircuit: true }],
+          "no-extra-boolean-cast": "error",
           "nonblock-statement-body-position": ["error", "beside"],
           "no-nested-ternary": "error",
           complexity: ["error", 15],
@@ -102,8 +103,6 @@ function buildRules(profile) {
           // eslint-plugin-promise
           "promise/catch-or-return": "off",
           "promise/always-return": "error",
-          "no-unused-expressions": ["warn", { allowShortCircuit: true }],
-          "no-extra-boolean-cast": "error",
 
           // eslint-plugin-fp
           "fp/no-unused-expression": "off",
@@ -131,10 +130,8 @@ function buildRules(profile) {
           // eslint-plugin-import
           "import/no-extraneous-dependencies": "off",
           "import/no-relative-parent-imports": "off",
-
           // avoid false-positives for module bundlers resolution
           "import/no-unresolved": "off",
-
           "import/no-internal-modules": ["off"],
           "import/order": [
             "error",
@@ -258,61 +255,6 @@ function buildRules(profile) {
             { varsIgnorePattern: "[iI]gnored", argsIgnorePattern: "^_" },
           ],
           "@typescript-eslint/no-shadow": "error",
-          "fp/no-loops": "warn",
-        },
-      },
-      {
-        // For unit tests, we can be a little bit less strict.  The settings below revise the
-        // defaults specified above.
-        files: [
-          // Test files
-          "*.test.ts",
-          "*.test.tsx",
-          "*.spec.ts",
-          "*.spec.tsx",
-
-          // Facebook convention
-          "**/__mocks__/*.ts",
-          "**/__mocks__/*.tsx",
-          "**/__tests__/*.ts",
-          "**/__tests__/*.tsx",
-        ],
-        extends: ["plugin:jest/all"],
-        rules: {
-          // Unit tests sometimes use a standalone statement like "new Thing(123);" to test a constructor.
-          "no-new": "off",
-
-          // Jest's mocking API is designed in a way that produces compositional data types that often have
-          // no concise description.  Since test code does not ship, and typically does not introduce new
-          // concepts or algorithms, the usual arguments for prioritizing readability over writability can be
-          // relaxed in this case.
-          "@typescript-eslint/typedef": [
-            "warn",
-            {
-              arrayDestructuring: false,
-              arrowParameter: false,
-              memberVariableDeclaration: true,
-              objectDestructuring: false,
-              parameter: true,
-              propertyDeclaration: true,
-              variableDeclaration: false, // <--- special case for test files
-              variableDeclarationIgnoreFunction: true,
-            },
-          ],
-
-          // eslint-plugin-jest
-          "jest/no-hooks": "off",
-          "jest/require-top-level-describe": "off",
-          "jest/prefer-expect-assertions": "off",
-          "jest/expect-expect": "off",
-          "jest/no-mocks-import": "off",
-          "jest/prefer-expect-resolves": "off",
-          "jest/prefer-called-with": "off",
-          "jest/no-identical-title": "warn",
-          "jest/valid-expect-in-promise": "warn",
-          "jest/no-disabled-tests": "error",
-          "jest/require-to-throw-message": "error",
-          "jest/no-commented-out-tests": "error",
         },
       },
     ],
