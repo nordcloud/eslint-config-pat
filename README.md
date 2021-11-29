@@ -16,7 +16,7 @@ A TypeScript ESLint ruleset designed for Nordcloud's Platform & Tools
 - **Minimal configuration:** To use this ruleset, your **.eslintrc.js** will need to choose one **"profile"**
   and possibly one or two **"mixins"** that cover special cases
 
-## Getting started in 3 steps
+## Getting started
 
 Applying the ruleset to your project is quick and easy. You install the package, then create an **.eslintrc.js** file
 and select an appropriate project profile. Optionally you can also add some "mixins" to enable additional rules.
@@ -92,9 +92,59 @@ module.exports = {
 
   settings: {
     react: {
-      version: "16.13.0", // <----
+      version: "16.13.0", // <---- Your React version
     },
   },
+};
+```
+
+#### `@nordcloud/eslint-config-pat/mixins/jest`
+
+For projects using the [Jest](https://jestjs.io/) library, the `@nordcloud/eslint-config-pat/mixins/jest` mixin
+enables some recommended rules. In order to apply it:
+
+- Configure your `settings.env` as shown below.
+
+Add the mixin to your `"extends"` field like this:
+
+**.eslintrc.js**
+
+```ts
+// This is a workaround for https://github.com/eslint/eslint/issues/3458
+require("@nordcloud/eslint-config-pat/patch/modern-module-resolution");
+
+module.exports = {
+  extends: [
+    "@nordcloud/eslint-config-pat/mixins/jest", // <----
+  ],
+  parserOptions: { tsconfigRootDir: __dirname },
+
+  settings: {
+    jest: {
+      version: "27", // <---- Your Jest version
+    },
+  },
+};
+```
+
+#### `@nordcloud/eslint-config-pat/mixins/cypress`
+
+If you are using [Cypress](https://www.cypress.io/) testing framework, the `@nordcloud/eslint-config-pat/mixins/cypress` mixin
+enables some specific rules.
+
+Add the mixin to your `"extends"` field like this:
+
+**.eslintrc.js**
+
+```ts
+// This is a workaround for https://github.com/eslint/eslint/issues/3458
+require("@nordcloud/eslint-config-pat/patch/modern-module-resolution");
+
+module.exports = {
+  extends: [
+    "@nordcloud/eslint-config-pat/mixins/cypress", // <----
+  ],
+  parserOptions: { tsconfigRootDir: __dirname },
 };
 ```
 
