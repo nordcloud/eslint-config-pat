@@ -231,7 +231,7 @@ function buildRules(profile) {
             },
             {
               selector: ["objectLiteralProperty", "objectLiteralMethod"],
-              format: ["camelCase", "PascalCase", "snake_case"],
+              format: ["camelCase", "PascalCase", "snake_case", "UPPER_CASE"],
               leadingUnderscore: "allowDouble",
             },
             {
