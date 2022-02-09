@@ -1,6 +1,6 @@
 {
   "name": "@nordcloud/eslint-config-pat",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Shareable ESLint config for PAT projects",
   "author": "Nordcloud Engineering",
   "license": "MIT",
@@ -57,7 +57,7 @@
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^24.3.4",
-    "eslint-plugin-jest-dom": "^3.9.2",
+    "eslint-plugin-jest-dom": "^4.0.1",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-promise": "^5.1.1",
     "eslint-plugin-react": "^7.27.0",
