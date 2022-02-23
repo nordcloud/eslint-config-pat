@@ -1,6 +1,6 @@
 {
   "name": "@nordcloud/eslint-config-pat",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Shareable ESLint config for PAT projects",
   "author": "Nordcloud Engineering",
   "license": "MIT",
