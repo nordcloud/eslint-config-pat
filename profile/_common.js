@@ -252,7 +252,7 @@ function buildRules(profile) {
           "@typescript-eslint/consistent-type-definitions": ["error", "type"],
           "@typescript-eslint/no-unused-vars": [
             "error",
-            { varsIgnorePattern: "[iI]gnored", argsIgnorePattern: "^_" },
+            { varsIgnorePattern: "[iI]gnored|_", argsIgnorePattern: "^_" },
           ],
           "@typescript-eslint/no-shadow": "error",
         },
