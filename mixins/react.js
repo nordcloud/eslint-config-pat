@@ -30,18 +30,6 @@ module.exports = {
       ],
 
       rules: {
-        "fp/no-mutation": [
-          "warn",
-          {
-            commonjs: true,
-            exceptions: [
-              { object: "window", property: "location" },
-              // Usage with React refs
-              { property: "current" },
-            ],
-          },
-        ],
-
         // avoid false-positives for module bundlers resolution
         "import/no-unresolved": "off",
 
@@ -146,10 +134,6 @@ module.exports = {
 
         // eslint-plugin-testing-library
         "testing-library/prefer-screen-queries": "warn",
-
-        // eslint-plugin-fp
-        // for...of loops are useful for awaiting multiple testing library queries
-        "fp/no-loops": "off",
       },
     },
   ],
