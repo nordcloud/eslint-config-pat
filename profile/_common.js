@@ -38,8 +38,6 @@ function buildRules(profile) {
     // Disable the parser by default
     parser: "",
 
-    plugins: ["fp"],
-
     // Manually authored .d.ts files are generally used to describe external APIs that are  not expected
     // to follow our coding conventions.  Linting those files tends to produce a lot of spurious suppressions,
     // so we simply ignore them.
@@ -74,7 +72,6 @@ function buildRules(profile) {
           "plugin:@typescript-eslint/eslint-recommended",
           "plugin:@typescript-eslint/recommended",
           "plugin:promise/recommended",
-          "plugin:fp/recommended",
           "plugin:import/errors",
           "plugin:import/warnings",
           "plugin:import/typescript",
@@ -103,29 +100,6 @@ function buildRules(profile) {
           // eslint-plugin-promise
           "promise/catch-or-return": "off",
           "promise/always-return": "error",
-
-          // eslint-plugin-fp
-          "fp/no-unused-expression": "off",
-          "fp/no-rest-parameters": "off",
-          "fp/no-nil": "off",
-          "fp/no-throw": "off",
-          "fp/no-loops": "warn",
-          "fp/no-let": "warn",
-          "fp/no-mutating-methods": [
-            "warn",
-            {
-              ...(isWebAppProfile && { allowedObjects: ["history"] }),
-            },
-          ],
-          "fp/no-mutation": [
-            "warn",
-            {
-              commonjs: true,
-              exceptions: isWebAppProfile
-                ? [{ object: "window", property: "location" }]
-                : [],
-            },
-          ],
 
           // eslint-plugin-import
           "import/no-extraneous-dependencies": "off",

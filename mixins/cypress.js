@@ -13,7 +13,6 @@ module.exports = {
         "promise/catch-or-return": "off",
         "promise/no-nesting": "off",
         "promise/always-return": "off",
-        "fp/no-loops": "off",
       },
     },
   ],
