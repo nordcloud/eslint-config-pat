@@ -1,3 +1,4 @@
+/** @type {import("@types/stylelint").Configuration} */
 module.exports = {
   processors: ["stylelint-processor-styled-components"],
   extends: [
