@@ -22,6 +22,9 @@ const macros = require("./_macros");
 // - An issue that catches code that is likely to malfunction (e.g. unterminated promise chain)
 // - An obsolete language feature that nobody should be using for any good reason
 
+/**
+ * @returns {import("@types/eslint").Linter.BaseConfig}
+ */
 function buildRules(profile) {
   const isWebAppProfile = profile === "web-app";
 

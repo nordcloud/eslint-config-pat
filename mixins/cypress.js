@@ -1,5 +1,7 @@
 // This mixin applies some additional checks for projects using Cypress framework.  For more information,
 // please see the README.md for "@nordcloud/eslint-config-pat".
+
+/** @type {import("@types/eslint").Linter.BaseConfig} */
 module.exports = {
   overrides: [
     {
