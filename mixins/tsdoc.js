@@ -7,7 +7,6 @@ module.exports = {
 
   overrides: [
     {
-      // Declare an override that applies to TypeScript files only
       files: ["*.ts", "*.tsx"],
 
       rules: {
