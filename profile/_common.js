@@ -47,7 +47,7 @@ function buildRules(profile) {
     ignorePatterns: ["*.d.ts"],
 
     env: {
-      es2020: true,
+      es2022: true,
       browser: isWebAppProfile,
       node: true,
     },
@@ -65,13 +65,14 @@ function buildRules(profile) {
           // Allow parsing of newer ECMAScript constructs used in TypeScript source code.  Although tsconfig.json
           // may allow only a small subset of ES2018 features, this liberal setting ensures that ESLint will correctly
           // parse whatever is encountered.
-          ecmaVersion: 2020,
+          ecmaVersion: "latest",
 
           sourceType: "module",
         },
 
         extends: [
           "plugin:sonarjs/recommended",
+          "plugin:unicorn/recommended",
           "plugin:@typescript-eslint/eslint-recommended",
           "plugin:@typescript-eslint/recommended",
           "plugin:promise/recommended",
