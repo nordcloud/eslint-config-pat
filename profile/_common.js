@@ -363,13 +363,178 @@ function buildRules(profile) {
           // ====================================================================================================
           // eslint-plugin-sonarjs
           // ====================================================================================================
-          "sonarjs/cognitive-complexity": "off",
-          "sonarjs/no-duplicate-string": "off",
-          "sonarjs/no-nested-template-literals": "warn",
-          "sonarjs/no-unused-collection": "warn",
+          /**
+           * Having all branches in a switch or if chain with the same implementation is an error.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-all-duplicated-branches.md
+           */
+          "sonarjs/no-all-duplicated-branches": "error",
+
+          /**
+           * When a collection is empty it makes no sense to access or iterate it.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-empty-collection.md
+           */
+          "sonarjs/no-empty-collection": "warn",
+
+          /**
+           * Remove additional overhead.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-extra-arguments.md
+           */
+          "sonarjs/no-extra-arguments": "warn",
+
+          /**
+           * Remove dead code, it could lead to unexpected behavior.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-identical-conditions.md
+           */
+          "sonarjs/no-identical-conditions": "error",
+
+          /**
+           * Using the same value on either side of a binary operator is almost always a mistake.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-identical-expressions.md
+           */
+          "sonarjs/no-identical-expressions": "error",
+
+          /**
+           * When the call to a function doesn’t have any side effects, there is no point of making the call if the results are ignored.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-ignored-return.md
+           */
+          "sonarjs/no-ignored-return": "error",
+
+          /**
+           * A loop with at most one iteration is equivalent to the use of an if statement to conditionally execute one piece of code.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-one-iteration-loop.md
+           */
+          "sonarjs/no-one-iteration-loop": "error",
+
+          /**
+           * If a function does not return anything, it makes no sense to use its output.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-use-of-empty-return-value.md
+           */
+          "sonarjs/no-use-of-empty-return-value": "error",
+
+          /**
+           * The use of operators pairs (=+, =- or =!) where the reversed, single operator was meant (+=, -= or !=) will compile and run, but not produce the expected results.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/non-existent-operator.md
+           */
+          "sonarjs/non-existent-operator": "error",
+
+          /**
+           * Cognitive Complexity is a measure of how hard the control flow of a function is to understand. Functions with high Cognitive Complexity will be difficult to maintain.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/cognitive-complexity.md
+           */
+          "sonarjs/cognitive-complexity": ["warn", 20],
+
+          /**
+           * The requirement for a final else statement is defensive programming. This is consistent with the requirement to have a final default clause in a switch statement.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/elseif-without-else.md
+           */
+          "sonarjs/elseif-without-else": "warn",
+
+          /**
+           * The requirement for a final else statement is defensive programming. This is consistent with the requirement to have a final default clause in a switch statement.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/max-switch-cases.md
+           */
+          "sonarjs/max-switch-cases": ["warn", 12],
+
+          /**
+           * Merging collapsible if statements increases the code's readability.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-collapsible-if.md
+           */
           "sonarjs/no-collapsible-if": "warn",
 
+          /**
+           * The size of a collection and the length of an array are always greater than or equal to zero. So testing that a size or length is greater than or equal to zero doesn't make sense,
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-collection-size-mischeck.md
+           */
+          "sonarjs/no-collection-size-mischeck": "warn",
+
+          /**
+           * Having two cases in a switch statement or two branches in an if chain with the same implementation is at best duplicate code, and at worst a coding error.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-duplicated-branches.md
+           */
+          "sonarjs/no-duplicated-branches": "warn",
+
+          /**
+           * If a boolean expression doesn’t change the evaluation of the condition, then it is entirely unnecessary, and can be removed.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-gratuitous-expressions.md
+           */
+          "sonarjs/no-gratuitous-expressions": "warn",
+
+          /**
+           * When two functions have the same implementation, either it was a mistake - something else was intended - or the duplication was intentional, but may be confusing to maintainers.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-identical-functions.md
+           */
+          "sonarjs/no-identical-functions": "error",
+
+          /**
+           * It is needlessly complex to invert the result of a boolean comparison. The opposite comparison should be made instead.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-inverted-boolean-check.md
+           */
+          "sonarjs/no-inverted-boolean-check": "error",
+
+          /**
+           * Nested switch structures are difficult to understand because you can easily confuse the cases of an inner switch as belonging to an outer statement.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-nested-switch.md
+           */
+          "sonarjs/no-nested-switch": "error",
+
+          /**
+           * Redundant Boolean literals should be removed from expressions to improve readability.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-boolean.md
+           */
+          "sonarjs/no-redundant-boolean": "error",
+
+          /**
+           * Reduce overhead and amount of code.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-redundant-jump.md
+           */
+          "sonarjs/no-redundant-jump": "error",
+
+          /**
+           * Code is clearest when each statement has its own line.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-same-line-conditional.md
+           */
+          "sonarjs/no-same-line-conditional": "error",
+
+          /**
+           * When a collection is populated but its contents are never used, then it is surely some kind of mistake.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-unused-collection.md
+           */
+          "sonarjs/no-unused-collection": "warn",
+
+          /**
+           * A catch clause that only rethrows the caught exception has the same effect as omitting the catch altogether.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/no-useless-catch.md
+           */
+          "sonarjs/no-useless-catch": "warn",
+
+          /**
+           * Declaring a variable only to immediately return or throw it is a bad practice.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/prefer-immediate-return.md
+           */
+          "sonarjs/prefer-immediate-return": "error",
+
+          /**
+           * Object literal syntax, which initializes an object's properties inside the object declaration is cleaner and clearer than the alternative:
+           * creating an empty object, and then giving it properties one by one.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/prefer-object-literal.md
+           */
+          "sonarjs/prefer-object-literal": "error",
+
+          /**
+           * Return of boolean literal statements wrapped into if-then-else flow should be simplified.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/prefer-single-boolean-return.md
+           */
+          "sonarjs/prefer-single-boolean-return": "error",
+
+          /**
+           * When only the condition expression is defined in a for loop, and the initialization and increment expressions are missing, a while loop should be used instead to increase readability.
+           * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/prefer-while.md
+           */
+          "sonarjs/prefer-while": "error",
+
+          // ====================================================================================================
           // @typescript-eslint/eslint-plugin
+          // ====================================================================================================
           "@typescript-eslint/no-use-before-define": "off",
           "@typescript-eslint/explicit-function-return-type": "off",
           "@typescript-eslint/explicit-module-boundary-types": "off",
