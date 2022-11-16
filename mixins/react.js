@@ -1,11 +1,19 @@
 // This mixin applies some additional checks for projects using the React library.  For more information,
 // please see the README.md for "@nordcloud/eslint-config-pat".
 
+const globals = require("globals");
+
 /** @type {import("@types/eslint").Linter.BaseConfig} */
 module.exports = {
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+  languageOptions: {
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+    globals: {
+      ...globals.serviceworker,
+      ...globals.browser,
     },
   },
 
@@ -25,14 +33,14 @@ module.exports = {
       // Declare an override that applies to TypeScript files only
       files: ["*.ts", "*.tsx"],
 
-      extends: ["plugin:react/recommended"],
-
-      plugins: ["react-hooks", "jsx-a11y"],
+      plugins: ["react-hooks", "jsx-a11y", "react", "import"],
 
       rules: {
+        // ====================================================================================================
+        // eslint-plugin-import
+        // ====================================================================================================
         // avoid false-positives for module bundlers resolution
         "import/no-unresolved": "off",
-
         "import/no-internal-modules": [
           "off",
           {
@@ -86,10 +94,159 @@ module.exports = {
           },
         ],
 
+        // ====================================================================================================
         // eslint-plugin-react
-        "react/jsx-no-useless-fragment": "off",
+        // ====================================================================================================
+        /**
+         * This name is used by React in debugging messages, it's easier to navigate cause of errors.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/display-name.md
+         */
+        "react/display-name": "error",
+
+        /**
+         * Enforce adding keys to elements inside lists.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-key.md
+         */
+        "react/jsx-key": "error",
+
+        /**
+         * This rule prevents comment strings (e.g. beginning with // or /*) from being accidentally injected as a text node in JSX statements.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-comment-textnodes.md
+         */
+        "react/jsx-no-comment-textnodes": "error",
+
+        /**
+         * Creating JSX elements with duplicate props can cause unexpected behavior in your application.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-duplicate-props.md
+         */
+        "react/jsx-no-duplicate-props": "error",
+
+        /**
+         * This rule aims to prevent user generated link hrefs and form actions from creating security vulnerabilities by requiring rel='noreferrer' for external link hrefs and form actions
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md
+         */
+        "react/jsx-no-target-blank": "error",
+
+        /**
+         * This rule helps locate potential ReferenceErrors resulting from misspellings or missing components.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-undef.md
+         */
+        "react/jsx-no-undef": "error",
+
+        /**
+         * JSX expands to a call to React.createElement, a file which includes React but only uses JSX should consider the React variable as used.
+         * Disabled since using JSX runtime is preferred
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-uses-react.md
+         */
+        "react/jsx-uses-react": "off",
+
+        /**
+         * When using JSX, <a /> expands to React.createElement("a"). Therefore the React variable must be in scope.
+         * Disabled since using JSX runtime is preferred
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md
+         */
+        "react/react-in-jsx-scope": "error",
+
+        /**
+         * Since 0.17.0 the eslint no-unused-vars rule does not detect variables used in JSX (see details). This rule will find variables used in JSX and mark them as used.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-uses-vars.md
+         */
+        "react/jsx-uses-vars": "error",
+
+        /**
+         * Children should always be actual children, not passed in as a prop.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-children-prop.md
+         */
+        "react/no-children-prop": "error",
+
+        /**
+         * This rule helps prevent problems caused by using children and the dangerouslySetInnerHTML prop at the same time.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-danger-with-children.md
+         */
+        "react/no-danger-with-children": "error",
+
+        /**
+         * Several methods are deprecated between React versions. This rule will warn you if you try to use a deprecated method.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-deprecated.md
+         */
+        "react/no-deprecated": "error",
+
+        /**
+         * NEVER mutate this.state directly.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-direct-mutation-state.md
+         */
+        "react/no-direct-mutation-state": "error",
+
+        /**
+         * Meta will eventually deprecate findDOMNode as it blocks certain improvements in React in the future.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-find-dom-node.md
+         */
+        "react/no-find-dom-node": "error",
+
+        /**
+         * isMounted is an anti-pattern, is not available when using ES6 classes, and it is on its way to being officially deprecated.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-is-mounted.md
+         */
+        "react/no-is-mounted": "error",
+
+        /**
+         * ReactDOM.render() currently returns a reference to the root ReactComponent instance. However, using this return value is legacy and should be avoided because future versions of React may render components asynchronously in some cases.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-render-return-value.md
+         */
+        "react/no-render-return-value": "error",
+
+        /**
+         * Prevent usage of deprecated api.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-string-refs.md
+         */
+        "react/no-string-refs": "error",
+
+        /**
+         * This rule prevents characters that you may have meant as JSX escape characters from being accidentally injected as a text node in JSX statements.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unescaped-entities.md
+         */
+        "react/no-unescaped-entities": "error",
+
+        /**
+         * In JSX most DOM properties and attributes should be camelCased to be consistent with standard JavaScript style.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unknown-property.md
+         */
+        "react/no-unknown-property": "error",
+
+        /**
+         * Certain legacy lifecycle methods are unsafe for use in async React applications and cause warnings in strict mode.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unsafe.md
+         */
+        "react/no-unsafe": "warn",
+
+        /**
+         * Disabled due to the usage of TypeScript.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unsafe.md
+         */
         "react/prop-types": "off",
+
+        /**
+         * When writing the render method in a component it is easy to forget to return the JSX content.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/require-render-return.md
+         */
+        "react/require-render-return": "error",
+
+        /**
+         * Disabled, sometimes it's required to make TypeScript happy.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md
+         */
+        "react/jsx-no-useless-fragment": "off",
+
+        /**
+         * This name is used by React in debugging messages.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/display-name.md
+         */
         "react/display-name": "off",
+
+        /**
+         * This rule is aimed to enforce consistent function types for function components.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/function-component-definition.md
+         */
         "react/function-component-definition": [
           "warn",
           {
@@ -97,9 +254,23 @@ module.exports = {
             unnamedComponents: "arrow-function",
           },
         ],
+
+        /**
+         * Enforces coding style that user-defined JSX components are defined and referenced in PascalCase.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md
+         */
         "react/jsx-pascal-case": ["error", { allowNamespace: true }],
+
+        /**
+         * Keep consistency in the code.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-boolean-value.md
+         */
         "react/jsx-boolean-value": ["error", "never"],
-        "react/jsx-key": "error",
+
+        /**
+         * Components without children can be self-closed to avoid unnecessary extra closing tag.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md
+         */
         "react/self-closing-comp": [
           "error",
           {
@@ -107,6 +278,157 @@ module.exports = {
             html: true,
           },
         ],
+
+        /**
+         * The default value of type attribute for button HTML element is "submit" which is often not the desired behavior and may lead to unexpected page reloads.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/button-has-type.md
+         */
+        "react/button-has-type": "warn",
+
+        /**
+         * Assure constant naming of state and state update function.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/hook-use-state.md
+         */
+        "react/hook-use-state": "warn",
+
+        /**
+         * Helps with maintaining consistency regarding the use of curly braces in JSX props and/or children as well as the use of unnecessary JSX expressions.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-curly-brace-presence.md
+         */
+        "react/jsx-curly-brace-presence": "error",
+
+        /**
+         * Keep code formatting consistent.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-closing-tag-location.md
+         */
+        "react/jsx-closing-tag-location": "error",
+
+        /**
+         * Keep code formatting consistent.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md
+         */
+        "react/jsx-closing-bracket-location": "error",
+
+        /**
+         * Keep code formatting consistent.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-curly-newline.md
+         */
+        "react/jsx-curly-newline": "error",
+
+        /**
+         * Keep code formatting consistent.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-curly-spacing.md
+         */
+        "react/jsx-curly-spacing": "error",
+
+        /**
+         * Keep code formatting consistent.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-equals-spacing.md
+         */
+        "react/jsx-equals-spacing": "error",
+
+        /**
+         * Keep code formatting consistent.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-one-expression-per-line.md
+         */
+        "react/jsx-one-expression-per-line": "error",
+
+        /**
+         * Keep file extensions consistent.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
+         */
+        "react/jsx-filename-extension": ["warn", { allow: "as-needed" }],
+
+        /**
+         * Keep naming consistent.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-handler-names.md
+         */
+        "react/jsx-handler-names": [
+          "warn",
+          {
+            eventHandlerPrefix: "handle",
+            eventHandlerPropPrefix: "on",
+            checkLocalVariables: true,
+            checkInlineFunction: true,
+          },
+        ],
+
+        /**
+         * Improve readability of JSX.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-max-depth.md
+         */
+        "react/jsx-max-depth": ["warn", { max: 6 }],
+
+        /**
+         * Warn about potential performance problem.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-constructed-context-values.md
+         */
+        "react/jsx-no-constructed-context-values": "warn",
+
+        /**
+         * Improve security.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-script-url.md
+         */
+        "react/jsx-no-script-url": "error",
+
+        /**
+         * Improve consistency and readability.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-sort-props.md
+         */
+        "jsx-sort-props": [
+          "warn",
+          {
+            callbacksLast: true,
+            shorthandFirst: true,
+            shorthandLast: false,
+            multiline: "last",
+            ignoreCase: true,
+            noSortAlphabetically: true,
+            reservedFirst: [
+              "key",
+              "ref",
+              "dangerouslySetInnerHTML",
+              "children",
+            ],
+            locale: "auto" | "any valid locale",
+          },
+        ],
+
+        /**
+         * It's a bad idea to use the array index since it doesn't uniquely identify your elements. In cases where the array is sorted or an element is added to the beginning of the array, the index will be changed even though the element representing that index may be the same. This results in unnecessary renders.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
+         */
+        "react/no-array-index-key": "warn",
+
+        /**
+         * Helps with minimizing confusion while reading code.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-invalid-html-attribute.md
+         */
+        "react/no-invalid-html-attribute": "error",
+
+        /**
+         * Namespaces in React elements, such as with svg:circle, are not supported in React.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-namespace.md
+         */
+        "react/no-namespace": "error",
+
+        /**
+         * Prevent potential unnecessary rerenders, and performance regressions.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-object-type-as-default-prop.md
+         */
+        "react/no-object-type-as-default-prop": "warn",
+
+        /**
+         *  Prevent errors caused by unfamiliarity with the differences between the two styles of components, or a missed reference when converting a class component to an SFC.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-this-in-sfc.md
+         */
+        "react/no-this-in-sfc": "error",
+
+        /**
+         * Prevent virtual DOM to do extra unnecessary work and possible bugs.
+         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unstable-nested-components.md
+         */
+        "react/no-unstable-nested-components": "warn",
 
         // ====================================================================================================
         // eslint-plugin-react-hooks
