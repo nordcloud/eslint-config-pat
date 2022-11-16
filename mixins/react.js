@@ -390,7 +390,7 @@ module.exports = {
               "dangerouslySetInnerHTML",
               "children",
             ],
-            locale: "auto" | "any valid locale",
+            locale: "en-US",
           },
         ],
 

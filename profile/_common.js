@@ -82,6 +82,8 @@ function buildRules(profile) {
           "prettier",
         ],
 
+        plugins: ["promise", "import"],
+
         rules: {
           // general
           "no-shadow": "off", // @typescript-eslint/no-shadow is used
@@ -101,16 +103,231 @@ function buildRules(profile) {
           "max-params": ["error", 3],
           eqeqeq: ["error", "smart"],
 
+          // ====================================================================================================
           // eslint-plugin-promise
-          "promise/catch-or-return": "off",
-          "promise/always-return": "error",
+          // ====================================================================================================
 
+          /**
+           * Prevent errors.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/always-return.md
+           */
+          "promise/always-return": ["error", { ignoreLastCallback: true }],
+
+          /**
+           * Error handling is not needed every time.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/catch-or-return.md
+           */
+          "promise/catch-or-return": "off",
+
+          /**
+           * Callback may be unintentionally be invoked twice.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/no-callback-in-promise.md
+           */
+          "promise/no-callback-in-promise": "warn",
+
+          /**
+           * Improve readability.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/no-nesting.md
+           */
+          "promise/no-nesting": "warn",
+
+          /**
+           * Calling a Promise static method with new is invalid, resulting in a TypeError at runtime.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/no-new-statics.md
+           */
+          "promise/no-new-statics": "warn",
+
+          /**
+           * Prevent unexpected behavior.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/no-promise-in-callback.md
+           */
+          "promise/no-promise-in-callback": "warn",
+
+          /**
+           * Disallow return statements inside a callback passed to finally(), since nothing would consume what's returned.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/no-return-in-finally.md
+           */
+          "promise/no-return-in-finally": "warn",
+
+          /**
+           * Prevent errors.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/no-return-wrap.md
+           */
+          "promise/no-return-wrap": "warn",
+
+          /**
+           * Ensures that new Promise() is instantiated with the parameter names resolve, reject to avoid confusion with order such as reject, resolve.
+           * Using the same parameter names as the language specification makes code more uniform and easier to understand.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/param-names.md
+           */
+          "promise/param-names": "error",
+
+          /**
+           * Calling a Promise function with the incorrect number of arguments can lead to unexpected behavior or hard to spot bugs.
+           * @see https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/valid-params.md
+           */
+          "promise/valid-params": "warn",
+
+          // ====================================================================================================
           // eslint-plugin-import
-          "import/no-extraneous-dependencies": "off",
-          "import/no-relative-parent-imports": "off",
-          // avoid false-positives for module bundlers resolution
+          // ====================================================================================================
+          /**
+           * Reports mistakes with exports, like repeated exports of names or defaults.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/export.md
+           */
+          "import/export": "error",
+
+          /**
+           * Prevent using deprecated APIs.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-deprecated.md
+           */
+          "import/no-deprecated": "warn",
+
+          /**
+           * Prevent mistakes when writing imports.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md
+           */
+          "import/no-empty-named-blocks": "warn",
+
+          /**
+           * Forbids the use of mutable exports with var or let.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-mutable-exports.md
+           */
+          "import/no-mutable-exports": "error",
+
+          /**
+           * Forbids using an exported name as the name of the default export is misleading or a mistake.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-named-as-default.md
+           */
+          "import/no-named-as-default": "warn",
+
+          /**
+           * Accessing a property that has a name that is shared by an exported name from the same module is likely to be a mistake.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-named-as-default-member.md
+           */
+          "import/no-named-as-default-member": "warn",
+
+          /**
+           * If a default import is requested, this rule will report if there is no default export in the imported module.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/default.md
+           */
+          "import/default": "error",
+
+          /**
+           * Verifies that all named imports are part of the set of named exports in the referenced module.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/named.md
+           */
+          "import/named": "error",
+
+          /**
+           * Enforces names exist at the time they are dereferenced, when imported as a full namespace (i.e. import * as foo from './foo'; foo.bar(); will report if bar is not exported by ./foo.).
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/namespace.md
+           */
+          "import/namespace": "error",
+
+          /**
+           * Import of modules using an absolute path is a bad practice as it ties the code using it to your computer, and therefore makes it unusable in packages distributed on npm for instance.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-absolute-path.md
+           */
+          "import/no-absolute-path": "warn",
+
+          /**
+           * Ensures that there is no resolvable path back to this module via its dependencies, prevents circular dependencies that can cause issues.
+           * maxDepth: 1 is used to improve performance, additional tool should be used to detect circular dependencies globally (e.g. `madge`).
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-cycle.md
+           */
+          "import/no-cycle": ["error", { ignoreExternal: true, maxDepth: 1 }],
+
+          /**
+           * Using expressions (for instance, concatenating a path and variable) as the argument makes it harder for tools to do static code analysis, or to find where in the codebase a module is used.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-dynamic-require.md
+           */
+          "import/no-dynamic-require": "warn",
+
+          /**
+           * Forbid a module from importing itself. This can sometimes happen during refactoring.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-self-import.md
+           */
+          "import/no-self-import": "error",
+
+          /**
+           * Ensures an imported module can be resolved to a module on the local filesystem, as defined by standard Node require.resolve behavior.
+           * Disabled - avoid false-positives for module bundlers resolution
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-unresolved.md
+           */
           "import/no-unresolved": "off",
-          "import/no-internal-modules": ["off"],
+
+          /**
+           * Make import paths shorter and more readable.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-useless-path-segments.md
+           */
+          "import/no-useless-path-segments": [
+            "warn",
+            {
+              noUselessIndex: true,
+            },
+          ],
+
+          /**
+           * Forbid a module from importing itself. This can sometimes happen during refactoring.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-self-import.md
+           */
+          "import/no-self-import": "error",
+
+          /**
+           * Forbid a module from importing itself. This can sometimes happen during refactoring.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/consistent-type-specifier-style.md
+           */
+          "import/consistent-type-specifier-style": [
+            "error",
+            "prefer-top-level",
+          ],
+
+          /**
+           * Forbid modules with too many dependencies - this is considered a code smell, and usually indicates the module is doing too much and/or should be broken up into smaller modules.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/max-dependencies.md
+           */
+          "import/max-dependencies": [
+            "warn",
+            {
+              max: 10,
+              ignoreTypeImports: true,
+            },
+          ],
+
+          /**
+           * Enforces having one or more empty lines after the last top-level import statement or require call.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/newline-after-import.md#importnewline-after-import
+           */
+          "import/newline-after-import": "error",
+
+          /**
+           * Ensuring that default exports are named helps improve the grepability of the codebase by encouraging the re-use of the same identifier for the module's default export at its declaration site and at its import sites.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-anonymous-default-export.md
+           */
+          "import/no-anonymous-default-export": [
+            "error",
+            {
+              allowArray: false,
+              allowArrowFunction: false,
+              allowAnonymousClass: false,
+              allowAnonymousFunction: false,
+              allowCallExpression: true, // The true value here is for backward compatibility
+              allowLiteral: false,
+              allowObject: false,
+            },
+          ],
+
+          /**
+           * Reports if a resolved path is imported more than once.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-duplicates.md
+           */
+          "import/no-duplicates": "error",
+
+          /**
+           * Enforce a convention in the order of require() / import statements.
+           * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md
+           */
           "import/order": [
             "error",
             {
@@ -142,20 +359,10 @@ function buildRules(profile) {
               pathGroupsExcludedImportTypes: ["~/generated/**"],
             },
           ],
-          "import/no-anonymous-default-export": [
-            "error",
-            {
-              allowArray: false,
-              allowArrowFunction: false,
-              allowAnonymousClass: false,
-              allowAnonymousFunction: false,
-              allowCallExpression: true, // The true value here is for backward compatibility
-              allowLiteral: false,
-              allowObject: false,
-            },
-          ],
 
+          // ====================================================================================================
           // eslint-plugin-sonarjs
+          // ====================================================================================================
           "sonarjs/cognitive-complexity": "off",
           "sonarjs/no-duplicate-string": "off",
           "sonarjs/no-nested-template-literals": "warn",
