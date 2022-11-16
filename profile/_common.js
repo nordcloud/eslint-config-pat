@@ -22,6 +22,11 @@ const macros = require("./_macros");
 // - An issue that catches code that is likely to malfunction (e.g. unterminated promise chain)
 // - An obsolete language feature that nobody should be using for any good reason
 
+// Omit `.d.ts` because 1) TypeScript compilation already confirms that
+// types are resolved, and 2) it would mask an unresolved
+// `.ts`/`.tsx`/`.js`/`.jsx` implementation.
+const allExtensions = [".ts", ".tsx", ".js", ".jsx"];
+
 /**
  * @returns {import("@types/eslint").Linter.BaseConfig}
  */
@@ -71,18 +76,13 @@ function buildRules(profile) {
         },
 
         extends: [
-          "plugin:sonarjs/recommended",
           "plugin:unicorn/recommended",
           "plugin:@typescript-eslint/eslint-recommended",
           "plugin:@typescript-eslint/recommended",
-          "plugin:promise/recommended",
-          "plugin:import/errors",
-          "plugin:import/warnings",
-          "plugin:import/typescript",
           "prettier",
         ],
 
-        plugins: ["promise", "import"],
+        plugins: ["promise", "import", "sonarjs"],
 
         rules: {
           // general
@@ -214,10 +214,10 @@ function buildRules(profile) {
           "import/default": "error",
 
           /**
-           * Verifies that all named imports are part of the set of named exports in the referenced module.
+           * TypeScript compilation already ensures that named imports exist in the referenced module
            * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/named.md
            */
-          "import/named": "error",
+          "import/named": "off",
 
           /**
            * Enforces names exist at the time they are dereferenced, when imported as a full namespace (i.e. import * as foo from './foo'; foo.bar(); will report if bar is not exported by ./foo.).
@@ -609,9 +609,14 @@ function buildRules(profile) {
       },
     ],
     settings: {
+      "import/extensions": allExtensions,
+      "import/external-module-folders": ["node_modules", "node_modules/@types"],
+      "import/parsers": {
+        "@typescript-eslint/parser": [".ts", ".tsx"],
+      },
       "import/resolver": {
         node: {
-          extensions: [".js", ".ts", ".tsx"],
+          extensions: allExtensions,
         },
       },
       // Common aliased import pattern used in Nordcloud
