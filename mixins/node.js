@@ -12,6 +12,18 @@ module.exports = {
   plugins: ["node"],
 
   rules: {
+    // ====================================================================================================
+    // eslint
+    // ====================================================================================================
+    /**
+     * This rule aims to prevent a likely common performance hazard due to a lack of understanding of the semantics of async function.
+     * @see https://eslint.org/docs/latest/rules/no-return-await
+     */
+    "no-return-await": "error",
+
+    // ====================================================================================================
+    // eslint-plugin-node
+    // ====================================================================================================
     /**
      * Prevent assignment to `exports` variable, it would not work as expected.
      * @see https://github.com/mysticatea/eslint-plugin-node/blob/f45c6149be7235c0f7422d1179c25726afeecd83/docs/rules/no-exports-assign.md

@@ -65,7 +65,8 @@ function buildRules(profile) {
         parserOptions: {
           // The "project" path is resolved relative to parserOptions.tsconfigRootDir.
           // Your local .eslintrc.js must specify that parserOptions.tsconfigRootDir=__dirname.
-          project: "./tsconfig.json",
+          tsconfigRootDir: __dirname,
+          project: ["./tsconfig.json"],
 
           // Allow parsing of newer ECMAScript constructs used in TypeScript source code.  Although tsconfig.json
           // may allow only a small subset of ES2018 features, this liberal setting ensures that ESLint will correctly
@@ -76,31 +77,405 @@ function buildRules(profile) {
         },
 
         extends: [
+          "eslint:recommended",
           "plugin:@typescript-eslint/eslint-recommended",
           "plugin:@typescript-eslint/recommended",
+          "plugin:@typescript-eslint/recommended-requiring-type-checking",
           "prettier",
         ],
 
         plugins: ["promise", "import", "sonarjs", "unicorn"],
 
         rules: {
-          // general
-          "no-shadow": "off", // @typescript-eslint/no-shadow is used
-          "consistent-return": "off",
-          "prefer-const": "off",
-          "no-underscore-dangle": "off",
-          "no-prototype-builtins": "off",
-          "no-console": "off",
-          "require-await": "off",
-          camelcase: "off", // @typescript-eslint/naming-convention is used
+          // ====================================================================================================
+          // eslint
+          // ====================================================================================================
+          /**
+           * This rule is aimed at preventing bugs and increasing code clarity by ensuring that block statements are wrapped in curly braces.
+           * @see https://eslint.org/docs/latest/rules/curly
+           */
           curly: "warn",
+
+          /**
+           * An unused expression which has no effect on the state of the program indicates a logic error.
+           * @see https://eslint.org/docs/latest/rules/no-unused-expressions
+           */
           "no-unused-expressions": ["warn", { allowShortCircuit: true }],
-          "no-extra-boolean-cast": "error",
+
+          /**
+           * This rule aims to enforce a consistent location for single-line statements.
+           * @see https://eslint.org/docs/latest/rules/nonblock-statement-body-position
+           */
           "nonblock-statement-body-position": ["error", "beside"],
-          "no-nested-ternary": "error",
+
+          /**
+           * This rule is aimed at reducing code complexity by capping the amount of cyclomatic complexity allowed in a program.
+           * @see https://eslint.org/docs/latest/rules/complexity
+           */
           complexity: ["error", 15],
+
+          /**
+           * Functions that take numerous parameters can be difficult to read and write because it requires the memorization of what each parameter is, its type, and the order they should appear in.
+           * @see https://eslint.org/docs/latest/rules/max-params
+           */
           "max-params": ["error", 3],
+
+          /**
+           * It is considered good practice to use the type-safe equality operators === and !== instead of their regular counterparts == and !=.
+           * @see https://eslint.org/docs/latest/rules/eqeqeq
+           */
           eqeqeq: ["error", "smart"],
+
+          /**
+           * Array has several methods for filtering, mapping, and folding.
+           * If we forget to write return statement in a callback of those, it’s probably a mistake.
+           * @see https://eslint.org/docs/latest/rules/array-callback-return
+           */
+          "array-callback-return": "error",
+
+          /**
+           * Comparisons which will always evaluate to true or false and logical expressions (||, &&, ??) which either always short-circuit or never short-circuit are both likely indications of programmer error.
+           * @see https://eslint.org/docs/latest/rules/no-constant-binary-expression
+           */
+          "no-constant-binary-expression": "warn",
+
+          /**
+           * Using a single import statement per module will make the code clearer because you can see everything being imported from that module on one line.
+           * @see https://eslint.org/docs/latest/rules/no-duplicate-imports
+           */
+          "no-duplicate-imports": "error",
+
+          /**
+           * Comparing a variable against itself is usually an error, either a typo or refactoring error.
+           * It is confusing to the reader and may potentially introduce a runtime error.
+           * @see https://eslint.org/docs/latest/rules/no-self-compare
+           */
+          "no-self-compare": "error",
+
+          /**
+           * Disallow the use of variables before they are defined, hoisting can be confusing.
+           * @see https://eslint.org/docs/latest/rules/no-use-before-define
+           */
+          "no-use-before-define": "warn",
+
+          /**
+           * Consistent style of writing comments can improve a project’s maintainability.
+           * @see https://eslint.org/docs/latest/rules/capitalized-comments
+           */
+          "capitalized-comments": "warn",
+
+          /**
+           * It’s better to always explicitly state what the default behavior should be so that it’s clear whether or not the developer forgot to include the default behavior by mistake.
+           * @see https://eslint.org/docs/latest/rules/default-case
+           */
+          "default-case": "error",
+
+          /**
+           * If a switch statement should have a default clause, it’s considered a best practice to define it as the last clause.
+           * @see https://eslint.org/docs/latest/rules/default-case-last
+           */
+          "default-case-last": "error",
+
+          /**
+           * Putting default parameter at last allows function calls to omit optional tail arguments.
+           * @see https://eslint.org/docs/latest/rules/default-param-last
+           */
+          "default-param-last": "error",
+
+          /**
+           * The dot notation is often preferred because it is easier to read, less verbose, and works better with aggressive JavaScript minimizers.
+           * @see https://eslint.org/docs/latest/rules/dot-notation
+           */
+          "dot-notation": "warn",
+
+          /**
+           * Looping over objects with a for in loop will include properties that are inherited through the prototype chain.
+           * This behavior can lead to unexpected items in your for loop.
+           * @see https://eslint.org/docs/latest/rules/guard-for-in
+           */
+          "guard-for-in": "warn",
+
+          /**
+           * This rule is aimed at enforcing or eliminating variable initializations during declaration.
+           * @see https://eslint.org/docs/latest/rules/init-declarations
+           */
+          "init-declarations": ["error", "always"],
+
+          /**
+           * This rule is aimed at enforcing or eliminating variable initializations during declaration.
+           * @see https://eslint.org/docs/latest/rules/init-declarations
+           */
+          "init-declarations": ["warn", "always"],
+
+          /**
+           * Large files tend to do a lot of things and can make it hard following what’s going.
+           * @see https://eslint.org/docs/latest/rules/max-lines
+           */
+          "max-lines": ["warn", 350],
+
+          /**
+           * Large functions tend to do a lot of things and can make it hard following what’s going on.
+           * @see https://eslint.org/docs/latest/rules/max-lines-per-function
+           */
+          "max-lines-per-function": ["warn", 150],
+
+          /**
+           * Prevent introducing code that's difficult to read if blocks are nested beyond a certain depth.
+           * @see https://eslint.org/docs/latest/rules/max-depth
+           */
+          "max-depth": ["error", 5],
+
+          /**
+           * Prevent introducing code that's difficult to read if blocks are nested beyond a certain depth.
+           * @see https://eslint.org/docs/latest/rules/max-nested-callbacks
+           */
+          "max-nested-callbacks": ["error", 5],
+
+          /**
+           * JavaScript’s alert, confirm, and prompt functions are widely considered to be obtrusive as UI elements and should be replaced by a more appropriate custom UI implementation.
+           * @see https://eslint.org/docs/latest/rules/no-alert
+           */
+          "no-alert": "error",
+
+          /**
+           * The use of arguments.caller and arguments.callee make several code optimizations impossible.
+           * @see https://eslint.org/docs/latest/rules/no-caller
+           */
+          "no-caller": "error",
+
+          /**
+           * Disallow arrow functions where they could be confused with comparisons.
+           * @see https://eslint.org/docs/latest/rules/no-confusing-arrow
+           */
+          "no-confusing-arrow": "error",
+
+          /**
+           * When `continue` is used incorrectly it makes code less testable, less readable and less maintainable.
+           * @see https://eslint.org/docs/latest/rules/no-continue
+           */
+          "no-continue": "error",
+
+          /**
+           * If an if block contains a return statement, the else block becomes unnecessary. Its contents can be placed outside of the block.
+           * @see https://eslint.org/docs/latest/rules/no-else-return
+           */
+          "no-else-return": "error",
+
+          /**
+           * Empty functions can reduce readability because readers need to guess whether it’s intentional or not.
+           * @see https://eslint.org/docs/latest/rules/no-empty-function
+           */
+          "no-empty-function": ["error", { allow: ["arrowFunctions"] }],
+
+          /**
+           * JavaScript’s eval() function is potentially dangerous and is often misused.
+           * @see https://eslint.org/docs/latest/rules/no-eval
+           */
+          "no-eval": "error",
+
+          /**
+           * Prevents security & performance problems.
+           * The best practice is to always use a function for the first argument of setTimeout() and setInterval() (and avoid execScript()).
+           * @see https://eslint.org/docs/latest/rules/no-implied-eval
+           */
+          "no-implied-eval": "error",
+
+          /**
+           * Disallows directly modifying the prototype of builtin objects.
+           * @see https://eslint.org/docs/latest/rules/no-extend-native
+           */
+          "no-extend-native": "error",
+
+          /**
+           * Although not a syntax error, format of floating decimals for numbers can make it difficult to distinguish between true decimal numbers and the dot operator.
+           * @see https://eslint.org/docs/latest/rules/no-floating-decimal
+           */
+          "no-floating-decimal": "error",
+
+          /**
+           * This rule is aimed to flag shorter notations for the type conversion, then suggest a more self-explanatory notation.
+           * @see https://eslint.org/docs/latest/rules/no-implicit-coercion
+           */
+          "no-implicit-coercion": ["warn", { allow: ["!!"] }],
+
+          /**
+           * While convenient in some cases, labels tend to be used only rarely and are frowned upon by some as a remedial form of flow control that is more error prone and harder to understand.
+           * @see https://eslint.org/docs/latest/rules/no-labels
+           */
+          "no-labels": "error",
+
+          /**
+           * If an if statement is the only statement in the else block, it is often clearer to use an else if form.
+           * @see https://eslint.org/docs/latest/rules/no-lonely-if
+           */
+          "no-lonely-if": "error",
+
+          /**
+           * Enclosing complex expressions by parentheses clarifies the developer’s intention, which makes the code more readable.
+           * @see https://eslint.org/docs/latest/rules/no-mixed-operators
+           */
+          "no-mixed-operators": "error",
+
+          /**
+           * Chaining the assignment of variables can lead to unexpected results and be difficult to read.
+           * @see https://eslint.org/docs/latest/rules/no-multi-assign
+           */
+          "no-multi-assign": "error",
+
+          /**
+           * Negated conditions are more difficult to understand. Code can be made more readable by inverting the condition instead.
+           * @see https://eslint.org/docs/latest/rules/no-negated-condition
+           */
+          "no-negated-condition": "warn",
+
+          /**
+           * As of the ECMAScript 5 specification, octal escape sequences in string literals are deprecated and should not be used.
+           * Unicode escape sequences should be used instead.
+           * @see https://eslint.org/docs/latest/rules/no-octal-escape
+           */
+          "no-octal-escape": "error",
+
+          /**
+           * Assignment to variables declared as function parameters can be misleading and lead to confusing behavior.
+           * Side effects on parameters can cause counter-intuitive execution flow and make errors difficult to track down.
+           * @see https://eslint.org/docs/latest/rules/no-param-reassign
+           */
+          "no-param-reassign": "error",
+
+          /**
+           * Because the unary ++ and -- operators are subject to automatic semicolon insertion, differences in whitespace can change semantics of source code.
+           * @see https://eslint.org/docs/latest/rules/no-plusplus
+           */
+          "no-plusplus": ["error", { allowForLoopAfterthoughts: true }],
+
+          /**
+           * __proto__ property has been deprecated as of ECMAScript 3.1 and shouldn’t be used in the code.
+           * @see https://eslint.org/docs/latest/rules/no-proto
+           */
+          "no-proto": "error",
+
+          /**
+           * It’s considered a best practice to not use assignment in return statements.
+           * @see https://eslint.org/docs/latest/rules/no-return-assign
+           */
+          "no-return-assign": "error",
+
+          /**
+           * Using javascript: URLs is considered by some as a form of eval.
+           * Code passed in javascript: URLs has to be parsed and evaluated by the browser in the same way that eval is processed.
+           * @see https://eslint.org/docs/latest/rules/no-script-url
+           */
+          "no-script-url": "error",
+
+          /**
+           * The comma operator includes multiple expressions where only one is expected.
+           * It frequently obscures side effects, and its use is often an accident.
+           * @see https://eslint.org/docs/latest/rules/no-sequences
+           */
+          "no-sequences": "error",
+
+          /**
+           * Avoid causing confusion while reading the code and problems with accessing outer-scoped variables.
+           * @see https://eslint.org/docs/latest/rules/no-shadow
+           */
+          "no-shadow": "error",
+
+          /**
+           * This rule is aimed at maintaining consistency when throwing exception by disallowing to throw literals and other expressions which cannot possibly be an Error object.
+           * @see https://eslint.org/docs/latest/rules/no-throw-literal
+           */
+          "no-throw-literal": "error",
+
+          /**
+           * It’s a common mistake in JavaScript to use a conditional expression to select between two Boolean values instead of using ! to convert the test to a Boolean.
+           * @see https://eslint.org/docs/latest/rules/no-unneeded-ternary
+           */
+          "no-unneeded-ternary": "error",
+
+          /**
+           * It’s unnecessary to use computed properties with literals.
+           * @see https://eslint.org/docs/latest/rules/no-useless-computed-key
+           */
+          "no-useless-computed-key": "error",
+
+          /**
+           * Disallow unnecessary concatenation of literals or template literals.
+           * @see https://eslint.org/docs/latest/rules/no-useless-concat
+           */
+          "no-useless-concat": "error",
+
+          /**
+           * Require let or const instead of var.
+           * @see https://eslint.org/docs/latest/rules/no-var
+           */
+          "no-var": "error",
+
+          /**
+           * ECMAScript 6 provides a concise form for defining object literal methods and properties.
+           * This syntax can make defining complex object literals much cleaner.
+           * @see https://eslint.org/docs/latest/rules/object-shorthand
+           */
+          "object-shorthand": ["error", "consistent-as-needed"],
+
+          /**
+           * Arrow functions can be an attractive alternative to function expressions for callbacks or function arguments.
+           * @see https://eslint.org/docs/latest/rules/prefer-arrow-callback
+           */
+          "prefer-arrow-callback": "error",
+
+          /**
+           * If a variable is never reassigned, using the const declaration is better.
+           * @see https://eslint.org/docs/latest/rules/prefer-const
+           */
+          "prefer-const": "error",
+
+          /**
+           * Introduced in ES2022, Object.hasOwn() is a shorter alternative to Object.prototype.hasOwnProperty.call().
+           * @see https://eslint.org/docs/latest/rules/prefer-object-has-own
+           */
+          "prefer-object-has-own": "warn",
+
+          /**
+           * It is considered good practice to only pass instances of the built-in Error object to the reject() function for user-defined errors in Promises.
+           * @see https://eslint.org/docs/latest/rules/prefer-promise-reject-errors
+           */
+          "prefer-promise-reject-errors": "error",
+
+          /**
+           * Require rest parameters instead of arguments, they are more convenient to use.
+           * @see https://eslint.org/docs/latest/rules/prefer-rest-params
+           */
+          "prefer-rest-params": "error",
+
+          /**
+           * Require spread operators instead of .apply().
+           * @see https://eslint.org/docs/latest/rules/prefer-spread
+           */
+          "prefer-spread": "error",
+
+          /**
+           * Always use the radix parameter to parseInt() to eliminate unintended consequences.
+           * @see https://eslint.org/docs/latest/rules/radix
+           */
+          radix: ["error", "as-needed"],
+
+          /**
+           * Asynchronous functions that don’t use await might not need to be asynchronous functions and could be the unintentional result of refactoring.
+           * @see https://eslint.org/docs/latest/rules/require-await
+           */
+          "require-await": "error",
+
+          /**
+           * Enforce consistent spacing after the `//` or `/*` in a comment.
+           * @see https://eslint.org/docs/latest/rules/spaced-comment
+           */
+          "spaced-comment": "error",
+
+          /**
+           * This rule aims to enforce consistent style of conditions which compare a variable to a literal value.
+           * @see https://eslint.org/docs/latest/rules/yoda
+           */
+          yoda: "error",
 
           // ====================================================================================================
           // eslint-plugin-unicorn
