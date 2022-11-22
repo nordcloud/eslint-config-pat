@@ -97,12 +97,6 @@ function buildRules(profile) {
           curly: "warn",
 
           /**
-           * An unused expression which has no effect on the state of the program indicates a logic error.
-           * @see https://eslint.org/docs/latest/rules/no-unused-expressions
-           */
-          "no-unused-expressions": ["warn", { allowShortCircuit: true }],
-
-          /**
            * This rule aims to enforce a consistent location for single-line statements.
            * @see https://eslint.org/docs/latest/rules/nonblock-statement-body-position
            */
@@ -153,12 +147,6 @@ function buildRules(profile) {
           "no-self-compare": "error",
 
           /**
-           * Disallow the use of variables before they are defined, hoisting can be confusing.
-           * @see https://eslint.org/docs/latest/rules/no-use-before-define
-           */
-          "no-use-before-define": "warn",
-
-          /**
            * Consistent style of writing comments can improve a project’s maintainability.
            * @see https://eslint.org/docs/latest/rules/capitalized-comments
            */
@@ -177,29 +165,11 @@ function buildRules(profile) {
           "default-case-last": "error",
 
           /**
-           * Putting default parameter at last allows function calls to omit optional tail arguments.
-           * @see https://eslint.org/docs/latest/rules/default-param-last
-           */
-          "default-param-last": "error",
-
-          /**
-           * The dot notation is often preferred because it is easier to read, less verbose, and works better with aggressive JavaScript minimizers.
-           * @see https://eslint.org/docs/latest/rules/dot-notation
-           */
-          "dot-notation": "warn",
-
-          /**
            * Looping over objects with a for in loop will include properties that are inherited through the prototype chain.
            * This behavior can lead to unexpected items in your for loop.
            * @see https://eslint.org/docs/latest/rules/guard-for-in
            */
           "guard-for-in": "warn",
-
-          /**
-           * This rule is aimed at enforcing or eliminating variable initializations during declaration.
-           * @see https://eslint.org/docs/latest/rules/init-declarations
-           */
-          "init-declarations": ["error", "always"],
 
           /**
            * This rule is aimed at enforcing or eliminating variable initializations during declaration.
@@ -260,12 +230,6 @@ function buildRules(profile) {
            * @see https://eslint.org/docs/latest/rules/no-else-return
            */
           "no-else-return": "error",
-
-          /**
-           * Empty functions can reduce readability because readers need to guess whether it’s intentional or not.
-           * @see https://eslint.org/docs/latest/rules/no-empty-function
-           */
-          "no-empty-function": ["error", { allow: ["arrowFunctions"] }],
 
           /**
            * JavaScript’s eval() function is potentially dangerous and is often misused.
@@ -375,18 +339,6 @@ function buildRules(profile) {
           "no-sequences": "error",
 
           /**
-           * Avoid causing confusion while reading the code and problems with accessing outer-scoped variables.
-           * @see https://eslint.org/docs/latest/rules/no-shadow
-           */
-          "no-shadow": "error",
-
-          /**
-           * This rule is aimed at maintaining consistency when throwing exception by disallowing to throw literals and other expressions which cannot possibly be an Error object.
-           * @see https://eslint.org/docs/latest/rules/no-throw-literal
-           */
-          "no-throw-literal": "error",
-
-          /**
            * It’s a common mistake in JavaScript to use a conditional expression to select between two Boolean values instead of using ! to convert the test to a Boolean.
            * @see https://eslint.org/docs/latest/rules/no-unneeded-ternary
            */
@@ -476,6 +428,386 @@ function buildRules(profile) {
            * @see https://eslint.org/docs/latest/rules/yoda
            */
           yoda: "error",
+
+          // ====================================================================================================
+          // typescript-eslint
+          // ====================================================================================================
+          /**
+           * Using the same style consistently across your codebase makes it easier for developers to read and understand array types.
+           * @see https://typescript-eslint.io/rules/array-type/
+           */
+          "@typescript-eslint/array-type": ["error", { default: "array" }],
+
+          /**
+           * This rule aims to standardize the use of type assertion style across the codebase. Keeping to one syntax consistently helps with code readability.
+           * @see https://typescript-eslint.io/rules/consistent-type-assertions/
+           */
+          "@typescript-eslint/consistent-type-assertions": [
+            "error",
+            { assertionStyle: "as", objectLiteralTypeAssertions: "allow" },
+          ],
+
+          /**
+           * Using the same type declaration style consistently helps with code readability.
+           * @see https://typescript-eslint.io/rules/consistent-type-definitions/
+           */
+          "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+
+          /**
+           * This allows transpilers to drop exports without knowing the types of the dependencies.
+           * @see https://typescript-eslint.io/rules/consistent-type-exports/
+           */
+          "@typescript-eslint/consistent-type-exports": [
+            "warn",
+            { fixMixedExportsWithInlineTypeSpecifier: true },
+          ],
+
+          /**
+           * A consistent ordering of fields, methods and constructors can make code easier to read, navigate, and edit.
+           * @see https://typescript-eslint.io/rules/member-ordering/
+           */
+          "@typescript-eslint/member-ordering": "warn",
+
+          /**
+           * A good practice is to use the TypeScript's strict option (which implies strictFunctionTypes) which enables correct typechecking for function properties only (method signatures get old behavior).
+           * @see https://typescript-eslint.io/rules/method-signature-style/
+           */
+          "@typescript-eslint/method-signature-style": ["error", "property"],
+
+          /**
+           * Enforcing naming conventions helps keep the codebase consistent, and reduces overhead when thinking about how to name a variable.
+           * @see https://typescript-eslint.io/rules/naming-convention/
+           */
+          "@typescript-eslint/naming-convention": [
+            "error",
+            {
+              selector: "default",
+              format: ["camelCase"],
+              filter: {
+                regex: "^(__typename|Component)$",
+                match: false,
+              },
+            },
+            {
+              selector: "variable",
+              format: ["camelCase", "UPPER_CASE", "PascalCase"],
+              filter: {
+                regex: "^(__typename)$",
+                match: false,
+              },
+            },
+            {
+              selector: "parameter",
+              format: ["camelCase", "PascalCase"],
+              leadingUnderscore: "allow",
+            },
+            {
+              selector: "memberLike",
+              modifiers: ["private"],
+              format: ["camelCase"],
+              leadingUnderscore: "require",
+            },
+            {
+              selector: "typeLike",
+              format: ["PascalCase"],
+            },
+            {
+              selector: ["function"],
+              format: ["camelCase", "PascalCase"],
+              leadingUnderscore: "forbid",
+            },
+            {
+              selector: ["objectLiteralProperty", "objectLiteralMethod"],
+              format: ["camelCase", "PascalCase", "snake_case", "UPPER_CASE"],
+              leadingUnderscore: "allowDouble",
+            },
+            {
+              selector: ["enumMember", "typeProperty"],
+              format: ["camelCase", "snake_case", "UPPER_CASE"],
+              leadingUnderscore: "allowDouble",
+              filter: {
+                regex: "^(Component)$",
+                match: false,
+              },
+            },
+            {
+              selector: "enum",
+              format: ["UPPER_CASE", "PascalCase"],
+            },
+          ],
+
+          /**
+           * This rule reports on stringified values that aren't primitives and don't define a more useful .toString() method.
+           * @see https://typescript-eslint.io/rules/no-base-to-string/
+           */
+          "@typescript-eslint/no-base-to-string": "error",
+
+          /**
+           * Using a non-null assertion (!) next to an assign or equals check (= or == or ===) creates code that is confusing as it looks similar to a not equals check (!= !==).
+           * @see https://typescript-eslint.io/rules/no-confusing-non-null-assertion/
+           */
+          "@typescript-eslint/no-confusing-non-null-assertion": "error",
+
+          /**
+           * Using a non-null assertion (!) next to an assign or equals check (= or == or ===) creates code that is confusing as it looks similar to a not equals check (!= !==).
+           * @see https://typescript-eslint.io/rules/no-confusing-non-null-assertion/
+           */
+          "@typescript-eslint/no-confusing-non-null-assertion": "error",
+
+          /**
+           * Although TypeScript supports duplicate enum member values, people usually expect members to have unique values within the same enum.
+           * Duplicate values can lead to bugs that are hard to track down.
+           * @see https://typescript-eslint.io/rules/no-duplicate-enum-values/
+           */
+          "@typescript-eslint/no-duplicate-enum-values": "warn",
+
+          /**
+           * Deleting dynamically computed keys can be dangerous and in some cases not well optimized.
+           * @see https://typescript-eslint.io/rules/no-dynamic-delete/
+           */
+          "@typescript-eslint/no-dynamic-delete": "warn",
+
+          /**
+           * Attempting to use a void type outside of a return type or generic type argument is often a sign of programmer error.
+           * @see https://typescript-eslint.io/rules/no-invalid-void-type/
+           */
+          "@typescript-eslint/no-invalid-void-type": "error",
+
+          /**
+           * This rule helps an authors catch API changes where previously a value was being discarded at a call site, but the callee changed so it no longer returns a value.
+           * Also Helps readers of the code by ensuring consistency.
+           * @see https://typescript-eslint.io/rules/no-meaningless-void-operator/
+           */
+          "@typescript-eslint/no-meaningless-void-operator": "error",
+
+          /**
+           * Using a ! non-null assertion type operator in the left operand of a nullish coalescing operator is redundant, and likely a sign of programmer error or confusion over the two operators.
+           * @see https://typescript-eslint.io/rules/no-non-null-asserted-nullish-coalescing/
+           */
+          "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
+
+          /**
+           * Some types can override some other types ("constituents") in a union or intersection and/or be overridden by some other types.
+           * @see https://typescript-eslint.io/rules/no-redundant-type-constituents/
+           */
+          "@typescript-eslint/no-redundant-type-constituents": "error",
+
+          /**
+           * Some types can override some other types ("constituents") in a union or intersection and/or be overridden by some other types.
+           * @see https://typescript-eslint.io/rules/no-redundant-type-constituents/
+           */
+          "@typescript-eslint/no-redundant-type-constituents": "error",
+
+          /**
+           * Conversely, any expression that always evaluates to truthy or always evaluates to falsy, as determined by the type of the expression, is considered unnecessary and will be flagged by this rule.
+           * @see https://typescript-eslint.io/rules/no-unnecessary-condition/
+           */
+          "@typescript-eslint/no-unnecessary-condition": "warn",
+
+          /**
+           * Conversely, any expression that always evaluates to truthy or always evaluates to falsy, as determined by the type of the expression, is considered unnecessary and will be flagged by this rule.
+           * @see https://typescript-eslint.io/rules/no-unnecessary-condition/
+           */
+          "@typescript-eslint/no-unnecessary-condition": "warn",
+
+          /**
+           * The qualifier is unnecessary: e.g. just member instead of Enum.member.
+           * @see https://typescript-eslint.io/rules/no-unnecessary-qualifier/
+           */
+          "@typescript-eslint/no-unnecessary-qualifier": "error",
+
+          /**
+           * It is redundant to provide an explicit type parameter equal to the default value.
+           * @see https://typescript-eslint.io/rules/no-unnecessary-type-arguments/
+           */
+          "@typescript-eslint/no-unnecessary-type-arguments": "error",
+
+          /**
+           * Remove useless exports.
+           * @see https://typescript-eslint.io/rules/no-useless-empty-export/
+           */
+          "@typescript-eslint/no-useless-empty-export": "warn",
+
+          /**
+           * Remove useless exports.
+           * @see https://typescript-eslint.io/rules/no-useless-empty-export/
+           */
+          "@typescript-eslint/no-useless-empty-export": "error",
+
+          /**
+           * Allowing implicit values for enums can cause bugs if enums are modified over time.
+           * @see https://typescript-eslint.io/rules/prefer-enum-initializers/
+           */
+          "@typescript-eslint/prefer-enum-initializers": "warn",
+
+          /**
+           * for-of loop is easier to read and write.
+           * @see https://typescript-eslint.io/rules/prefer-for-of/
+           */
+          "@typescript-eslint/prefer-for-of": "warn",
+
+          /**
+           * The function type form is generally preferred when possible for being more succinct.
+           * @see https://typescript-eslint.io/rules/prefer-function-type/
+           */
+          "@typescript-eslint/prefer-function-type": "error",
+
+          /**
+           * `includes` is easier to read and write than `indexOf` comparisons.
+           * @see https://typescript-eslint.io/rules/prefer-includes/
+           */
+          "@typescript-eslint/prefer-includes": "error",
+
+          /**
+           * Because enums create their own scope whereby each enum member becomes a variable in that scope, developers are often surprised at the resultant values.
+           * @see https://typescript-eslint.io/rules/prefer-literal-enum-member/
+           */
+          "@typescript-eslint/prefer-literal-enum-member": "error",
+
+          /**
+           * Because enums create their own scope whereby each enum member becomes a variable in that scope, developers are often surprised at the resultant values.
+           * @see https://typescript-eslint.io/rules/prefer-literal-enum-member/
+           */
+          "@typescript-eslint/prefer-literal-enum-member": "error",
+
+          /**
+           * Because the nullish coalescing operator only coalesces when the original value is null or undefined, it is much safer than relying upon logical OR operator chaining ||, which coalesces on any falsy value.
+           * @see https://typescript-eslint.io/rules/prefer-nullish-coalescing/
+           */
+          "@typescript-eslint/prefer-nullish-coalescing": "error",
+
+          /**
+           * It is much safer than relying upon logical AND operator chaining &&; which chains on any truthy value.
+           * It is also often less code to use ?. optional chaining than && truthiness checks.
+           * @see https://typescript-eslint.io/rules/prefer-optional-chain/
+           */
+          "@typescript-eslint/prefer-optional-chain": "error",
+
+          /**
+           * TypeScript doesn't have to try to infer the type, and avoids the common pitfalls that come with casting.
+           * @see https://typescript-eslint.io/rules/prefer-reduce-type-parameter/
+           */
+          "@typescript-eslint/prefer-reduce-type-parameter": "warn",
+
+          /**
+           * As of ES2015, the most common way in JavaScript is to use String#startsWith and String#endsWith.
+           * Keeping to those methods consistently helps with code readability.
+           * @see https://typescript-eslint.io/rules/prefer-string-starts-ends-with/
+           */
+          "@typescript-eslint/prefer-string-starts-ends-with": "error",
+
+          /**
+           * It's easy for @ts-ignores to be forgotten about, and remain in code even after the error they were suppressing is fixed.
+           * @see https://typescript-eslint.io/rules/prefer-ts-expect-error/
+           */
+          "@typescript-eslint/prefer-ts-expect-error": "error",
+
+          /**
+           * The result of .sort() is that elements are sorted alphabetically, regardless of their type. For example, when sorting numbers, this results in a "10 before 2" order:
+           * @see https://typescript-eslint.io/rules/require-array-sort-compare/
+           */
+          "@typescript-eslint/require-array-sort-compare": "error",
+
+          /**
+           * Sorting union (|) and intersection (&) types can help:
+             - keep your codebase standardized
+             - find repeated types
+             - reduce diff churn
+           * @see https://typescript-eslint.io/rules/sort-type-constituents/
+           */
+          "@typescript-eslint/sort-type-constituents": "warn",
+
+          /**
+           * If the union type changes, it's easy to forget to modify the switch cases to account for any new types.
+           * @see https://typescript-eslint.io/rules/switch-exhaustiveness-check/
+           */
+          "@typescript-eslint/switch-exhaustiveness-check": "warn",
+
+          /**
+           * If the union type changes, it's easy to forget to modify the switch cases to account for any new types.
+           * @see https://typescript-eslint.io/rules/switch-exhaustiveness-check/
+           */
+          "@typescript-eslint/switch-exhaustiveness-check": "warn",
+
+          /**
+           * Empty functions can reduce readability because readers need to guess whether it’s intentional or not.
+           * @see https://typescript-eslint.io/rules/no-empty-function/
+           */
+          "@typescript-eslint/no-empty-function": [
+            "error",
+            { allow: ["arrowFunctions"] },
+          ],
+          "no-empty-function": "off",
+
+          /**
+           * Variables that are declared and not used anywhere in the code are most likely an error due to incomplete refactoring.
+           * Such variables take up space in the code and can lead to confusion by readers.
+           * @see https://typescript-eslint.io/rules/no-unused-vars/
+           */
+          "@typescript-eslint/no-unused-vars": [
+            "error",
+            { varsIgnorePattern: "[iI]gnored|^_", argsIgnorePattern: "^_" },
+          ],
+          "no-unused-vars": "off",
+
+          /**
+           * Avoid causing confusion while reading the code and problems with accessing outer-scoped variables.
+           * @see https://typescript-eslint.io/rules/no-shadow/
+           */
+          "@typescript-eslint/no-shadow": "error",
+          "no-shadow": "off",
+
+          /**
+           * Putting default parameter at last allows function calls to omit optional tail arguments.
+           * @see https://typescript-eslint.io/rules/default-param-last/
+           */
+          "@typescript-eslint/default-param-last": "error",
+          "default-param-last": "off",
+
+          /**
+           * The dot notation is often preferred because it is easier to read, less verbose, and works better with aggressive JavaScript minimizers.
+           * @see https://typescript-eslint.io/rules/dot-notation/
+           */
+          "@typescript-eslint/dot-notation": "warn",
+          "dot-notation": "off",
+
+          /**
+           * This rule is aimed at enforcing or eliminating variable initializations during declaration.
+           * @see https://typescript-eslint.io/rules/init-declarations/
+           */
+          "@typescript-eslint/init-declarations": ["error", "always"],
+          "init-declarations": "off",
+
+          /**
+           * In JavaScript, it’s possible to redeclare the same variable name using var. This can lead to confusion as to where the variable is actually declared and initialized.
+           * @see https://typescript-eslint.io/rules/no-redeclare/
+           */
+          "@typescript-eslint/no-redeclare": "error",
+          "no-redeclare": "off",
+
+          /**
+           * This rule is aimed at maintaining consistency when throwing exception by disallowing to throw literals and other expressions which cannot possibly be an Error object.
+           * @see https://typescript-eslint.io/rules/no-throw-literal/
+           */
+          "@typescript-eslint/no-throw-literal": "error",
+          "no-throw-literal": "off",
+
+          /**
+           * An unused expression which has no effect on the state of the program indicates a logic error.
+           * @see https://typescript-eslint.io/rules/no-unused-expressions/
+           */
+          "@typescript-eslint/no-unused-expressions": [
+            "warn",
+            { allowShortCircuit: true },
+          ],
+          "no-unused-expressions": "off",
+
+          /**
+           * Disallow the use of variables before they are defined, hoisting can be confusing.
+           * @see https://typescript-eslint.io/rules/no-use-before-define/
+           */
+          "@typescript-eslint/no-use-before-define": "warn"
+          "no-use-before-define": "off",
 
           // ====================================================================================================
           // eslint-plugin-unicorn
@@ -1487,80 +1819,6 @@ function buildRules(profile) {
            * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/prefer-while.md
            */
           "sonarjs/prefer-while": "error",
-
-          // ====================================================================================================
-          // @typescript-eslint/eslint-plugin
-          // ====================================================================================================
-          "@typescript-eslint/no-use-before-define": "off",
-          "@typescript-eslint/explicit-function-return-type": "off",
-          "@typescript-eslint/explicit-module-boundary-types": "off",
-          "@typescript-eslint/interface-name-prefix": "off",
-          "@typescript-eslint/no-empty-function": "off",
-          "@typescript-eslint/no-explicit-any": "error",
-          "@typescript-eslint/naming-convention": [
-            "error",
-            {
-              selector: "default",
-              format: ["camelCase"],
-              filter: {
-                regex: "^(__typename|Component)$",
-                match: false,
-              },
-            },
-            {
-              selector: "variable",
-              format: ["camelCase", "UPPER_CASE", "PascalCase"],
-              filter: {
-                regex: "^(__typename)$",
-                match: false,
-              },
-            },
-            {
-              selector: "parameter",
-              format: ["camelCase", "PascalCase"],
-              leadingUnderscore: "allow",
-            },
-            {
-              selector: "memberLike",
-              modifiers: ["private"],
-              format: ["camelCase"],
-              leadingUnderscore: "require",
-            },
-            {
-              selector: "typeLike",
-              format: ["PascalCase"],
-            },
-            {
-              selector: ["function"],
-              format: ["camelCase", "PascalCase"],
-              leadingUnderscore: "forbid",
-            },
-            {
-              selector: ["objectLiteralProperty", "objectLiteralMethod"],
-              format: ["camelCase", "PascalCase", "snake_case", "UPPER_CASE"],
-              leadingUnderscore: "allowDouble",
-            },
-            {
-              selector: ["enumMember", "typeProperty"],
-              format: ["camelCase", "snake_case", "UPPER_CASE"],
-              leadingUnderscore: "allowDouble",
-              filter: {
-                regex: "^(Component)$",
-                match: false,
-              },
-            },
-            {
-              selector: "enum",
-              format: ["UPPER_CASE", "PascalCase"],
-            },
-          ],
-          "@typescript-eslint/no-non-null-assertion": "error",
-          "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-          "@typescript-eslint/no-unused-vars": [
-            "error",
-            { varsIgnorePattern: "[iI]gnored|^_", argsIgnorePattern: "^_" },
-          ],
-          "@typescript-eslint/no-shadow": "error",
         },
       },
     ],
