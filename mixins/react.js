@@ -346,7 +346,7 @@ module.exports = {
             eventHandlerPrefix: "handle",
             eventHandlerPropPrefix: "on",
             checkLocalVariables: true,
-            checkInlineFunction: true,
+            checkInlineFunction: false,
           },
         ],
 

@@ -183,13 +183,13 @@ function buildRules(profile) {
            * Large files tend to do a lot of things and can make it hard following what’s going.
            * @see https://eslint.org/docs/latest/rules/max-lines
            */
-          "max-lines": ["warn", 350],
+          "max-lines": ["warn", 400],
 
           /**
            * Large functions tend to do a lot of things and can make it hard following what’s going on.
            * @see https://eslint.org/docs/latest/rules/max-lines-per-function
            */
-          "max-lines-per-function": ["warn", 180],
+          "max-lines-per-function": ["warn", 200],
 
           /**
            * Prevent introducing code that's difficult to read if blocks are nested beyond a certain depth.
@@ -405,7 +405,7 @@ function buildRules(profile) {
            * Always use the radix parameter to parseInt() to eliminate unintended consequences.
            * @see https://eslint.org/docs/latest/rules/radix
            */
-          radix: ["error", "as-needed"],
+          radix: ["error", "always"],
 
           /**
            * Asynchronous functions that don’t use await might not need to be asynchronous functions and could be the unintentional result of refactoring.
@@ -1076,9 +1076,10 @@ function buildRules(profile) {
 
           /**
            * Simplify code, avoid unecessary noise.
+           * DISABLED - conflicts with TypeScript
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-undefined.md
            */
-          "unicorn/no-useless-undefined": "error",
+          "unicorn/no-useless-undefined": "off",
 
           /**
            * There is no difference in JavaScript between, for example, 1, 1.0 and 1., so prefer the former for consistency.
@@ -1338,17 +1339,25 @@ function buildRules(profile) {
             "warn",
             {
               allowList: {
-                res: true,
-                req: true,
-                err: true,
-                ctx: true,
                 app: true,
+                App: true,
                 apps: true,
-                env: true,
-                envs: true,
+                Apps: true,
+                ctx: true,
                 curr: true,
+                env: true,
+                Env: true,
+                envs: true,
+                Envs: true,
+                err: true,
                 props: true,
                 Props: true,
+                res: true,
+                req: true,
+                str,
+                Str,
+                num,
+                Num,
               },
             },
           ],
@@ -1587,7 +1596,7 @@ function buildRules(profile) {
           "import/max-dependencies": [
             "warn",
             {
-              max: 10,
+              max: 12,
               ignoreTypeImports: true,
             },
           ],
