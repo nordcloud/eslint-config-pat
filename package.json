@@ -1,6 +1,6 @@
 {
   "name": "@nordcloud/eslint-config-pat",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Shareable ESLint config for PAT projects",
   "author": "Nordcloud Engineering",
   "license": "MIT",
@@ -29,16 +29,20 @@
     "styleguide"
   ],
   "engines": {
-    "node": ">=14.15.5",
-    "npm": ">=7"
+    "node": ">=18.12.0",
+    "npm": ">=8.19.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
     "eslint": "^8.27.0",
-    "prettier": "^2.7.0",
-    "typescript": "^4.8.0"
+    "prettier": "^2.8.0",
+    "typescript": "^4.9.0",
+    "stylelint": "^13.12.0",
+    "stylelint-config-recommended": "^5.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -46,32 +50,44 @@
     },
     "prettier": {
       "optional": true
+    },
+    "stylelint": {
+      "optional": true
+    },
+    "stylelint-config-recommended": {
+      "optional": true
+    },
+    "stylelint-config-styled-components": {
+      "optional": true
+    },
+    "stylelint-processor-styled-components": {
+      "optional": true
     }
   },
   "dependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
-    "@typescript-eslint/eslint-plugin": "^5.42.1",
-    "@typescript-eslint/parser": "^5.42.1",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@typescript-eslint/parser": "^5.44.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^27.1.4",
-    "eslint-plugin-jest-dom": "^4.0.2",
+    "eslint-plugin-jest": "^27.1.5",
+    "eslint-plugin-jest-dom": "^4.0.3",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-sonarjs": "^0.16.0",
     "eslint-plugin-testing-library": "^5.9.1",
     "eslint-plugin-tsdoc": "^0.2.17",
-    "eslint-plugin-unicorn": "^44.0.2",
+    "eslint-plugin-unicorn": "^45.0.0",
     "stylelint-config-prettier": "^9.0.4"
   },
   "devDependencies": {
     "@types/stylelint": "^14.0.0",
-    "eslint": "^8.27.0",
-    "prettier": "^2.7.1",
-    "typescript": "^4.8.4"
+    "eslint": "^8.28.0",
+    "prettier": "^2.8.0",
+    "typescript": "^4.9.3"
   }
 }

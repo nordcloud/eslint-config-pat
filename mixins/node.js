@@ -2,11 +2,9 @@ const globals = require("globals");
 
 /** @type {import("@types/eslint").Linter.BaseConfig} */
 module.exports = {
-  languageOptions: {
-    globals: {
-      ...globals.node,
-      ...globals.commonjs,
-    },
+  globals: {
+    ...globals.node,
+    ...globals.commonjs,
   },
 
   plugins: ["node"],

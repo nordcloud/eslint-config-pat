@@ -5,16 +5,15 @@ const globals = require("globals");
 
 /** @type {import("@types/eslint").Linter.BaseConfig} */
 module.exports = {
-  languageOptions: {
-    parserOptions: {
-      ecmaFeatures: {
-        jsx: true,
-      },
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    globals: {
-      ...globals.serviceworker,
-      ...globals.browser,
-    },
+  },
+
+  globals: {
+    ...globals.serviceworker,
+    ...globals.browser,
   },
 
   settings: {
@@ -145,7 +144,7 @@ module.exports = {
          * Disabled since using JSX runtime is preferred
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md
          */
-        "react/react-in-jsx-scope": "error",
+        "react/react-in-jsx-scope": "off",
 
         /**
          * Since 0.17.0 the eslint no-unused-vars rule does not detect variables used in JSX (see details). This rule will find variables used in JSX and mark them as used.
@@ -211,7 +210,7 @@ module.exports = {
          * In JSX most DOM properties and attributes should be camelCased to be consistent with standard JavaScript style.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unknown-property.md
          */
-        "react/no-unknown-property": "error",
+        "react/no-unknown-property": ["error", { ignore: ["css"] }],
 
         /**
          * Certain legacy lifecycle methods are unsafe for use in async React applications and cause warnings in strict mode.
@@ -297,47 +296,45 @@ module.exports = {
          */
         "react/jsx-curly-brace-presence": "error",
 
+        // Disabled due to potential conflicts with prettier
         /**
          * Keep code formatting consistent.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-closing-tag-location.md
          */
-        "react/jsx-closing-tag-location": "error",
+        // "react/jsx-closing-tag-location": "off",
 
         /**
          * Keep code formatting consistent.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md
          */
-        "react/jsx-closing-bracket-location": "error",
+        // "react/jsx-closing-bracket-location": "off",
 
         /**
          * Keep code formatting consistent.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-curly-newline.md
          */
-        "react/jsx-curly-newline": "error",
+        // "react/jsx-curly-newline": "off",
 
         /**
          * Keep code formatting consistent.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-curly-spacing.md
          */
-        "react/jsx-curly-spacing": "error",
+        // "react/jsx-curly-spacing": "off",
 
         /**
          * Keep code formatting consistent.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-equals-spacing.md
          */
-        "react/jsx-equals-spacing": "error",
-
-        /**
-         * Keep code formatting consistent.
-         * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-one-expression-per-line.md
-         */
-        "react/jsx-one-expression-per-line": "error",
+        // "react/jsx-equals-spacing": "off",
 
         /**
          * Keep file extensions consistent.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
          */
-        "react/jsx-filename-extension": ["warn", { allow: "as-needed" }],
+        "react/jsx-filename-extension": [
+          "warn",
+          { extensions: [".jsx", ".tsx"] },
+        ],
 
         /**
          * Keep naming consistent.
@@ -375,7 +372,7 @@ module.exports = {
          * Improve consistency and readability.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-sort-props.md
          */
-        "jsx-sort-props": [
+        "react/jsx-sort-props": [
           "warn",
           {
             callbacksLast: true,
@@ -416,7 +413,8 @@ module.exports = {
          * Prevent potential unnecessary rerenders, and performance regressions.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-object-type-as-default-prop.md
          */
-        "react/no-object-type-as-default-prop": "warn",
+        // TODO enable after plugin release
+        // "react/no-object-type-as-default-prop": "warn",
 
         /**
          *  Prevent errors caused by unfamiliarity with the differences between the two styles of components, or a missed reference when converting a class component to an SFC.

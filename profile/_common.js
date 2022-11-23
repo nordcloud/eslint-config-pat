@@ -27,6 +27,8 @@ const macros = require("./_macros");
 // `.ts`/`.tsx`/`.js`/`.jsx` implementation.
 const allExtensions = [".ts", ".tsx", ".js", ".jsx"];
 
+const isContinousIntegration = process.env.CI;
+
 /**
  * @returns {import("@types/eslint").Linter.BaseConfig}
  */
@@ -187,7 +189,7 @@ function buildRules(profile) {
            * Large functions tend to do a lot of things and can make it hard following what’s going on.
            * @see https://eslint.org/docs/latest/rules/max-lines-per-function
            */
-          "max-lines-per-function": ["warn", 150],
+          "max-lines-per-function": ["warn", 180],
 
           /**
            * Prevent introducing code that's difficult to read if blocks are nested beyond a certain depth.
@@ -212,12 +214,6 @@ function buildRules(profile) {
            * @see https://eslint.org/docs/latest/rules/no-caller
            */
           "no-caller": "error",
-
-          /**
-           * Disallow arrow functions where they could be confused with comparisons.
-           * @see https://eslint.org/docs/latest/rules/no-confusing-arrow
-           */
-          "no-confusing-arrow": "error",
 
           /**
            * When `continue` is used incorrectly it makes code less testable, less readable and less maintainable.
@@ -367,7 +363,7 @@ function buildRules(profile) {
            * This syntax can make defining complex object literals much cleaner.
            * @see https://eslint.org/docs/latest/rules/object-shorthand
            */
-          "object-shorthand": ["error", "consistent-as-needed"],
+          "object-shorthand": ["error", "always"],
 
           /**
            * Arrow functions can be an attractive alternative to function expressions for callbacks or function arguments.
@@ -806,8 +802,17 @@ function buildRules(profile) {
            * Disallow the use of variables before they are defined, hoisting can be confusing.
            * @see https://typescript-eslint.io/rules/no-use-before-define/
            */
-          "@typescript-eslint/no-use-before-define": "warn"
+          "@typescript-eslint/no-use-before-define": ["warn", "nofunc"],
           "no-use-before-define": "off",
+
+          /**
+           * This rule forbids providing Promises to logical locations such as if statements in places where the TypeScript compiler allows them but they are not handled properly.
+           * DISABLED for local environment due to huge performance cost
+           * @see https://typescript-eslint.io/rules/no-misused-promises
+           */
+          "@typescript-eslint/no-misused-promises": isContinousIntegration
+            ? "error"
+            : "off",
 
           // ====================================================================================================
           // eslint-plugin-unicorn
@@ -910,12 +915,6 @@ function buildRules(profile) {
           "unicorn/no-array-push-push": "error",
 
           /**
-           * When accessing a member from an await expression, the await expression has to be parenthesized, which is not readable.
-           * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-await-expression-member.md
-           */
-          "unicorn/no-await-expression-member": "error",
-
-          /**
            * The console.log() method and similar methods joins the parameters with a space, so adding a leading/trailing space to a parameter, results in two spaces being added.
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-console-spaces.md
            */
@@ -1004,9 +1003,10 @@ function buildRules(profile) {
 
           /**
            * If an object is defined as "thenable", once it's accidentally used in an await expression, it may cause problems.
+           * DISABLED: false-positives reported in some validation libraries
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-thenable.md
            */
-          "unicorn/no-thenable": "error",
+          "unicorn/no-thenable": "off",
 
           /**
            * `this` should be used directly. If you want a reference to this from a higher scope, consider using arrow function expression or Function#bind().
@@ -1250,15 +1250,6 @@ function buildRules(profile) {
           "unicorn/prefer-node-protocol": isWebAppProfile ? "error" : "off",
 
           /**
-           * Prefer Number static properties over global ones
-           * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-number-properties.md
-           */
-          "unicorn/prefer-number-properties": [
-            "error",
-            { checkInfinity: false },
-          ],
-
-          /**
            * When transforming a list of key-value pairs into an object, Object.fromEntries(…) should be preferred to reduce complexity.
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-object-from-entries.md
            */
@@ -1341,10 +1332,26 @@ function buildRules(profile) {
 
           /**
            * Using complete words results in more readable code. Not everyone knows all your abbreviations. Code is written only once, but read many times.
-           * TODO: add config
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prevent-abbreviations.md
            */
-          "unicorn/prevent-abbreviations": "error",
+          "unicorn/prevent-abbreviations": [
+            "warn",
+            {
+              allowList: {
+                res: true,
+                req: true,
+                err: true,
+                ctx: true,
+                app: true,
+                apps: true,
+                env: true,
+                envs: true,
+                curr: true,
+                props: true,
+                Props: true,
+              },
+            },
+          ],
 
           /**
            * When using a relative URL in new URL(), the URL should either never or always use the ./ prefix consistently.
@@ -1475,7 +1482,8 @@ function buildRules(profile) {
            * Prevent mistakes when writing imports.
            * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-empty-named-blocks.md
            */
-          "import/no-empty-named-blocks": "warn",
+          // TODO uncomment after plugin release
+          // "import/no-empty-named-blocks": "warn",
 
           /**
            * Forbids the use of mutable exports with var or let.
@@ -1566,10 +1574,11 @@ function buildRules(profile) {
            * Forbid a module from importing itself. This can sometimes happen during refactoring.
            * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/consistent-type-specifier-style.md
            */
-          "import/consistent-type-specifier-style": [
-            "error",
-            "prefer-top-level",
-          ],
+          // TODO uncomment after plugin release
+          // "import/consistent-type-specifier-style": [
+          //   "error",
+          //   "prefer-top-level",
+          // ],
 
           /**
            * Forbid modules with too many dependencies - this is considered a code smell, and usually indicates the module is doing too much and/or should be broken up into smaller modules.
