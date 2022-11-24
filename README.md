@@ -148,6 +148,18 @@ module.exports = {
 };
 ```
 
+#### `@nordcloud/eslint-config-pat/mixins/tsdoc`
+
+This mixin validates code comments to ensure that they follow the [TSDoc](https://tsdoc.org/) standard.
+
+#### `@nordcloud/eslint-config-pat/mixins/node`
+
+Mixin dedicated for Node.js servers.
+
+#### `@nordcloud/eslint-config-pat/mixins/react-testing`
+
+Enables rules for [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/).
+
 ### 4. Prettier
 
 The `@nordcloud/eslint-config-pat` ruleset is intended to be used with the Prettier code formatter. For general
