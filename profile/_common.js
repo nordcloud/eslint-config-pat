@@ -27,8 +27,6 @@ const macros = require("./_macros");
 // `.ts`/`.tsx`/`.js`/`.jsx` implementation.
 const allExtensions = [".ts", ".tsx", ".js", ".jsx"];
 
-const isContinousIntegration = process.env.CI;
-
 /**
  * @returns {import("@types/eslint").Linter.BaseConfig}
  */
@@ -807,12 +805,10 @@ function buildRules(profile) {
 
           /**
            * This rule forbids providing Promises to logical locations such as if statements in places where the TypeScript compiler allows them but they are not handled properly.
-           * DISABLED for local environment due to huge performance cost
+           * WARNING: This rule hurts lint process performance
            * @see https://typescript-eslint.io/rules/no-misused-promises
            */
-          "@typescript-eslint/no-misused-promises": isContinousIntegration
-            ? "error"
-            : "off",
+          "@typescript-eslint/no-misused-promises": "error",
 
           // ====================================================================================================
           // eslint-plugin-unicorn
