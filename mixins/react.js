@@ -1,5 +1,5 @@
-// This mixin applies some additional checks for projects using the React library.  For more information,
-// please see the README.md for "@nordcloud/eslint-config-pat".
+// This mixin applies some additional checks for projects using the React library.
+// For more information, please see the README.md for "@nordcloud/eslint-config-pat".
 
 const globals = require("globals");
 

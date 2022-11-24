@@ -1,3 +1,6 @@
+// This mixin applies some additional checks for servers based on Node.js.
+// For more information, please see the README.md for "@nordcloud/eslint-config-pat".
+
 const globals = require("globals");
 
 /** @type {import("@types/eslint").Linter.BaseConfig} */

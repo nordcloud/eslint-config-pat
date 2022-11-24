@@ -1,5 +1,5 @@
-// This mixin applies some additional checks for projects using the Jest library.  For more information,
-// please see the README.md for "@nordcloud/eslint-config-pat".
+// This mixin applies some additional checks for projects using the React Testing Library.
+// For more information, please see the README.md for "@nordcloud/eslint-config-pat".
 
 /** @type {import("@types/eslint").Linter.BaseConfig} */
 module.exports = {
