@@ -106,7 +106,7 @@ function buildRules(profile) {
            * This rule is aimed at reducing code complexity by capping the amount of cyclomatic complexity allowed in a program.
            * @see https://eslint.org/docs/latest/rules/complexity
            */
-          complexity: ["error", 15],
+          complexity: ["error", 20],
 
           /**
            * Functions that take numerous parameters can be difficult to read and write because it requires the memorization of what each parameter is, its type, and the order they should appear in.
@@ -212,12 +212,6 @@ function buildRules(profile) {
            * @see https://eslint.org/docs/latest/rules/no-caller
            */
           "no-caller": "error",
-
-          /**
-           * When `continue` is used incorrectly it makes code less testable, less readable and less maintainable.
-           * @see https://eslint.org/docs/latest/rules/no-continue
-           */
-          "no-continue": "error",
 
           /**
            * If an if block contains a return statement, the else block becomes unnecessary. Its contents can be placed outside of the block.
@@ -666,9 +660,10 @@ function buildRules(profile) {
 
           /**
            * Because the nullish coalescing operator only coalesces when the original value is null or undefined, it is much safer than relying upon logical OR operator chaining ||, which coalesces on any falsy value.
+           * DISABLED: Empty strings are not supported @see https://github.com/typescript-eslint/typescript-eslint/issues/4906
            * @see https://typescript-eslint.io/rules/prefer-nullish-coalescing/
            */
-          "@typescript-eslint/prefer-nullish-coalescing": "error",
+          "@typescript-eslint/prefer-nullish-coalescing": "off",
 
           /**
            * It is much safer than relying upon logical AND operator chaining &&; which chains on any truthy value.
@@ -1339,8 +1334,10 @@ function buildRules(profile) {
                 App: true,
                 apps: true,
                 Apps: true,
+                args: true,
                 ctx: true,
                 curr: true,
+                Db: true,
                 env: true,
                 Env: true,
                 envs: true,

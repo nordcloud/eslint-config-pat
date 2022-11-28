@@ -104,7 +104,12 @@ module.exports = {
      * Prevents using unsupported features.
      * @see https://github.com/mysticatea/eslint-plugin-node/blob/f45c6149be7235c0f7422d1179c25726afeecd83/docs/rules/no-unsupported-features/es-syntax.md
      */
-    "node/no-unsupported-features/es-syntax": "error",
+    "node/no-unsupported-features/es-syntax": [
+      "error",
+      {
+        ignores: ["modules"],
+      },
+    ],
 
     /**
      * Prevents using unsupported features.
