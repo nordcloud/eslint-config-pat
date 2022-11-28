@@ -354,7 +354,7 @@ module.exports = {
          * Improve readability of JSX.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-max-depth.md
          */
-        "react/jsx-max-depth": ["warn", { max: 6 }],
+        "react/jsx-max-depth": ["warn", { max: 8 }],
 
         /**
          * Warn about potential performance problem.
