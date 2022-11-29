@@ -163,10 +163,10 @@ module.exports = {
 
         /**
          * Ensure that it's ok to pass an unbound method to expect calls.
+         * DISABLED - false-positives with react packages
          * @see https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/unbound-method.md
          */
-        "jest/unbound-method": "error",
-        "@typescript-eslint/unbound-method": "off",
+        "jest/unbound-method": "off",
 
         /**
          * Make defining tests consistent across codebase.
