@@ -330,7 +330,7 @@ function buildRules(profile) {
            * It’s a common mistake in JavaScript to use a conditional expression to select between two Boolean values instead of using ! to convert the test to a Boolean.
            * @see https://eslint.org/docs/latest/rules/no-unneeded-ternary
            */
-          "no-unneeded-ternary": "error",
+          "no-unneeded-ternary": "off",
 
           /**
            * It’s unnecessary to use computed properties with literals.
@@ -1343,10 +1343,16 @@ function buildRules(profile) {
                 envs: true,
                 Envs: true,
                 err: true,
+                org: true,
+                Org: true,
+                Param: true,
+                Params: true,
                 props: true,
                 Props: true,
                 res: true,
                 req: true,
+                ref: true,
+                Ref: true,
                 str: true,
                 Str: true,
                 num: true,
