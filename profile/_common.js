@@ -421,6 +421,12 @@ function buildRules(profile) {
           // typescript-eslint
           // ====================================================================================================
           /**
+           * Enforce unbound methods are called with their expected scope.
+           * DISABLED - reports false-positives from some of the npm packages
+           * @see https://typescript-eslint.io/rules/unbound-method/
+           */
+          "@typescript-eslint/unbound-method": "off",
+          /**
            * Using the same style consistently across your codebase makes it easier for developers to read and understand array types.
            * @see https://typescript-eslint.io/rules/array-type/
            */
@@ -588,15 +594,10 @@ function buildRules(profile) {
 
           /**
            * Conversely, any expression that always evaluates to truthy or always evaluates to falsy, as determined by the type of the expression, is considered unnecessary and will be flagged by this rule.
+           * DISABLED - Optional chaining is sometimes needed for React rendering behavior
            * @see https://typescript-eslint.io/rules/no-unnecessary-condition/
            */
-          "@typescript-eslint/no-unnecessary-condition": "warn",
-
-          /**
-           * Conversely, any expression that always evaluates to truthy or always evaluates to falsy, as determined by the type of the expression, is considered unnecessary and will be flagged by this rule.
-           * @see https://typescript-eslint.io/rules/no-unnecessary-condition/
-           */
-          "@typescript-eslint/no-unnecessary-condition": "warn",
+          "@typescript-eslint/no-unnecessary-condition": "off",
 
           /**
            * The qualifier is unnecessary: e.g. just member instead of Enum.member.
@@ -976,9 +977,10 @@ function buildRules(profile) {
 
           /**
            * As soon as additional options are added, you risk replacing the whole foo = {a: false, b: true} object when passing only one option: {a: true}
+           * DISABLED - degrades readability, requires additional code that might be hard to understand
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-object-as-default-parameter.md
            */
-          "unicorn/no-object-as-default-parameter": "error",
+          "unicorn/no-object-as-default-parameter": "off",
 
           /**
            * Smart handling of process.exit(), allows usage in certain cases.
@@ -1330,10 +1332,12 @@ function buildRules(profile) {
             "warn",
             {
               allowList: {
+                acc: true,
                 app: true,
                 App: true,
                 apps: true,
                 Apps: true,
+                arr: true,
                 args: true,
                 ctx: true,
                 curr: true,
@@ -1343,20 +1347,23 @@ function buildRules(profile) {
                 envs: true,
                 Envs: true,
                 err: true,
+                num: true,
+                Num: true,
                 org: true,
                 Org: true,
                 Param: true,
+                params: true,
                 Params: true,
+                prev: true,
                 props: true,
                 Props: true,
+                Prop: true,
                 res: true,
                 req: true,
                 ref: true,
                 Ref: true,
                 str: true,
                 Str: true,
-                num: true,
-                Num: true,
               },
             },
           ],
