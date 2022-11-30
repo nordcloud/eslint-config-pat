@@ -400,12 +400,6 @@ function buildRules(profile) {
           radix: ["error", "always"],
 
           /**
-           * Asynchronous functions that don’t use await might not need to be asynchronous functions and could be the unintentional result of refactoring.
-           * @see https://eslint.org/docs/latest/rules/require-await
-           */
-          "require-await": "error",
-
-          /**
            * Enforce consistent spacing after the `//` or `/*` in a comment.
            * @see https://eslint.org/docs/latest/rules/spaced-comment
            */
@@ -420,6 +414,13 @@ function buildRules(profile) {
           // ====================================================================================================
           // typescript-eslint
           // ====================================================================================================
+          /**
+           * Disallow async functions which have no await expression.
+           * @see https://typescript-eslint.io/rules/require-await/
+           */
+          "@typescript-eslint/require-await": "error",
+          "require-await": "off",
+
           /**
            * Enforce unbound methods are called with their expected scope.
            * DISABLED - reports false-positives from some of the npm packages
