@@ -43,7 +43,7 @@ module.exports = {
          * DISABLED - does not work for GraphQL codegen
          * @see https://github.com/B2o5T/graphql-eslint/blob/master/docs/rules/known-fragment-names.md
          */
-        "@graphql-eslint/known-fragment-names": "error",
+        "@graphql-eslint/known-fragment-names": "off",
 
         /**
          * A GraphQL document is only valid if referenced types (specifically variable definitions and fragment conditions) are defined by the type schema.
@@ -67,7 +67,13 @@ module.exports = {
             VariableDefinition: "camelCase",
             OperationDefinition: {
               style: "PascalCase",
-              forbiddenPrefixes: ["Query", "Mutation", "Subscription", "Get"],
+              forbiddenPrefixes: [
+                "Query",
+                "Mutation",
+                "Subscription",
+                "Get",
+                "List",
+              ],
               forbiddenSuffixes: ["Query", "Mutation", "Subscription"],
             },
             FragmentDefinition: {
