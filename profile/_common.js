@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
-// See LICENSE in the project root for license information.
-
 const macros = require("./_macros");
 
 // Rule severity guidelines
@@ -1852,6 +1849,7 @@ function buildRules(profile) {
       "import/external-module-folders": ["node_modules", "node_modules/@types"],
       "import/parsers": {
         "@typescript-eslint/parser": [".ts", ".tsx"],
+        "@graphql-eslint/eslint-plugin": [".graphql"],
       },
       "import/resolver": {
         node: {
