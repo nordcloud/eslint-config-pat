@@ -54,15 +54,17 @@ module.exports = {
 
     /**
      * Disallow import declarations which import non-existence modules.
+     * DISABLED - reports false-positives
      * @see https://github.com/mysticatea/eslint-plugin-node/blob/f45c6149be7235c0f7422d1179c25726afeecd83/docs/rules/no-missing-import.md
      */
-    "node/no-missing-import": "error",
+    "node/no-missing-import": "off",
 
     /**
      * Disallow require() expressions which import non-existence modules
+     * DISABLED - reports false-positives
      * @see https://github.com/mysticatea/eslint-plugin-node/blob/f45c6149be7235c0f7422d1179c25726afeecd83/docs/rules/no-missing-require.md
      */
-    "node/no-missing-require": "error",
+    "node/no-missing-require": "off",
 
     /**
      * Disallow new operators with calls to require, they might be confusing.

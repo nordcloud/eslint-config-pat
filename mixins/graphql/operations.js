@@ -6,6 +6,10 @@ module.exports = {
     {
       ...commons,
 
+      parserOptions: {
+        operations: "./src/**/*.graphql",
+      },
+
       rules: {
         /**
          * A GraphQL document is only valid for execution if all definitions are either operation or fragment definitions.
