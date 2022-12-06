@@ -4,9 +4,6 @@ const commons = {
   files: ["*.graphql"],
 
   parser: "@graphql-eslint/eslint-plugin",
-  parserOptions: {
-    operations: "./src/**/*.graphql",
-  },
 
   extends: ["prettier"],
   plugins: ["@graphql-eslint"],
