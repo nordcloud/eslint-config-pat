@@ -145,9 +145,10 @@ function buildRules(profile) {
 
           /**
            * Consistent style of writing comments can improve a project’s maintainability.
+           * DISABLED - auto-fixes temporarly commented-out code, causing confusion and additional overhead
            * @see https://eslint.org/docs/latest/rules/capitalized-comments
            */
-          "capitalized-comments": "warn",
+          "capitalized-comments": "off",
 
           /**
            * It’s better to always explicitly state what the default behavior should be so that it’s clear whether or not the developer forgot to include the default behavior by mistake.
