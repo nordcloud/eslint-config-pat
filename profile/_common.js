@@ -1339,9 +1339,6 @@ function buildRules(profile) {
                 arr: true,
                 args: true,
                 Args: true,
-                co2e: true,
-                Co2e: true,
-                CO2e: true,
                 ctx: true,
                 curr: true,
                 Db: true,
@@ -1368,6 +1365,7 @@ function buildRules(profile) {
                 str: true,
                 Str: true,
               },
+              ignore: [/co2e$/i, /^co2e/i],
             },
           ],
 
