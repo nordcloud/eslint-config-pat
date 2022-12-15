@@ -475,34 +475,38 @@ function buildRules(profile) {
             "error",
             {
               selector: "default",
-              format: ["camelCase"],
-              filter: {
-                regex: "^(__typename|Component)$",
-                match: false,
-              },
+              format: null,
+            },
+            // Ignore destructured names
+            {
+              selector: "variable",
+              modifiers: ["destructured"],
+              format: null,
+            },
+            {
+              selector: "variable",
+              types: ["boolean"],
+              format: ["PascalCase"],
+              prefix: ["is", "are", "should", "has", "can", "did", "will"],
             },
             {
               selector: "variable",
               format: ["camelCase", "UPPER_CASE", "PascalCase"],
-              filter: {
-                regex: "^(__typename)$",
-                match: false,
-              },
             },
             {
               selector: "parameter",
-              format: ["camelCase", "PascalCase"],
+              format: ["camelCase"],
               leadingUnderscore: "allow",
+              filter: {
+                regex: "^(Component)$",
+                match: false,
+              },
             },
             {
               selector: "memberLike",
               modifiers: ["private"],
               format: ["camelCase"],
               leadingUnderscore: "require",
-            },
-            {
-              selector: "typeLike",
-              format: ["PascalCase"],
             },
             {
               selector: ["function"],
@@ -513,10 +517,14 @@ function buildRules(profile) {
               selector: ["objectLiteralProperty", "objectLiteralMethod"],
               format: ["camelCase", "PascalCase", "snake_case", "UPPER_CASE"],
               leadingUnderscore: "allowDouble",
+              filter: {
+                regex: "^(&:)",
+                match: false,
+              },
             },
             {
-              selector: ["enumMember", "typeProperty"],
-              format: ["camelCase", "snake_case", "UPPER_CASE"],
+              selector: ["typeProperty"],
+              format: ["camelCase", "snake_case"],
               leadingUnderscore: "allowDouble",
               filter: {
                 regex: "^(Component)$",
@@ -524,8 +532,12 @@ function buildRules(profile) {
               },
             },
             {
+              selector: ["enumMember"],
+              format: ["PascalCase", "UPPER_CASE"],
+            },
+            {
               selector: "enum",
-              format: ["UPPER_CASE", "PascalCase"],
+              format: ["PascalCase", "UPPER_CASE"],
             },
           ],
 
@@ -1365,7 +1377,7 @@ function buildRules(profile) {
                 str: true,
                 Str: true,
               },
-              ignore: [/co2e$/i, /^co2e/i],
+              ignore: [/co2e/i],
             },
           ],
 
