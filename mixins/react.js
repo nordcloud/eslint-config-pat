@@ -339,9 +339,10 @@ module.exports = {
         /**
          * Keep naming consistent.
          * @see https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-handler-names.md
+         * DISABLED - not suitable for every case (like setState methods)
          */
         "react/jsx-handler-names": [
-          "warn",
+          "off",
           {
             eventHandlerPrefix: "handle",
             eventHandlerPropPrefix: "on",

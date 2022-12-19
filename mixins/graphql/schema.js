@@ -115,8 +115,8 @@ module.exports = {
          * @see https://github.com/B2o5T/graphql-eslint/blob/master/docs/rules/require-description.md
          */
         "@graphql-eslint/require-description": [
-          "error",
-          { types: true, DirectiveDefinition: true },
+          "warn",
+          { types: false, DirectiveDefinition: true },
         ],
 
         /**
@@ -125,11 +125,14 @@ module.exports = {
          * @see https://github.com/B2o5T/graphql-eslint/blob/master/docs/rules/strict-id-in-types.md
          */
         "@graphql-eslint/strict-id-in-types": [
-          "error",
+          "warn",
           {
             acceptedIdNames: ["id", "nid"],
             acceptedIdTypes: ["ID"],
-            exceptions: { suffixes: ["Payload", "Response", "Data"] },
+            exceptions: {
+              types: ["Error"],
+              suffixes: ["Payload", "Response", "Data", "Error"],
+            },
           },
         ],
 
