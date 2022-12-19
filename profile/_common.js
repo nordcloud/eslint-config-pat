@@ -214,8 +214,9 @@ function buildRules(profile) {
           /**
            * If an if block contains a return statement, the else block becomes unnecessary. Its contents can be placed outside of the block.
            * @see https://eslint.org/docs/latest/rules/no-else-return
+           * DISABLED - adding `else` can improve readability in some cases (e.g. huge blocks of code)
            */
-          "no-else-return": "error",
+          "no-else-return": "off",
 
           /**
            * JavaScript’s eval() function is potentially dangerous and is often misused.
@@ -271,12 +272,6 @@ function buildRules(profile) {
            * @see https://eslint.org/docs/latest/rules/no-multi-assign
            */
           "no-multi-assign": "error",
-
-          /**
-           * Negated conditions are more difficult to understand. Code can be made more readable by inverting the condition instead.
-           * @see https://eslint.org/docs/latest/rules/no-negated-condition
-           */
-          "no-negated-condition": "warn",
 
           /**
            * As of the ECMAScript 5 specification, octal escape sequences in string literals are deprecated and should not be used.
@@ -480,6 +475,7 @@ function buildRules(profile) {
             // Ignore destructured names
             {
               selector: "variable",
+              types: ["array", "boolean", "function", "number", "string"],
               modifiers: ["destructured"],
               format: null,
             },
@@ -487,7 +483,17 @@ function buildRules(profile) {
               selector: "variable",
               types: ["boolean"],
               format: ["PascalCase"],
-              prefix: ["is", "are", "should", "has", "can", "did", "will"],
+              prefix: [
+                "is",
+                "are",
+                "should",
+                "has",
+                "can",
+                "did",
+                "will",
+                "show",
+                "hide",
+              ],
             },
             {
               selector: "variable",
@@ -518,7 +524,7 @@ function buildRules(profile) {
               format: ["camelCase", "PascalCase", "snake_case", "UPPER_CASE"],
               leadingUnderscore: "allowDouble",
               filter: {
-                regex: "^(&:)",
+                regex: "^(&:)|^[0-9]+$",
                 match: false,
               },
             },
@@ -815,7 +821,12 @@ function buildRules(profile) {
            * WARNING: This rule hurts lint process performance
            * @see https://typescript-eslint.io/rules/no-misused-promises
            */
-          "@typescript-eslint/no-misused-promises": "error",
+          "@typescript-eslint/no-misused-promises": [
+            "error",
+            {
+              checksVoidReturn: false,
+            },
+          ],
 
           // ====================================================================================================
           // eslint-plugin-unicorn
@@ -963,9 +974,10 @@ function buildRules(profile) {
           /**
            * Negated conditions are more difficult to understand. Code can be made more readable by inverting the condition.
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-negated-condition.md
+           * DISABLED - reports logical operators like != or !== that are useful
            */
           "no-negated-condition": "off",
-          "unicorn/no-negated-condition": "warn",
+          "unicorn/no-negated-condition": "off",
 
           /**
            * Keep code simple, improve readability.
@@ -1327,7 +1339,7 @@ function buildRules(profile) {
            * Using an if-else statement typically results in more lines of code than a single-line ternary expression, which leads to an unnecessarily larger codebase that is more difficult to maintain.
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-ternary.md
            */
-          "unicorn/prefer-ternary": "error",
+          "unicorn/prefer-ternary": ["error", "only-single-line"],
 
           /**
            * This rule enforces you to throw a TypeError after a type checking if-statement, instead of a generic Error.
@@ -1359,6 +1371,7 @@ function buildRules(profile) {
                 envs: true,
                 Envs: true,
                 err: true,
+                Fn: true,
                 num: true,
                 Num: true,
                 org: true,
