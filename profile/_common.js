@@ -170,12 +170,6 @@ function buildRules(profile) {
           "guard-for-in": "warn",
 
           /**
-           * This rule is aimed at enforcing or eliminating variable initializations during declaration.
-           * @see https://eslint.org/docs/latest/rules/init-declarations
-           */
-          "init-declarations": ["warn", "always"],
-
-          /**
            * Large files tend to do a lot of things and can make it hard following what’s going.
            * @see https://eslint.org/docs/latest/rules/max-lines
            */
@@ -813,7 +807,16 @@ function buildRules(profile) {
            * Disallow the use of variables before they are defined, hoisting can be confusing.
            * @see https://typescript-eslint.io/rules/no-use-before-define/
            */
-          "@typescript-eslint/no-use-before-define": ["warn", "nofunc"],
+          "@typescript-eslint/no-use-before-define": [
+            "warn",
+            {
+              functions: false,
+              classes: true,
+              variables: true,
+              allowNamedExports: false,
+              ignoreTypeReferences: true,
+            },
+          ],
           "no-use-before-define": "off",
 
           /**
@@ -989,8 +992,9 @@ function buildRules(profile) {
           /**
            * When using the Array constructor with one argument, it's not clear whether the argument is meant to be the length of the array or the only element.
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-new-array.md
+           * DISABLED - conflicts with @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/v45.0.1/docs/rules/new-for-builtins.md
            */
-          "unicorn/no-new-array": "error",
+          "unicorn/no-new-array": "off",
 
           /**
            * Enforces the use of Buffer.from and Buffer.alloc() instead of new Buffer(), which has been deprecated since Node.js 4.
