@@ -1305,8 +1305,9 @@ function buildRules(profile) {
           /**
            * Enforce usage of spread operator, it's more readable and straightforward.
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-spread.md
+           * DISABLED - autofix does not mirror old behavior causing bugs
            */
-          "unicorn/prefer-spread": "warn",
+          "unicorn/prefer-spread": "off",
 
           /**
            * The String#replaceAll() method is both faster and safer as you don't have to use a regex and remember to escape it if the string is not a literal.
