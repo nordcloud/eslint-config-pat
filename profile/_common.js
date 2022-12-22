@@ -1370,6 +1370,7 @@ function buildRules(profile) {
                 ctx: true,
                 curr: true,
                 Db: true,
+                Docs: true,
                 env: true,
                 Env: true,
                 envs: true,
