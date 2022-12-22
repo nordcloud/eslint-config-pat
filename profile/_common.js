@@ -806,9 +806,10 @@ function buildRules(profile) {
           /**
            * Disallow the use of variables before they are defined, hoisting can be confusing.
            * @see https://typescript-eslint.io/rules/no-use-before-define/
+           * DISABLED - too much unnecessary warnings
            */
           "@typescript-eslint/no-use-before-define": [
-            "warn",
+            "off",
             {
               functions: false,
               classes: true,
