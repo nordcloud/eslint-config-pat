@@ -116,7 +116,19 @@ module.exports = {
          */
         "@graphql-eslint/require-description": [
           "warn",
-          { types: false, DirectiveDefinition: true },
+          {
+            DirectiveDefinition: true,
+            rootField: true,
+            InputValueDefinition: true,
+            types: false,
+            InputObjectTypeDefinition: false,
+            ObjectTypeDefinition: false,
+            InterfaceTypeDefinition: false,
+            EnumTypeDefinition: false,
+            ScalarTypeDefinition: false,
+            UnionTypeDefinition: false,
+            EnumValueDefinition: false,
+          },
         ],
 
         /**
