@@ -1378,6 +1378,7 @@ function buildRules(profile) {
                 params: true,
                 Params: true,
                 prev: true,
+                Prod: true,
                 props: true,
                 Props: true,
                 Prop: true,
