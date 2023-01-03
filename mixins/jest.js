@@ -23,25 +23,6 @@ module.exports = {
       plugins: ["@typescript-eslint", "jest"],
       rules: {
         /**
-         * Jest's mocking API is designed in a way that produces compositional data types that often have no concise description.
-         * Since test code does not ship, and typically does not introduce new concepts or algorithms,
-         * the usual arguments for prioritizing readability over writability can be relaxed in this case.
-         */
-        "@typescript-eslint/typedef": [
-          "warn",
-          {
-            arrayDestructuring: false,
-            arrowParameter: false,
-            memberVariableDeclaration: true,
-            objectDestructuring: false,
-            parameter: true,
-            propertyDeclaration: true,
-            variableDeclaration: false, // <--- special case for test files
-            variableDeclarationIgnoreFunction: true,
-          },
-        ],
-
-        /**
          * Ensure that there is at least one expect call made in a test.
          * @see https://github.com/jest-community/eslint-plugin-jest/blob/main/docs/rules/expect-expect.md
          */

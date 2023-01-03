@@ -109,7 +109,7 @@ function buildRules(profile) {
            * Functions that take numerous parameters can be difficult to read and write because it requires the memorization of what each parameter is, its type, and the order they should appear in.
            * @see https://eslint.org/docs/latest/rules/max-params
            */
-          "max-params": ["error", 3],
+          "max-params": ["error", isWebAppProfile ? 3 : 4],
 
           /**
            * It is considered good practice to use the type-safe equality operators === and !== instead of their regular counterparts == and !=.
@@ -257,15 +257,22 @@ function buildRules(profile) {
 
           /**
            * Enclosing complex expressions by parentheses clarifies the developer’s intention, which makes the code more readable.
+           * DISABLED - conflicts with prettier
            * @see https://eslint.org/docs/latest/rules/no-mixed-operators
            */
-          "no-mixed-operators": "error",
+          "no-mixed-operators": "off",
 
           /**
            * Chaining the assignment of variables can lead to unexpected results and be difficult to read.
            * @see https://eslint.org/docs/latest/rules/no-multi-assign
            */
           "no-multi-assign": "error",
+
+          /**
+           * Chaining the assignment of variables can lead to unexpected results and be difficult to read.
+           * @see https://eslint.org/docs/latest/rules/no-multi-assign
+           */
+          "no-nested-ternary": "warn",
 
           /**
            * As of the ECMAScript 5 specification, octal escape sequences in string literals are deprecated and should not be used.
@@ -976,10 +983,10 @@ function buildRules(profile) {
 
           /**
            * Keep code simple, improve readability.
+           * DISABLED - conflicts with prettier
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-nested-ternary.md
            */
-          "no-nested-ternary": "off",
-          "unicorn/no-nested-ternary": "error",
+          "unicorn/no-nested-ternary": "off",
 
           /**
            * When using the Array constructor with one argument, it's not clear whether the argument is meant to be the length of the array or the only element.
@@ -1363,6 +1370,7 @@ function buildRules(profile) {
                 ctx: true,
                 curr: true,
                 Db: true,
+                dir: true,
                 Docs: true,
                 env: true,
                 Env: true,
