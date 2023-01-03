@@ -32,7 +32,7 @@ module.exports = {
       // Declare an override that applies to TypeScript files only
       files: ["*.ts", "*.tsx"],
 
-      plugins: ["react-hooks", "jsx-a11y", "react", "import"],
+      plugins: ["react-hooks", "jsx-a11y", "react", "import", "unicorn"],
 
       rules: {
         // ====================================================================================================
@@ -632,6 +632,13 @@ module.exports = {
          * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/tabindex-no-positive.md
          */
         "jsx-a11y/tabindex-no-positive": "error",
+
+        /**
+         * Disallow ternary operators when simpler logical operator alternatives exist.
+         * DISABLED - ternary conditions are useful in JSX
+         * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-logical-operator-over-ternary.md
+         */
+        "unicorn/prefer-logical-operator-over-ternary": "off",
       },
     },
   ],
