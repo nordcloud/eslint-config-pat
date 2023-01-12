@@ -24,8 +24,6 @@ module.exports = {
         singleQuote: true,
       },
     },
-  ],
-  overrides: [
     {
       files: "*.json5",
       options: {
