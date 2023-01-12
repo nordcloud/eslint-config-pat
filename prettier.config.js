@@ -25,4 +25,15 @@ module.exports = {
       },
     },
   ],
+  overrides: [
+    {
+      files: "*.json5",
+      options: {
+        singleQuote: false,
+        parser: "json5",
+        quoteProps: "preserve",
+        trailingComma: false,
+      },
+    },
+  ],
 };
