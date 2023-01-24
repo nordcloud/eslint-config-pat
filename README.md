@@ -160,6 +160,34 @@ Mixin dedicated for Node.js servers.
 
 Enables rules for [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/).
 
+#### `@nordcloud/eslint-config-pat/mixins/playwright`
+
+Enables rules from [Playwright ESLint plugin](https://github.com/playwright-community/eslint-plugin-playwright).
+
+#### `@nordcloud/eslint-config-pat/mixins/graphql`
+
+Enables rules for GraphQL schema and operation files.
+
+**server**
+
+```ts
+module.exports = {
+  extends: [
+    "@nordcloud/eslint-config-pat/mixins/graphql/schema", // <----
+  ],
+};
+```
+
+**client**
+
+```ts
+module.exports = {
+  extends: [
+    "@nordcloud/eslint-config-pat/mixins/graphql/operations", // <----
+  ],
+};
+```
+
 ### 4. Prettier
 
 The `@nordcloud/eslint-config-pat` ruleset is intended to be used with the Prettier code formatter. For general
