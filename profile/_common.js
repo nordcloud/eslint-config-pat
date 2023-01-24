@@ -1372,6 +1372,8 @@ function buildRules(profile) {
                 Db: true,
                 dir: true,
                 Docs: true,
+                e2e: true,
+                E2e: true,
                 env: true,
                 Env: true,
                 envs: true,
