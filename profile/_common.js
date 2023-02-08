@@ -797,7 +797,7 @@ function buildRules(profile) {
            */
           "@typescript-eslint/no-unused-expressions": [
             "warn",
-            { allowShortCircuit: true },
+            { allowShortCircuit: true, allowTaggedTemplates: true },
           ],
           "no-unused-expressions": "off",
 
