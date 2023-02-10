@@ -128,10 +128,11 @@ module.exports = {
         /**
          * Requires output types to have one unique identifier unless they do not have a logical one.
          * Exceptions can be used to ignore output types that do not have unique identifiers.
+         * DISABLED - reports false-positives in modularized schemas
          * @see https://github.com/B2o5T/graphql-eslint/blob/master/docs/rules/strict-id-in-types.md
          */
         "@graphql-eslint/strict-id-in-types": [
-          "warn",
+          "off",
           {
             acceptedIdNames: ["id", "nid"],
             acceptedIdTypes: ["ID"],
