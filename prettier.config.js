@@ -30,7 +30,7 @@ module.exports = {
         singleQuote: false,
         parser: "json5",
         quoteProps: "preserve",
-        trailingComma: false,
+        trailingComma: "none",
       },
     },
   ],
