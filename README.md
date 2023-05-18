@@ -148,10 +148,6 @@ module.exports = {
 };
 ```
 
-#### `@nordcloud/eslint-config-pat/mixins/tsdoc`
-
-This mixin validates code comments to ensure that they follow the [TSDoc](https://tsdoc.org/) standard.
-
 #### `@nordcloud/eslint-config-pat/mixins/node`
 
 Mixin dedicated for Node.js servers.
