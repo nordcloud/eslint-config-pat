@@ -5,7 +5,7 @@
 module.exports = {
   overrides: [
     {
-      files: ["*.test.ts", "*.test.tsx", "*.spec.ts", "*.spec.tsx"],
+      files: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
       plugins: ["jest-dom", "testing-library"],
       rules: {
         // ====================================================================================================

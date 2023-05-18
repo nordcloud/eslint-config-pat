@@ -5,7 +5,7 @@
 module.exports = {
   overrides: [
     {
-      files: ["cypress/**/*.ts"],
+      files: ["**/cypress/**/*.ts"],
 
       env: {
         jest: false,

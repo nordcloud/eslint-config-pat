@@ -30,7 +30,7 @@ module.exports = {
   overrides: [
     {
       // Declare an override that applies to TypeScript files only
-      files: ["*.ts", "*.tsx"],
+      files: ["**/*.ts", "**/*.tsx"],
 
       plugins: ["react-hooks", "jsx-a11y", "react", "import", "unicorn"],
 

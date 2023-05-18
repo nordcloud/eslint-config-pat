@@ -57,7 +57,7 @@ function buildRules(profile) {
     overrides: [
       {
         // Declare an override that applies to TypeScript files only
-        files: ["*.ts", "*.tsx"],
+        files: ["**/*.ts", "**/*.tsx"],
         parser: "@typescript-eslint/parser",
         parserOptions: {
           // The "project" path is resolved relative to parserOptions.tsconfigRootDir.
@@ -1878,6 +1878,35 @@ function buildRules(profile) {
            * @see https://github.com/SonarSource/eslint-plugin-sonarjs/blob/master/docs/rules/prefer-while.md
            */
           "sonarjs/prefer-while": "error",
+        },
+      },
+      {
+        files: ["**/*.{yml,yaml}"],
+        parser: "yaml-eslint-parser",
+        extends: ["plugin:yml/standard", "plugin:yml/prettier"],
+        rules: {
+          "yml/file-extension": ["error", { extension: "yml" }],
+        },
+      },
+      {
+        extends: ["plugin:jsdoc/recommended-typescript-error"],
+        files: ["**/*.ts", "**/*.tsx"],
+        parser: "@typescript-eslint/parser",
+        rules: {
+          "jsdoc/require-jsdoc": "off",
+          "jsdoc/require-param": "off",
+          "jsdoc/require-property": "off",
+          "jsdoc/require-returns": "off",
+        },
+      },
+      {
+        extends: ["plugin:jsdoc/recommended"],
+        files: ["**/*.js", "**/*.mjs"],
+        rules: {
+          "jsdoc/require-jsdoc": "off",
+          "jsdoc/require-param": "off",
+          "jsdoc/require-property": "off",
+          "jsdoc/require-returns": "off",
         },
       },
     ],
