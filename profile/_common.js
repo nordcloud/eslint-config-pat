@@ -173,13 +173,13 @@ function buildRules(profile) {
            * Large files tend to do a lot of things and can make it hard following what’s going.
            * @see https://eslint.org/docs/latest/rules/max-lines
            */
-          "max-lines": ["warn", 400],
+          "max-lines": ["off", 400],
 
           /**
            * Large functions tend to do a lot of things and can make it hard following what’s going on.
            * @see https://eslint.org/docs/latest/rules/max-lines-per-function
            */
-          "max-lines-per-function": ["warn", 200],
+          "max-lines-per-function": ["off", 200],
 
           /**
            * Prevent introducing code that's difficult to read if blocks are nested beyond a certain depth.
@@ -1635,7 +1635,7 @@ function buildRules(profile) {
            * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/max-dependencies.md
            */
           "import/max-dependencies": [
-            "warn",
+            "off",
             {
               max: 12,
               ignoreTypeImports: true,
