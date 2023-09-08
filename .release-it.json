@@ -1,16 +1,20 @@
 {
   "git": {
     "requireBranch": "master",
-    "commitMessage": "Release v${version}"
+    "requireCommits": true,
+    "commitMessage": "chore: release v${version}"
   },
   "github": {
-    "release": true
+    "autoGenerate": true,
+    "release": true,
+    "releaseName": "v${version}"
   },
   "hooks": {
     "before:init": ["git pull"],
     "after:bump": "npx auto-changelog -p"
   },
   "npm": {
-    "publish": true
+    "publish": true,
+    "publishArgs": ["--provenance"]
   }
 }
