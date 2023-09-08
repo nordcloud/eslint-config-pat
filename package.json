@@ -29,8 +29,8 @@
     "styleguide"
   ],
   "engines": {
-    "node": ">=16.17.0",
-    "npm": ">=8.15.0"
+    "node": "~18.12.0 || ~18.13.0",
+    "npm": "~8.19.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
