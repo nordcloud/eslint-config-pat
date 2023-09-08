@@ -16,15 +16,6 @@ module.exports = {
 
       rules: {
         // ====================================================================================================
-        // eslint
-        // ====================================================================================================
-        /**
-         * This rule aims to prevent a likely common performance hazard due to a lack of understanding of the semantics of async function.
-         * @see https://eslint.org/docs/latest/rules/no-return-await
-         */
-        "no-return-await": "error",
-
-        // ====================================================================================================
         // typescript-eslint
         // ====================================================================================================
         /**

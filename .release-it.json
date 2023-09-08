@@ -1,0 +1,25 @@
+{
+  "git": {
+    "requireBranch": "master",
+    "requireCommits": true,
+    "commitMessage": "chore: release v${version}"
+  },
+  "github": {
+    "autoGenerate": true,
+    "release": true,
+    "releaseName": "v${version}"
+  },
+  "npm": {
+    "publish": true,
+    "publishArgs": ["--provenance"]
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "conventionalcommits"
+      },
+      "infile": "CHANGELOG.md",
+      "header": "# Changelog"
+    }
+  }
+}
