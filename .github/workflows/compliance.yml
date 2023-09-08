@@ -26,3 +26,4 @@ jobs:
             renovate
             renovate[bot]
           ignore-team-members: false
+          issue-labels-auto-close: false
