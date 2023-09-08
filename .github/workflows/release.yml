@@ -48,7 +48,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           if npm run should-semantic-release ; then
-            npm release-it --verbose
+            npx release-it --verbose
           fi
       - if: always()
         name: Recreate branch protection on master
