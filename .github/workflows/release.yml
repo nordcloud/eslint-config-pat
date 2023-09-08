@@ -70,7 +70,7 @@ jobs:
                 repo: "eslint-config-pat",
                 required_conversation_resolution: true,
                 required_linear_history: true,
-                required_pull_request_reviews: null,
+                required_pull_request_reviews: 1,
                 required_status_checks: {
                   checks: [
                     { context: "compliance" },
