@@ -1,0 +1,27 @@
+name: Release & Publish to NPM
+on: workflow_dispatch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: package.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Initialize Git user
+        run: |
+          git config --global user.email "dominik.nowik@nordcloud.com"
+          git config --global user.name "Release Workflow"
+      - run: echo "registry=https://registry.npmjs.org/" > .npmrc
+      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_KEY }}
+      - run: npm publish --access public
+      - name: Run Release
+        run: npm run release --ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_KEY }}

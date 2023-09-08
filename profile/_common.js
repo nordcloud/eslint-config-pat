@@ -405,6 +405,47 @@ function buildRules(profile) {
            */
           yoda: "error",
 
+          /**
+           * This rule aims to enforce consistent style of conditions which compare a variable to a literal value.
+           * @see https://eslint.org/docs/latest/rules/no-async-promise-executor
+           */
+          "no-async-promise-executor": "error",
+
+          /**
+           * Returning a value from an executor function is a possible error because the returned value cannot be used and it doesn’t affect the promise in any way.
+           * @see https://eslint.org/docs/latest/rules/no-promise-executor-return
+           */
+          "no-promise-executor-return": "error",
+
+          /**
+           * Disallow assignments that can lead to race conditions due to usage of await or yield.
+           * @see https://eslint.org/docs/latest/rules/require-atomic-updates
+           */
+          "require-atomic-updates": "error",
+
+          /**
+           * This rule enforces a maximum depth that callbacks can be nested to increase code clarity.
+           * @see https://eslint.org/docs/latest/rules/max-nested-callbacks
+           */
+          "max-nested-callbacks": ["error", 3],
+
+          /**
+           * This rule aims to prevent a likely common performance hazard due to a lack of understanding of the semantics of async function.
+           * @see https://eslint.org/docs/latest/rules/no-return-await
+           */
+          "no-return-await": "error",
+
+          /**
+           * It is considered good practice to only pass instances of the built-in Error object to the reject() function for user-defined errors in Promises. Error objects automatically store a stack trace, which can be used to debug an error by determining where it came from.
+           * @see https://eslint.org/docs/latest/rules/prefer-promise-reject-errors
+           */
+          "prefer-promise-reject-errors": [
+            "error",
+            {
+              allowEmptyReject: true,
+            },
+          ],
+
           // ====================================================================================================
           // typescript-eslint
           // ====================================================================================================
