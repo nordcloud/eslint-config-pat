@@ -72,7 +72,9 @@ jobs:
                 required_linear_history: true,
                 required_pull_request_reviews: null,
                 required_status_checks: {
-                  checks: [],
+                  checks: [
+                    { context: "compliance" },
+                  ],
                   strict: false,
                 },
                 restrictions: null,
