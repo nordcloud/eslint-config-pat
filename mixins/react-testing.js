@@ -82,9 +82,9 @@ module.exports = {
         // ====================================================================================================
         /**
          * Ensure that promises returned by async queries are handled properly.
-         * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/await-async-query.md
+         * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/await-async-queries.md
          */
-        "testing-library/await-async-query": "error",
+        "testing-library/await-async-queries": "error",
 
         /**
          * Ensure that promises returned by async utils are handled properly.
@@ -142,27 +142,15 @@ module.exports = {
 
         /**
          * Move render closer to test assertions.
-         * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-render-in-setup.md
+         * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-render-in-lifecycle.md
          */
-        "testing-library/no-render-in-setup": "warn",
-
-        /**
-         * Move render closer to test assertions.
-         * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-render-in-setup.md
-         */
-        "testing-library/no-render-in-setup": "warn",
+        "testing-library/no-render-in-lifecycle": "warn",
 
         /**
          * All Testing Library utils are already wrapped in act. Most of the time, if you're seeing an act warning, it's not just something to be silenced, but it's actually telling you that something unexpected is happening in your test.
          * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-unnecessary-act.md
          */
         "testing-library/no-unnecessary-act": "error",
-
-        /**
-         * This rule aims to ensure the correct usage of waitFor and waitForElementToBeRemoved, in the way that they're intended to be used.
-         * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-wait-for-empty-callback.md
-         */
-        "testing-library/no-wait-for-empty-callback": "error",
 
         /**
          * This rule aims to ensure the correct usage of expect inside waitFor, in the way that they're intended to be used.
@@ -220,12 +208,6 @@ module.exports = {
          * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/prefer-user-event.md
          */
         "testing-library/prefer-user-event": "error",
-
-        /**
-         * This rule aims to use waitFor async util rather than previous deprecated ones.
-         * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/prefer-wait-for.md
-         */
-        "testing-library/prefer-wait-for": "error",
 
         /**
          * This rule aims to ensure the return value from render is named properly.

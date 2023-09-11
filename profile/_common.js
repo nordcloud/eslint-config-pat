@@ -1096,7 +1096,7 @@ function buildRules(profile) {
            * Uses safe-regex to disallow potentially catastrophic exponential-time regular expressions.
            * @see https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unsafe-regex.md
            */
-          "unicorn/no-unsafe-regex": "warn",
+          "unicorn/no-unsafe-regex": "off",
 
           /**
            * Unused properties, much like unused variables, are often a result of incomplete refactoring and may confuse readers.
