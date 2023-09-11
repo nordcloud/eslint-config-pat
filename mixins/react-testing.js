@@ -94,9 +94,9 @@ module.exports = {
 
         /**
          * Ensure that sync queries are not awaited unnecessarily.
-         * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-await-sync-query.md
+         * @see https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-await-sync-queries.md
          */
-        "testing-library/no-await-sync-query": "error",
+        "testing-library/no-await-sync-queries": "error",
 
         /**
          * Assures confidence that the user can really interact with UI. Also, tests becomes easier to read, and it will break less frequently.

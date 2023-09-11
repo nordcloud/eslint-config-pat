@@ -1,0 +1,7 @@
+# Example file to run linter on
+
+query TestData {
+  data {
+    id
+  }
+}
