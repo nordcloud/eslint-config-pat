@@ -1,5 +1,16 @@
 # Changelog
 
+## [8.0.0](https://github.com/nordcloud/eslint-config-pat/compare/v7.0.0...v8.0.0) (2023-09-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* minimal required version of eslint has been increased
+
+### Features
+
+* major update to support TypeScript 5 ([#56](https://github.com/nordcloud/eslint-config-pat/issues/56)) ([1fd4ad3](https://github.com/nordcloud/eslint-config-pat/commit/1fd4ad375cd0fec4ee140cde124e8dd154d306d1))
+
 ## [7.0.0](https://github.com/nordcloud/eslint-config-pat/compare/v6.0.0...v7.0.0) (2023-09-08)
 
 
