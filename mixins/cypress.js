@@ -52,6 +52,11 @@ module.exports = {
          * @see https://github.com/cypress-io/eslint-plugin-cypress/blob/master/docs/rules/no-pause.md
          */
         "cypress/no-pause": "error",
+
+        /**
+         * @see https://github.com/cypress-io/eslint-plugin-cypress/blob/master/docs/rules/unsafe-to-chain-command.md
+         */
+        "cypress/unsafe-to-chain-command": "warn",
       },
     },
   ],

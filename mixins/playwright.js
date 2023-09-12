@@ -57,6 +57,18 @@ module.exports = {
         "playwright/no-force-option": "error",
 
         /**
+         * Nesting test.step() methods can make your tests difficult to read.
+         * @see https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-nested-step.md
+         */
+        "playwright/no-nested-step": "error",
+
+        /**
+         * These methods can be prone to flakiness if the DOM structure changes.
+         * @see https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-nth-methods.md
+         */
+        "playwright/no-nth-methods": "warn",
+
+        /**
          * Prevent usage of page.pause().
          * @see https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-page-pause.md
          */
@@ -67,6 +79,12 @@ module.exports = {
          * @see https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-skipped-test.md
          */
         "playwright/no-skipped-test": "error",
+
+        /**
+         * Some Playwright methods are frequently, yet incorrectly, awaited when the await expression has no effect.
+         * @see https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-useless-await.md
+         */
+        "playwright/no-useless-await": "error",
 
         /**
          * Several Playwright matchers are complimentary such as toBeVisible/toBeHidden and toBeEnabled/toBeDisabled.
@@ -105,6 +123,12 @@ module.exports = {
          * @see https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-to-have-length.md
          */
         "playwright/prefer-to-have-length": "error",
+
+        /**
+         * These assertions are preferred over instance methods as the web first assertions will automatically wait for the conditions to be fulfilled resulting in more resilient tests.
+         * @see https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-web-first-assertions.md
+         */
+        "playwright/prefer-web-first-assertions": "error",
 
         /**
          * Ensure expect() is called with a matcher.

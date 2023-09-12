@@ -1,0 +1,8 @@
+type Data {
+  id: String!
+}
+
+type Query {
+  """some description"""
+  data: Data
+}
