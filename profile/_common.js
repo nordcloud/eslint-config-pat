@@ -424,12 +424,6 @@ function buildRules(profile) {
           "require-atomic-updates": "error",
 
           /**
-           * This rule enforces a maximum depth that callbacks can be nested to increase code clarity.
-           * @see https://eslint.org/docs/latest/rules/max-nested-callbacks
-           */
-          "max-nested-callbacks": ["error", 3],
-
-          /**
            * This rule aims to prevent a likely common performance hazard due to a lack of understanding of the semantics of async function.
            * @see https://eslint.org/docs/latest/rules/no-return-await
            */
@@ -870,6 +864,12 @@ function buildRules(profile) {
               checksVoidReturn: false,
             },
           ],
+
+          /**
+           * Disallow comparing an enum value with a non-enum value.
+           * @see https://typescript-eslint.io/rules/no-unsafe-enum-comparison/
+           */
+          "@typescript-eslint/no-unsafe-enum-comparison": "off",
 
           // ====================================================================================================
           // eslint-plugin-unicorn
