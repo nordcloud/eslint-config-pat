@@ -6,7 +6,7 @@ on:
     branches: [master]
 jobs:
   lint_check:
-    name: RUn ESLint on local test files
+    name: Run ESLint on local test files
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
