@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.1.0](https://github.com/nordcloud/eslint-config-pat/compare/v8.0.0...v8.1.0) (2023-09-22)
+
+
+### Features
+
+* allow object type ([#57](https://github.com/nordcloud/eslint-config-pat/issues/57)) ([06f33ab](https://github.com/nordcloud/eslint-config-pat/commit/06f33ab5a54d301ac21d0f20256edd44b6d5b428))
+
 ## [8.0.0](https://github.com/nordcloud/eslint-config-pat/compare/v7.0.0...v8.0.0) (2023-09-12)
 
 
