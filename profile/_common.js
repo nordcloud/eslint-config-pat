@@ -444,6 +444,19 @@ function buildRules(profile) {
           // typescript-eslint
           // ====================================================================================================
           /**
+           * Some built-in types have aliases, while some types are considered dangerous or harmful. It's often a good idea to ban certain types to help with consistency and safety.
+           * @see https://typescript-eslint.io/rules/ban-types/
+           */
+          "@typescript-eslint/ban-types": [
+            "error",
+            {
+              types: {
+                "{}": false,
+              },
+              extendDefaults: true,
+            },
+          ],
+          /**
            * Disallow async functions which have no await expression.
            * @see https://typescript-eslint.io/rules/require-await/
            */
