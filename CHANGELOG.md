@@ -1,5 +1,16 @@
 # Changelog
 
+## [9.0.0](https://github.com/nordcloud/eslint-config-pat/compare/v8.1.0...v9.0.0) (2023-11-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* requires migration to vitest
+
+### Features
+
+* replace eslint-plugin-jest with eslint-plugin-vitest ([#58](https://github.com/nordcloud/eslint-config-pat/issues/58)) ([100be5c](https://github.com/nordcloud/eslint-config-pat/commit/100be5c1f19d480bc9c817d28fd6cd67f7ae764a))
+
 ## [8.1.0](https://github.com/nordcloud/eslint-config-pat/compare/v8.0.0...v8.1.0) (2023-09-22)
 
 
