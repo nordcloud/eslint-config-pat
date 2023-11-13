@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.1](https://github.com/nordcloud/eslint-config-pat/compare/v9.0.0...v9.0.1) (2023-11-13)
+
+
+### Bug Fixes
+
+* fix vitest config ([#59](https://github.com/nordcloud/eslint-config-pat/issues/59)) ([735ae8f](https://github.com/nordcloud/eslint-config-pat/commit/735ae8fadb516c9ebdeb5034c8ef08fb6a5ce893))
+
 ## [9.0.0](https://github.com/nordcloud/eslint-config-pat/compare/v8.1.0...v9.0.0) (2023-11-13)
 
 
