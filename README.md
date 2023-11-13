@@ -98,10 +98,9 @@ module.exports = {
 };
 ```
 
-#### `@nordcloud/eslint-config-pat/mixins/jest`
+#### `@nordcloud/eslint-config-pat/mixins/vitest`
 
-For projects using the [Jest](https://jestjs.io/) library, the `@nordcloud/eslint-config-pat/mixins/jest` mixin
-enables some recommended rules. In order to apply it:
+For projects using [Vitest](https://vitest.dev/) testing framework, the `@nordcloud/eslint-config-pat/mixins/vitest` mixin enables some recommended rules. In order to apply it:
 
 - Configure your `settings.env` as shown below.
 
@@ -115,15 +114,9 @@ require("@nordcloud/eslint-config-pat/patch/modern-module-resolution");
 
 module.exports = {
   extends: [
-    "@nordcloud/eslint-config-pat/mixins/jest", // <----
+    "@nordcloud/eslint-config-pat/mixins/vitest", // <----
   ],
   parserOptions: { tsconfigRootDir: __dirname },
-
-  settings: {
-    jest: {
-      version: "27", // <---- Your Jest version
-    },
-  },
 };
 ```
 
