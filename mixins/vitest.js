@@ -57,12 +57,6 @@ module.exports = {
         "vitest/no-duplicate-hooks": "warn",
 
         /**
-         * This rule aims to eliminate duplicate runs of tests by exporting things from test files.
-         * @see https://github.com/veritem/eslint-plugin-vitest/blob/main/docs/rules/no-export.md
-         */
-        "vitest/no-export": "error",
-
-        /**
          * Ensure all tests are executed on your build system.
          * @see https://github.com/veritem/eslint-plugin-vitest/blob/main/docs/rules/no-focused-tests.md
          */
@@ -79,12 +73,6 @@ module.exports = {
          * @see https://github.com/veritem/eslint-plugin-vitest/blob/main/docs/rules/no-interpolation-in-snapshots.md
          */
         "vitest/no-interpolation-in-snapshots": "error",
-
-        /**
-         * Most functionality offered by Jasmine has been ported to Vitest, and the Jasmine globals will stop working in the future.
-         * @see https://github.com/veritem/eslint-plugin-vitest/blob/main/docs/rules/no-jasmine-globals.md
-         */
-        "vitest/no-jasmine-globals": "error",
 
         /**
          * Prevent having multiple instances of the mocked module.
@@ -121,12 +109,6 @@ module.exports = {
          * @see https://github.com/veritem/eslint-plugin-vitest/blob/main/docs/rules/valid-expect.md
          */
         "vitest/valid-expect": "error",
-
-        /**
-         * Ensure promises that include expectations are returned or awaited.
-         * @see https://github.com/veritem/eslint-plugin-vitest/blob/main/docs/rules/valid-expect-in-promise.md
-         */
-        "vitest/valid-expect-in-promise": "error",
 
         /**
          * Ensure that the titles of Vitest blocks are valid.
