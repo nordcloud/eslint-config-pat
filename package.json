@@ -95,5 +95,8 @@
     "release-it": "^16.1.5",
     "should-semantic-release": "^0.1.1",
     "typescript": "^5.2.2"
+  },
+  "overrides": {
+    "@babel/traverse": "~7.23.2"
   }
 }
