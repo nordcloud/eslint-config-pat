@@ -24,65 +24,8 @@ jobs:
           node-version-file: package.json
       - name: Install dependencies
         run: npm ci
-      - name: Initialize Git user
-        run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - name: Set NPM config
-        run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+      - name: Release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_KEY }}
-      - name: Delete branch protection on master
-        uses: actions/github-script@v6.4.1
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          script: |
-            try {
-              await github.request(
-                `DELETE /repos/nordcloud/eslint-config-pat/branches/master/protection`,
-              );
-            } catch (error) {
-              if (!error.message?.includes?.("Branch not protected")) {
-                throw error;
-              }
-            }
-      - env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          if npm run should-semantic-release ; then
-            npx release-it --verbose
-          fi
-      - if: always()
-        name: Recreate branch protection on master
-        uses: actions/github-script@v6.4.1
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          script: |
-            github.request(
-              `PUT /repos/nordcloud/eslint-config-pat/branches/master/protection`,
-              {
-                allow_deletions: false,
-                allow_force_pushes: true,
-                allow_fork_pushes: false,
-                allow_fork_syncing: true,
-                block_creations: false,
-                branch: "master",
-                enforce_admins: false,
-                owner: "nordcloud",
-                repo: "eslint-config-pat",
-                required_conversation_resolution: true,
-                required_linear_history: true,
-                required_pull_request_reviews: {
-                  require_code_owner_reviews: true,
-                  required_approving_review_count: 1,
-                  dismiss_stale_reviews: true
-                },
-                required_status_checks: {
-                  checks: [
-                    { context: "compliance" },
-                  ],
-                  strict: false,
-                },
-                restrictions: null,
-              }
-            );
+          NPM_TOKEN: ${{ secrets.NPM_KEY }}
+        uses: JoshuaKGoldberg/release-it-action@v0.2.2
