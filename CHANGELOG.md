@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.3.0](https://github.com/nordcloud/eslint-config-pat/compare/v9.2.0...v9.3.0) (2023-12-18)
+
+
+### Features
+
+* automate github release ([#66](https://github.com/nordcloud/eslint-config-pat/issues/66)) ([93e75a6](https://github.com/nordcloud/eslint-config-pat/commit/93e75a6c0a91d1d09ca52c2c55e009f52f98b717))
+
 ## [9.2.0](https://github.com/nordcloud/eslint-config-pat/compare/v9.1.0...v9.2.0) (2023-12-18)
 
 
