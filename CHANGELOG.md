@@ -1,7 +1,5 @@
 # Changelog
 
-## [9.1.0](https://github.com/nordcloud/eslint-config-pat/compare/v9.0.1...v9.1.0) (2023-11-13)
-
 ## [9.0.1](https://github.com/nordcloud/eslint-config-pat/compare/v9.0.0...v9.0.1) (2023-11-13)
 
 
