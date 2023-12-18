@@ -24,7 +24,7 @@ jobs:
           node-version-file: package.json
       - name: Install dependencies
         run: npm ci
-      - name: Release
+      - name: Release and publish
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_KEY }}
