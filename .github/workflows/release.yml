@@ -19,13 +19,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: master
       - uses: actions/setup-node@v3
         with:
           node-version-file: package.json
       - name: Install dependencies
         run: npm ci
       - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_KEY }}
         uses: JoshuaKGoldberg/release-it-action@v0.2.2
+        with:
+          branch: 'master'
+          github-token: ${{ secrets.GH_TOKEN }}
+          npm-token: ${{ secrets.NPM_KEY }}

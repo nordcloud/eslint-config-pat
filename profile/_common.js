@@ -270,9 +270,9 @@ function buildRules(profile) {
 
           /**
            * Chaining the assignment of variables can lead to unexpected results and be difficult to read.
-           * @see https://eslint.org/docs/latest/rules/no-multi-assign
+           * @see https://eslint.org/docs/latest/rules/no-nested-ternary
            */
-          "no-nested-ternary": "warn",
+          "no-nested-ternary": "off",
 
           /**
            * As of the ECMAScript 5 specification, octal escape sequences in string literals are deprecated and should not be used.
