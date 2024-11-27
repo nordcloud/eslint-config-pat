@@ -1,6 +1,6 @@
 {
   "name": "@nordcloud/eslint-config-pat",
-  "version": "9.3.0",
+  "version": "9.4.0",
   "description": "Shareable ESLint config for PAT projects",
   "author": "Nordcloud Engineering",
   "license": "MIT",
@@ -97,6 +97,9 @@
     "typescript": "^5.2.2"
   },
   "overrides": {
-    "@babel/traverse": "~7.23.2"
+    "@babel/traverse": "~7.23.2",
+    "pac-resolver": "~7.0.1",
+    "socks": "~2.8.3",
+    "@graphql-tools/url-loader": "~8.0.0"
   }
 }
