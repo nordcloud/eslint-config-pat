@@ -87,12 +87,12 @@
     "stylelint-config-prettier": "^9.0.5"
   },
   "devDependencies": {
-    "@release-it/conventional-changelog": "^9.0.3",
+    "@release-it/conventional-changelog": "^7.0.1",
     "@types/stylelint": "^14.0.0",
     "eslint": "^8.57.1",
     "graphql": "^16.8.0",
     "prettier": "^3.4.1",
-    "release-it": "^17.10.0",
+    "release-it": "^16.1.5",
     "should-semantic-release": "^0.1.1",
     "typescript": "^5.7.2"
   },
