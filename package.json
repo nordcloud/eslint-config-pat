@@ -99,6 +99,7 @@
   "overrides": {
     "@babel/traverse": "~7.23.2",
     "pac-resolver": "~7.0.1",
-    "socks": "~2.8.3"
+    "socks": "~2.8.3",
+    "@graphql-tools/url-loader": "~8.0.0"
   }
 }
