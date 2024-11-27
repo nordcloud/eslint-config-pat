@@ -97,6 +97,8 @@
     "typescript": "^5.2.2"
   },
   "overrides": {
-    "@babel/traverse": "~7.23.2"
+    "@babel/traverse": "~7.23.2",
+    "pac-resolver": "~7.0.1",
+    "socks": "~2.8.3"
   }
 }
