@@ -13,12 +13,12 @@ A TypeScript ESLint ruleset designed for Nordcloud's Platform & Tools
   Prettier avoids frivolous debates: its defaults have already been debated
   at length and adopted by a sizeable community.
 
-- **Minimal configuration:** To use this ruleset, your **.eslintrc.js** will need to choose one **"profile"**
+- **Minimal configuration:** To use this ruleset, your eslint configuration file (**.eslintrc.js** or **eslint.config.mjs**) will need to choose one **"profile"**
   and possibly one or two **"mixins"** that cover special cases
 
 ## Getting started
 
-Applying the ruleset to your project is quick and easy. You install the package, then create an **.eslintrc.js** file
+Applying the ruleset to your project is quick and easy. You install the package, then create an eslint configuration file
 and select an appropriate project profile. Optionally you can also add some "mixins" to enable additional rules.
 Let's walk through those steps in more detail.
 
@@ -43,7 +43,7 @@ your project:
   example security rules that are relevant to web browser APIs such as DOM.
   _Also use this profile if you are creating a library that can be consumed by both Node.js and web applications._
 
-After choosing a profile, create an **.eslintrc.js** config file that provides the Node.js `__dirname` context
+After choosing a profile, create an **.eslintrc.js** (eslint before v9) or **eslint.config.mjs** (eslint after v9) config file that provides the Node.js `__dirname` context
 for TypeScript. Add your profile string in the `extends` field, as shown below:
 
 **.eslintrc.js**
@@ -56,6 +56,52 @@ module.exports = {
   extends: ["@nordcloud/eslint-config-pat/profile/node"], // <---- put your profile string here
   parserOptions: { tsconfigRootDir: __dirname },
 };
+```
+
+**eslint.config.mjs**
+
+```ts
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import js from "@eslint/js";
+import tsParser from "@typescript-eslint/parser";
+import { FlatCompat } from "@eslint/eslintrc";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
+});
+
+export default [
+  {
+    ignores: ["**/*.js"], // <---- ignore files
+  },
+  ...compat.extends("@nordcloud/eslint-config-pat/profile/web-app"), // <---- put your profile
+  {
+    languageOptions: {
+      parser: tsParser,
+      ecmaVersion: 5,
+      sourceType: "script",
+
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+      },
+    },
+
+    settings: {
+      react: {
+        version: "18.13.0", // <---- Your React version
+      },
+    },
+
+    rules: {
+      "unicorn/expiring-todo-comments": "off", // <---- overwrite rules
+    },
+  },
+];
 ```
 
 ### 3. Add any relevant mixins
@@ -98,6 +144,20 @@ module.exports = {
 };
 ```
 
+**eslint.config.mjs**
+
+```ts
+export default [
+  // Other configurations
+  ...compat
+    .extends("@nordcloud/eslint-config-pat/mixins/react") // <----
+    .map((config) => ({
+      ...config,
+      files: ["src/**/*.ts", "src/**/*.tsx"],
+    })),
+];
+```
+
 #### `@nordcloud/eslint-config-pat/mixins/vitest`
 
 For projects using [Vitest](https://vitest.dev/) testing framework, the `@nordcloud/eslint-config-pat/mixins/vitest` mixin enables some recommended rules. In order to apply it:
@@ -113,11 +173,17 @@ Add the mixin to your `"extends"` field like this:
 require("@nordcloud/eslint-config-pat/patch/modern-module-resolution");
 
 module.exports = {
-  extends: [
-    "@nordcloud/eslint-config-pat/mixins/vitest", // <----
-  ],
+  extends: ["@nordcloud/eslint-config-pat/mixins/vitest"], // <----
   parserOptions: { tsconfigRootDir: __dirname },
 };
+```
+
+**eslint.config.mjs**
+
+```ts
+export default [
+  ...compat.extends("@nordcloud/eslint-config-pat/mixins/vitest"),
+];
 ```
 
 #### `@nordcloud/eslint-config-pat/mixins/cypress`
@@ -141,6 +207,14 @@ module.exports = {
 };
 ```
 
+**eslint.config.mjs**
+
+```ts
+export default [
+  ...compat.extends("@nordcloud/eslint-config-pat/mixins/cypress"), // <----
+];
+```
+
 #### `@nordcloud/eslint-config-pat/mixins/node`
 
 Mixin dedicated for Node.js servers.
@@ -159,15 +233,25 @@ Enables rules for GraphQL schema and operation files.
 
 **server**
 
+**.eslintrc.js**
+
 ```ts
 module.exports = {
-  extends: [
-    "@nordcloud/eslint-config-pat/mixins/graphql/schema", // <----
-  ],
+  extends: ["@nordcloud/eslint-config-pat/mixins/graphql/schema"], // <----
 };
 ```
 
+**eslint.config.mjs**
+
+```ts
+export default [
+  ...compat.extends("@nordcloud/eslint-config-pat/mixins/graphql/schema"), // <----
+];
+```
+
 **client**
+
+**.eslintrc.js**
 
 ```ts
 module.exports = {
@@ -175,6 +259,14 @@ module.exports = {
     "@nordcloud/eslint-config-pat/mixins/graphql/operations", // <----
   ],
 };
+```
+
+**eslint.config.mjs**
+
+```ts
+export default [
+  ...compat.extends("@nordcloud/eslint-config-pat/mixins/graphql/operations"), // <----
+];
 ```
 
 ### 4. Prettier
@@ -193,7 +285,7 @@ Add the prettier config file in the root directory:
 
 ```ts
 module.exports = {
-  ...require("@nordcloud/eslint-config-pat/prettier.config.js"),
+  ...require("@nordcloud/eslint-config-pat/prettier.config.js"), // <----
   // Your overrides
 };
 ```
@@ -213,7 +305,7 @@ Add the stylelint config file in the root directory:
 
 ```ts
 module.exports = {
-  extends: "@nordcloud/eslint-config-pat/stylelint.config.js",
+  extends: "@nordcloud/eslint-config-pat/stylelint.config.js", // <----
   rules: {
     // Your overrides
   },
@@ -223,3 +315,4 @@ module.exports = {
 ## Credits
 
 - Based on [@rushstack/eslint-config](https://github.dev/microsoft/rushstack/tree/master/stack/eslint-config)
+- Migration guide for Eslint configuration: [Migrate to ESLint 9.x](https://tduyng.com/blog/migrating-to-eslint9x/)
