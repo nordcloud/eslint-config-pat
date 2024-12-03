@@ -444,18 +444,10 @@ function buildRules(profile) {
           // typescript-eslint
           // ====================================================================================================
           /**
-           * Some built-in types have aliases, while some types are considered dangerous or harmful. It's often a good idea to ban certain types to help with consistency and safety.
-           * @see https://typescript-eslint.io/rules/ban-types/
+           * Enable using the "empty object" type.
+           * @see https://typescript-eslint.io/rules/no-empty-object-type
            */
-          "@typescript-eslint/ban-types": [
-            "error",
-            {
-              types: {
-                "{}": false,
-              },
-              extendDefaults: true,
-            },
-          ],
+          "@typescript-eslint/no-empty-object-type": "off",
           /**
            * Disallow async functions which have no await expression.
            * @see https://typescript-eslint.io/rules/require-await/
@@ -834,10 +826,11 @@ function buildRules(profile) {
 
           /**
            * This rule is aimed at maintaining consistency when throwing exception by disallowing to throw literals and other expressions which cannot possibly be an Error object.
-           * @see https://typescript-eslint.io/rules/no-throw-literal/
+           * @see https://typescript-eslint.io/rules/only-throw-error
            */
-          "@typescript-eslint/no-throw-literal": "error",
+          // Note: you must disable the base rule as it can report incorrect errors
           "no-throw-literal": "off",
+          "@typescript-eslint/only-throw-error": "error",
 
           /**
            * An unused expression which has no effect on the state of the program indicates a logic error.
