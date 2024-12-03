@@ -1,5 +1,16 @@
 # Changelog
 
+## [10.0.0](https://github.com/nordcloud/eslint-config-pat/compare/v9.4.0...v10.0.0) (2024-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade eslint from v8 to v9 (#77)
+
+### Features
+
+* Upgrade eslint from v8 to v9 ([#77](https://github.com/nordcloud/eslint-config-pat/issues/77)) ([78b3d38](https://github.com/nordcloud/eslint-config-pat/commit/78b3d38045cf613ccbe4e773943cfb0760353568))
+
 ## [9.3.0](https://github.com/nordcloud/eslint-config-pat/compare/v9.2.0...v9.3.0) (2023-12-18)
 
 
