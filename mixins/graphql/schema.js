@@ -9,12 +9,9 @@ module.exports = {
       rules: {
         /**
          * Enforce arrange in alphabetical order for type fields, enum values.
-         * @see https://github.com/B2o5T/graphql-eslint/blob/master/docs/rules/alphabetize.md
+         * @see https://the-guild.dev/graphql/eslint/rules/alphabetize
          */
-        "@graphql-eslint/alphabetize": [
-          "error",
-          { values: ["EnumTypeDefinition"] },
-        ],
+        "@graphql-eslint/alphabetize": ["error", { values: true }],
 
         /**
          * Require all comments to follow the same style.
@@ -76,9 +73,9 @@ module.exports = {
 
         /**
          * Disallow case-insensitive enum values duplicates.
-         * @see https://github.com/B2o5T/graphql-eslint/blob/master/docs/rules/no-case-insensitive-enum-values-duplicates.md
+         * @see https://the-guild.dev/graphql/eslint/rules/unique-enum-value-names
          */
-        "@graphql-eslint/no-case-insensitive-enum-values-duplicates": "error",
+        "@graphql-eslint/unique-enum-value-names": "error",
 
         /**
          * Requires to use """ or " for adding a GraphQL description instead of #. Allows to use hashtag for comments, as long as it's not attached to an AST definition.
@@ -117,10 +114,9 @@ module.exports = {
         "@graphql-eslint/require-description": [
           "warn",
           {
-            DirectiveDefinition: true,
             rootField: true,
+            DirectiveDefinition: true,
             InputValueDefinition: true,
-            types: false,
             EnumValueDefinition: false,
           },
         ],

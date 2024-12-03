@@ -7,7 +7,9 @@ module.exports = {
       ...commons,
 
       parserOptions: {
-        operations: "./src/**/*.graphql",
+        graphQLConfig: {
+          documents: "./src/**/*.graphql",
+        },
       },
 
       rules: {
@@ -157,9 +159,9 @@ module.exports = {
 
         /**
          * Enforce selecting specific fields when they are available on the GraphQL type.
-         * @see https://github.com/B2o5T/graphql-eslint/blob/master/docs/rules/require-id-when-available.md
+         * @see https://the-guild.dev/graphql/eslint/rules/require-selections
          */
-        "@graphql-eslint/require-id-when-available": "error",
+        "@graphql-eslint/require-selections": "error",
 
         /**
          * A GraphQL document is valid only if all leaf fields (fields without sub selections) are of scalar or enum types.
