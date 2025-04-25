@@ -1,6 +1,6 @@
 {
   "name": "@nordcloud/eslint-config-pat",
-  "version": "9.5.1",
+  "version": "10.1.0",
   "description": "Shareable ESLint config for PAT projects",
   "author": "Nordcloud Engineering",
   "license": "MIT",
@@ -29,7 +29,7 @@
     "styleguide"
   ],
   "engines": {
-    "node": "^18"
+    "node": "^18 || ^22"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -66,8 +66,8 @@
   "dependencies": {
     "@graphql-eslint/eslint-plugin": "^4.2.0",
     "@rushstack/eslint-patch": "^1.10.4",
-    "@typescript-eslint/eslint-plugin": "^8.16.0",
-    "@typescript-eslint/parser": "^8.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-cypress": "^4.1.0",
     "eslint-plugin-import": "^2.31.0",
@@ -82,9 +82,10 @@
     "eslint-plugin-sonarjs": "^1.0.4",
     "eslint-plugin-testing-library": "^7.0.0",
     "eslint-plugin-unicorn": "^56.0.1",
-    "eslint-plugin-vitest": "^0.5.4",
+    "@vitest/eslint-plugin": "^1.1.43",
     "eslint-plugin-yml": "^1.16.0",
-    "stylelint-config-prettier": "^9.0.5"
+    "stylelint-config-prettier": "^9.0.5",
+    "globals": "^15.12.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -102,9 +103,6 @@
     "@babel/traverse": "~7.23.2",
     "pac-resolver": "~7.0.1",
     "socks": "~2.8.3",
-    "@graphql-tools/url-loader": "~8.0.0",
-    "eslint-plugin-vitest": {
-      "@typescript-eslint/utils": "~8.16.0"
-    }
+    "@graphql-tools/url-loader": "~8.0.0"
   }
 }
