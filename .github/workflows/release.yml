@@ -20,15 +20,14 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v4
         with:
-          node-version-file: package.json
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm@latest
       - name: Install dependencies
         run: npm ci
       - name: Release
-        uses: JoshuaKGoldberg/release-it-action@v0.2.2
+        uses: JoshuaKGoldberg/release-it-action@v0.4.0
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          branch: 'master'
-          npm-token: ${{ secrets.NPM_KEY }}
