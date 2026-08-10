@@ -96,7 +96,7 @@
     "graphql": "^16.8.0",
     "prettier": "^3.4.1",
     "release-it": "^21.0.2",
-    "should-semantic-release": "^0.1.1",
+    "should-semantic-release": "^0.3.5",
     "typescript": "^5.7.2"
   },
   "overrides": {
