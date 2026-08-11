@@ -1,6 +1,6 @@
 /** @type {import("@types/stylelint").Configuration} */
 module.exports = {
-  processors: ["stylelint-processor-styled-components"],
+  customSyntax: "@stylelint/postcss-css-in-js",
   extends: [
     "stylelint-config-recommended",
     "stylelint-config-styled-components",

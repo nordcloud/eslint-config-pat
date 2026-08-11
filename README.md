@@ -296,7 +296,7 @@ It's possible to use common [Stylelint](https://stylelint.io/) config from this 
 
 ```sh
 cd your-project-folder
-npm install -D stylelint stylelint-config-recommended stylelint-config-styled-components stylelint-processor-styled-components
+npm install -D stylelint stylelint-config-recommended stylelint-config-styled-components @stylelint/postcss-css-in-js
 ```
 
 Add the stylelint config file in the root directory:
