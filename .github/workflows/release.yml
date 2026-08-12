@@ -1,32 +1,75 @@
 name: Release
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    types: [closed]
+    branches: [master]
+
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
 
 permissions:
   contents: write
-  id-token: write
-
-concurrency:
-  cancel-in-progress: true
-  group: ${{ github.workflow }}
+  id-token: write # required for npm Trusted Publishing
+  issues: write # required for release-commenter
+  pull-requests: write # required for release-commenter
 
 jobs:
-  release:
+  publish:
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           ref: master
-      - uses: actions/setup-node@v6
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-      - name: Install dependencies
-        run: npm ci
-      - name: Release
-        uses: JoshuaKGoldberg/release-it-action@v0.4.0
+
+      - run: npm install -g npm@latest
+      - run: npm ci
+
+      - name: Read version
+        id: pkg
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag v${{ steps.pkg.outputs.version }}
+          git push origin v${{ steps.pkg.outputs.version }}
+
+      - name: Extract latest changelog section for release notes
+        id: notes
+        run: |
+          NOTES=$(awk '/^## /{c++} c==1{print} c==2{exit}' CHANGELOG.md)
+          echo "notes<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$NOTES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        run: |
+          gh release create v${{ steps.pkg.outputs.version }} \
+            --title "v${{ steps.pkg.outputs.version }}" \
+            --notes "${{ steps.notes.outputs.notes }}"
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to npm (Trusted Publishing)
+        run: npm publish --access public --provenance
+
+      - name: Comment on linked issues/PRs
+        uses: apexskier/github-release-commenter@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          comment-template: |
+            :tada: This is included in version {release_link} :tada:
+
+            The release is available on:
+
+            * [GitHub releases](https://github.com/nordcloud/eslint-config-pat/releases/tag/{release_tag})
+            * [npm package (@latest dist-tag)](https://www.npmjs.com/package/@nordcloud/eslint-config-pat/v/${{ env.npm_version }})

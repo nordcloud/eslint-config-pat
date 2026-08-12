@@ -1,0 +1,67 @@
+name: Prepare Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      increment:
+        description: 'Version increment (leave empty to auto-detect from conventional commits)'
+        required: false
+        type: choice
+        options: ['', patch, minor, major]
+
+concurrency:
+  group: prepare-release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # required for conventional-changelog to read full history
+
+      - name: Check for existing open release PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          OPEN_PR=$(gh pr list --state open --json number,headRefName,url \
+            --jq '[.[] | select(.headRefName | startswith("release/"))][0]')
+
+          if [ -n "$OPEN_PR" ] && [ "$OPEN_PR" != "null" ]; then
+            echo "::error::An open release PR already exists. Merge or close it before preparing a new release."
+            echo "$OPEN_PR"
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - run: npm ci
+
+      - name: Bump version and update changelog (no commit / no push)
+        run: npx release-it ${{ inputs.increment }} --ci
+
+      - name: Read new version
+        id: pkg
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Open release PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'chore(release): v${{ steps.pkg.outputs.version }}'
+          title: 'chore(release): v${{ steps.pkg.outputs.version }}'
+          body: |
+            Automated release preparation PR, triggered by @${{ github.actor }}.
+
+            Merging this PR will trigger tagging, GitHub Release creation, and npm publish.
+          branch: release/v${{ steps.pkg.outputs.version }}
+          base: master
+          labels: release
+          author: '${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>'
+          committer: '${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>'
