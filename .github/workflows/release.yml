@@ -1,11 +1,12 @@
 name: Release
+
 on:
   pull_request:
     types: [closed]
     branches: [master]
 
 concurrency:
-  group: publish-release
+  group: release
   cancel-in-progress: false
 
 permissions:
@@ -15,16 +16,16 @@ permissions:
   pull-requests: write # required for release-commenter
 
 jobs:
-  publish:
+  release:
     if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: master
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
@@ -36,6 +37,12 @@ jobs:
         id: pkg
         run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
+      - name: Get previous tag
+        id: prev_tag
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "tag=$PREV_TAG" >> "$GITHUB_OUTPUT"
+
       - name: Create and push tag
         run: |
           git config user.name "github-actions[bot]"
@@ -43,33 +50,68 @@ jobs:
           git tag v${{ steps.pkg.outputs.version }}
           git push origin v${{ steps.pkg.outputs.version }}
 
-      - name: Extract latest changelog section for release notes
-        id: notes
+      - name: Extract latest changelog section
         run: |
-          NOTES=$(awk '/^## /{c++} c==1{print} c==2{exit}' CHANGELOG.md)
-          echo "notes<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$NOTES" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          awk '/^## /{c++} c==1{print} c==2{exit}' CHANGELOG.md > /tmp/changelog_excerpt.md
 
-      - name: Create GitHub Release
-        run: |
-          gh release create v${{ steps.pkg.outputs.version }} \
-            --title "v${{ steps.pkg.outputs.version }}" \
-            --notes "${{ steps.notes.outputs.notes }}"
+      - name: Generate GitHub auto notes (Contributors / Full Changelog only)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "${{ steps.prev_tag.outputs.tag }}" ]; then
+            gh api "repos/${{ github.repository }}/releases/generate-notes" \
+              -f tag_name="v${{ steps.pkg.outputs.version }}" \
+              -f previous_tag_name="${{ steps.prev_tag.outputs.tag }}" \
+              --jq .body > /tmp/auto_notes_full.md
+          else
+            gh api "repos/${{ github.repository }}/releases/generate-notes" \
+              -f tag_name="v${{ steps.pkg.outputs.version }}" \
+              --jq .body > /tmp/auto_notes_full.md
+          fi
+
+          # Keep only "## New Contributors" onward (includes the Full Changelog line).
+          awk '/^## New Contributors/,0' /tmp/auto_notes_full.md > /tmp/auto_notes.md
+
+          # If there were no new contributors this release, that section won't exist —
+          # fall back to just the Full Changelog line on its own.
+          if [ ! -s /tmp/auto_notes.md ]; then
+            grep '^\*\*Full Changelog\*\*' /tmp/auto_notes_full.md > /tmp/auto_notes.md
+          fi
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            cat /tmp/changelog_excerpt.md
+            echo ""
+            cat /tmp/auto_notes.md
+          } > /tmp/release_body.md
+
+          gh release create v${{ steps.pkg.outputs.version }} \
+            --title "v${{ steps.pkg.outputs.version }}" \
+            --notes-file /tmp/release_body.md
 
       - name: Publish to npm (Trusted Publishing)
         run: npm publish --access public --provenance
 
-      - name: Comment on linked issues/PRs
-        uses: apexskier/github-release-commenter@v1
-        with:
+      - name: Comment on included PRs
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          comment-template: |
-            :tada: This is included in version {release_link} :tada:
+        run: |
+          PREV_TAG="${{ steps.prev_tag.outputs.tag }}"
+          CURRENT_TAG="v${{ steps.pkg.outputs.version }}"
+          RELEASE_URL="https://github.com/${{ github.repository }}/releases/tag/$CURRENT_TAG"
 
-            The release is available on:
+          if [ -z "$PREV_TAG" ]; then
+            echo "No previous tag found — skipping release comments."
+            exit 0
+          fi
 
-            * [GitHub releases](https://github.com/nordcloud/eslint-config-pat/releases/tag/{release_tag})
-            * [npm package (@latest dist-tag)](https://www.npmjs.com/package/@nordcloud/eslint-config-pat/v/${{ env.npm_version }})
+          for sha in $(git log "$PREV_TAG"..HEAD --format="%H"); do
+            PR_NUMBER=$(gh api "/repos/${{ github.repository }}/commits/$sha/pulls" \
+              --jq '.[0].number // empty' 2>/dev/null || true)
+            if [ -n "$PR_NUMBER" ]; then
+              gh pr comment "$PR_NUMBER" --body "🎉 This was included in [$CURRENT_TAG]($RELEASE_URL)." || true
+            fi
+          done
