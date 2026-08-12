@@ -1,24 +1,54 @@
 # Changelog
 
+## [12.0.0](https://github.com/nordcloud/eslint-config-pat/compare/v11.2.0...v12.0.0) (2026-08-12)
+
+### Breaking Change: Stylelint v13 to v14 Migration Checklist
+
+This release upgrades Stylelint from v13 to v14 and introduces a breaking configuration change for CSS-in-JS users (especially styled-components).
+
+#### Who is affected
+
+- Projects upgrading from v11 or earlier of this package.
+
+#### Installation checklist
+
+- Install @stylelint/postcss-css-in-js.
+- Keep stylelint and stylelint-config-recommended installed.
+- Keep stylelint-config-styled-components installed (if you use styled-components).
+- Remove stylelint-processor-styled-components from dependencies.
+
+#### Configuration checklist
+
+- Remove the legacy processors entry:
+  processors: ["stylelint-processor-styled-components"]
+- Use customSyntax instead:
+  customSyntax: "@stylelint/postcss-css-in-js"
+- Continue extending the shared config from this package:
+  extends: "@nordcloud/eslint-config-pat/stylelint.config.js"
+
+#### Notes
+
+- This migration is released as a major version because consumers must update both dependencies and Stylelint config.
+
 ## [11.2.0](https://github.com/nordcloud/eslint-config-pat/compare/v11.1.1...v11.2.0) (2026-08-12)
 
 ### Features
 
-* improve release workflow ([#87](https://github.com/nordcloud/eslint-config-pat/issues/87)) ([90f4e1b](https://github.com/nordcloud/eslint-config-pat/commit/90f4e1b0d2f433cae567879a0ab80f26ab072eb5))
+- improve release workflow ([#87](https://github.com/nordcloud/eslint-config-pat/issues/87)) ([90f4e1b](https://github.com/nordcloud/eslint-config-pat/commit/90f4e1b0d2f433cae567879a0ab80f26ab072eb5))
 
 ## [11.1.0](https://github.com/nordcloud/eslint-config-pat/compare/v11.0.1...v11.1.0) (2026-08-11)
 
 ### Features
 
-* upgrade stylelint to v14 ([#84](https://github.com/nordcloud/eslint-config-pat/issues/84)) ([4b687e9](https://github.com/nordcloud/eslint-config-pat/commit/4b687e99962b1cbb08f21841cce4780a9a2dd219))
+- upgrade stylelint to v14 ([#84](https://github.com/nordcloud/eslint-config-pat/issues/84)) ([4b687e9](https://github.com/nordcloud/eslint-config-pat/commit/4b687e99962b1cbb08f21841cce4780a9a2dd219))
 
 ### Bug Fixes
 
-* add Node 24 to supported engines ([a53bf48](https://github.com/nordcloud/eslint-config-pat/commit/a53bf48b0190fbd3f9b660f85858b98e56193b3f))
-* add skipChecks for OIDC (preflight checks fail without token) ([f4e6b03](https://github.com/nordcloud/eslint-config-pat/commit/f4e6b033a108f7c4a8076ea76886480f4dfdc615))
-* switch release workflow to npm trusted publishing (OIDC) ([0551a8d](https://github.com/nordcloud/eslint-config-pat/commit/0551a8d4a807ebd175fe7097ee969b36435a7269))
-* update lodash & npm audit fix ([898fec6](https://github.com/nordcloud/eslint-config-pat/commit/898fec6176c28398a390bc1296b6d5b2a1be15b5))
-* use Node 24 (npm 11.x) for OIDC trusted publishing support ([580e6c4](https://github.com/nordcloud/eslint-config-pat/commit/580e6c4304cc3a025f7d85cf34956711803f884c))
+- add Node 24 to supported engines ([a53bf48](https://github.com/nordcloud/eslint-config-pat/commit/a53bf48b0190fbd3f9b660f85858b98e56193b3f))
+- add skipChecks for OIDC (preflight checks fail without token) ([f4e6b03](https://github.com/nordcloud/eslint-config-pat/commit/f4e6b033a108f7c4a8076ea76886480f4dfdc615))
+- switch release workflow to npm trusted publishing (OIDC) ([0551a8d](https://github.com/nordcloud/eslint-config-pat/commit/0551a8d4a807ebd175fe7097ee969b36435a7269))
+- update lodash & npm audit fix ([898fec6](https://github.com/nordcloud/eslint-config-pat/commit/898fec6176c28398a390bc1296b6d5b2a1be15b5))
+- use Node 24 (npm 11.x) for OIDC trusted publishing support ([580e6c4](https://github.com/nordcloud/eslint-config-pat/commit/580e6c4304cc3a025f7d85cf34956711803f884c))
 
 ## [11.0.0](https://github.com/nordcloud/eslint-config-pat/compare/v10.0.0...v11.0.0) (2025-04-28)
 
