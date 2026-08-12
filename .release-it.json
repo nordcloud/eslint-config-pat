@@ -1,18 +1,14 @@
 {
   "git": {
-    "requireBranch": "master",
-    "requireCommits": true,
-    "commitMessage": "chore: release v${version}"
+    "commit": false,
+    "tag": false,
+    "push": false
   },
   "github": {
-    "autoGenerate": true,
-    "release": true,
-    "releaseName": "v${version}"
+    "release": false
   },
   "npm": {
-    "publish": true,
-    "skipChecks": true,
-    "publishArgs": ["--provenance"]
+    "publish": false
   },
   "plugins": {
     "@release-it/conventional-changelog": {
