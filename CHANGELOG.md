@@ -1,5 +1,7 @@
 # Changelog
 
+## [12.0.0](https://github.com/nordcloud/eslint-config-pat/compare/v11.2.0...v12.0.0) (2026-08-12)
+
 ## [11.2.0](https://github.com/nordcloud/eslint-config-pat/compare/v11.1.1...v11.2.0) (2026-08-12)
 
 ### Features
