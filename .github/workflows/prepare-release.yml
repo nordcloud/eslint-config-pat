@@ -44,6 +44,18 @@ jobs:
 
       - run: npm ci
 
+      - name: Check if worth releasing
+        id: check
+        run: |
+          NEXT_VERSION=$(npx release-it ${{ inputs.increment }} --release-version --ci)
+          if [ -z "$NEXT_VERSION" ]; then
+            echo "No commits warranting a release were found since the last tag."
+            echo "has_release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Next version would be: $NEXT_VERSION"
+            echo "has_release=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Bump version and update changelog (no commit / no push)
         run: npx release-it ${{ inputs.increment }} --ci
 
