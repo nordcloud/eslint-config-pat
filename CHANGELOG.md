@@ -1,5 +1,11 @@
 # Changelog
 
+## [11.2.0](https://github.com/nordcloud/eslint-config-pat/compare/v11.1.1...v11.2.0) (2026-08-12)
+
+### Features
+
+* improve release workflow ([#87](https://github.com/nordcloud/eslint-config-pat/issues/87)) ([90f4e1b](https://github.com/nordcloud/eslint-config-pat/commit/90f4e1b0d2f433cae567879a0ab80f26ab072eb5))
+
 ## [11.1.0](https://github.com/nordcloud/eslint-config-pat/compare/v11.0.1...v11.1.0) (2026-08-11)
 
 ### Features
