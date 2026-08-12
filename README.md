@@ -299,6 +299,15 @@ cd your-project-folder
 npm install -D stylelint stylelint-config-recommended stylelint-config-styled-components @stylelint/postcss-css-in-js
 ```
 
+In v12, Stylelint was upgraded from v13 to v14, which is a breaking change. If you are upgrading from v11 or earlier, remove the legacy processor setup.
+
+```js
+// remove this from your stylelint config
+processors: ["stylelint-processor-styled-components"];
+```
+
+Also remove `stylelint-processor-styled-components` from your dependencies.
+
 Add the stylelint config file in the root directory:
 
 **stylelint.config.js**
