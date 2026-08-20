@@ -321,6 +321,69 @@ module.exports = {
 };
 ```
 
+## Release Process
+
+Releases are automated using a **Release PR** pattern, split across two GitHub Actions workflows. Neither workflow needs to bypass branch protection on `master` — the version bump goes through a normal, reviewed PR, and publishing is triggered by merging that PR.
+
+```
+Prepare Release (manual)              Publish Release (automatic)
+      │                                        │
+      ▼                                        │
+Compute next version                           │
+Update CHANGELOG.md                            │
+      │                                        │
+      ▼                                        │
+Open PR: release/vX.Y.Z → master               │
+      │                                        │
+      ▼                                        │
+   Review & merge ─────────────────────────────▶
+                                                │
+                                                ▼
+                                        Tag vX.Y.Z
+                                        Create GitHub Release
+                                        Publish to npm
+                                        Comment on linked issues/PRs
+```
+
+### Workflow A: `prepare-release.yml`
+
+**Trigger:** Manual — go to **Actions → Prepare Release → Run workflow**.
+
+**What it does:**
+
+1. Checks that no release PR is currently open (to avoid duplicate/conflicting releases).
+2. Runs `release-it` to compute the next version from [Conventional Commits](https://www.conventionalcommits.org/) since the last tag, and updates `CHANGELOG.md`. It does **not** commit, tag, publish, or create a GitHub Release — it only computes and edits files.
+3. If there's nothing worth releasing (no `feat`/`fix`/breaking-change commits since the last tag), the workflow stops here with a notice — no PR is opened.
+4. Otherwise, opens a PR (`release/vX.Y.Z` → `master`) containing the version bump and changelog update, authored as whoever triggered the run.
+
+**Manual version override:** if you need to force a specific bump regardless of commit history, select `patch`, `minor`, or `major` in the workflow's input dropdown instead of leaving it on auto-detect.
+
+### Workflow B: `release.yml`
+
+**Trigger:** Automatic — fires when a PR whose branch starts with `release/` is merged into `master`.
+
+**What it does:**
+
+1. Reads the version already committed to `package.json` on `master`.
+2. Creates and pushes the git tag `vX.Y.Z`.
+3. Creates the GitHub Release, using the latest section of `CHANGELOG.md` as the release notes.
+4. Publishes to npm using [Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC) — no npm token/secret required.
+5. Comments on the issues/PRs included in the release.
+
+### How to cut a release
+
+1. Merge whatever feature/fix work you want included into `master` as usual, using Conventional Commit prefixes (`feat:`, `fix:`, `chore:`, etc.) — this is what determines the next version number.
+2. Go to **Actions → Prepare Release → Run workflow**.
+3. Review the resulting `release/vX.Y.Z` PR — check the version bump and the generated changelog entry look right.
+4. Merge the PR. Publishing to npm and GitHub happens automatically from there — no further action needed.
+
+### Notes for maintainers
+
+- Only one release PR can be open at a time; merge or close the existing one before starting a new one.
+- If `Prepare Release` reports nothing to release, it means no commits since the last tag are `feat`/`fix`/breaking-change type — this is expected behavior, not a bug. Use the manual version dropdown if you need to force a release anyway.
+- npm's Trusted Publisher configuration must point to the exact workflow filename `release.yml`. If you rename this file, update the Trusted Publisher setting on npmjs.com to match, or publishing will fail.
+- If branch protection on `master` requires signed commits, make sure that's compatible with the commits these workflows produce, or publishing/PR creation may be rejected.
+
 ## Credits
 
 - Based on [@rushstack/eslint-config](https://github.dev/microsoft/rushstack/tree/master/stack/eslint-config)
